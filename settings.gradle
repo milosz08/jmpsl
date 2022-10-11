@@ -1,0 +1,3 @@
+rootProject.name = 'jmps-library'
+
+include 'util'
