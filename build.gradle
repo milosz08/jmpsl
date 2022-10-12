@@ -1,101 +1,127 @@
 plugins {
-    id "java"
+    id "java-library"
     id "signing"
     id "maven-publish"
-    id "org.springframework.boot" version "2.7.3"
-    id "io.spring.dependency-management" version "1.0.13.RELEASE"
-}
-
-version "1.0.1"
-group "pl.miloszgilga"
-sourceCompatibility = "11"
-
-repositories {
-    mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
+    id "org.springframework.boot" version "2.7.3" apply false
+    id "io.spring.dependency-management" version "1.0.13.RELEASE" apply false
 }
 
 ext {
+    // dependencies version
     springVersion = "2.7.3"
     jupiterTest = "5.8.1"
+
+    // maven nexus repository artifacts and additional package information's
+    libraryVersion = "1.0.1"
+    globalArtifactId = "pl.miloszgilga"
 }
 
-dependencies {
-    implementation "org.springframework.boot:spring-boot-starter:${springVersion}"
-
-    implementation project(":jmpsl-util")
-
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${jupiterTest}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterTest}"
+project(":").ext {
+    libraryArtifactId = "jmpsl-all"
+    libraryPomName = "JMPSL"
+    libraryPomDescription = "all modules"
 }
 
-jar {
-    enabled = true
-    archiveClassifier.set("")
+project(":jmpsl-util").ext {
+    libraryArtifactId = "jmpsl-util"
+    libraryPomName = "JMPSL Util"
+    libraryPomDescription = "utilities classes"
 }
 
-test {
-    useJUnitPlatform()
-}
+allprojects {
+    apply plugin: "java-library"
+    apply plugin: "signing"
+    apply plugin: "maven-publish"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = "pl.miloszgilga"
-            artifactId = "jmpsl-all"
-            version = "1.0.1"
-            from components.java
-            pom {
-                name = "JMPSL"
-                description = "Java Multi Purpose Spring Library - all modules"
-                url = "https://github.com/Milosz08/jmps-library"
-                inceptionYear = "2022"
-                licenses {
-                    license {
-                        name = "MIT License"
-                        url = "https://opensource.org/licenses/mit-license.php"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "milosz08"
-                        name = "Milosz Gilga"
-                        email = "personal@miloszgilga.pl"
-                    }
-                }
-                scm {
-                    connection = "scm:git:git:github.com/Milosz08/jmps-library.git"
-                    developerConnection = "scm:git:ssh://github.com/Milosz08/jmps-library.git"
-                    url = "https://github.com/Milosz08/jmps-library"
-                }
-            }
-        }
-    }
+    version "${libraryVersion}"
+    group "${globalArtifactId}"
+    java.sourceCompatibility(JavaVersion.VERSION_11)
+    java.targetCompatibility(JavaVersion.VERSION_11)
     repositories {
+        mavenLocal()
+        mavenCentral()
         maven {
-            name = "OSSRH"
-            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials {
-                username = project.properties["ossrhUsername"]
-                password = project.properties["ossrhPassword"]
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    // rename outing .jar files from plan.jar into simple .jar
+    jar {
+        enabled = true
+        archiveClassifier.set("")
+    }
+    test {
+        useJUnitPlatform()
+    }
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = "${globalArtifactId}"
+                artifactId = "${libraryArtifactId}"
+                version = "${libraryVersion}"
+                from components.java
+                pom {
+                    name = "${libraryPomName}"
+                    description = "Java Multi Purpose Spring Library - ${libraryPomDescription}"
+                    url = "https://github.com/Milosz08/jmps-library"
+                    inceptionYear = "2022"
+                    licenses {
+                        license {
+                            name = "MIT License"
+                            url = "https://opensource.org/licenses/mit-license.php"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "milosz08"
+                            name = "Milosz Gilga"
+                            email = "personal@miloszgilga.pl"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git:git:github.com/Milosz08/jmps-library.git"
+                        developerConnection = "scm:git:ssh://github.com/Milosz08/jmps-library.git"
+                        url = "https://github.com/Milosz08/jmps-library"
+                    }
+                }
             }
+        }
+        repositories {
+            maven {
+                name = "OSSRH"
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username = project.properties["ossrhUsername"]
+                    password = project.properties["ossrhPassword"]
+                }
+            }
+        }
+    }
+    signing {
+        useGpgCmd()
+        sign configurations.archives
+    }
+    javadoc {
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
         }
     }
 }
 
-signing {
-    sign publishing.publications.mavenJava
+// dependencies only for root project (grabbed all multi-modules into one single project module)
+project(":").dependencies {
+    api project(":jmpsl-util")
 }
 
-javadoc {
-    if(JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption('html5', true)
+// dependencies for all subprojects
+subprojects {
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${jupiterTest}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterTest}"
     }
 }

@@ -1,6 +1,9 @@
-.idea
-build
-/.gradle/
-/util/.gradle/
-secret-keys.gpg
+# IDEA project
+.idea/
+
+# Gradle wrapper and building patch
+.gradle/
+build/
+
+# Env and properties
 gradle.properties
