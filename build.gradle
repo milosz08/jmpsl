@@ -67,7 +67,7 @@ allprojects {
                 from components.java
                 pom {
                     name = "${libraryPomName}"
-                    description = "Java Multi Purpose Spring Library - ${libraryPomDescription}"
+                    description = "Java MultiPurpose Spring Library - ${libraryPomDescription}"
                     url = "https://github.com/Milosz08/jmps-library"
                     inceptionYear = "2022"
                     licenses {
