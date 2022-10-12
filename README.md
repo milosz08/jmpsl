@@ -1,2 +1,2 @@
 # JMPS Library
-Java Multi Purpose Spring Library
+Java MultiPurpose Spring Library
