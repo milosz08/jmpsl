@@ -58,20 +58,10 @@ public class ValidateJwtPayload {
         this.claims = Optional.empty();
     }
 
-    /**
-     * @return one of the {@link JwtValidationType} enum class
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public JwtValidationType getType() {
         return type;
     }
 
-    /**
-     * @return claims wrapped in {@link Optional} class
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public Optional<Claims> getClaims() {
         return claims;
     }

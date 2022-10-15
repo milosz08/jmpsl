@@ -29,45 +29,20 @@ public class AddedCookiePayload {
     private final String value;
     private final int maxAge;
 
-    /**
-     * Constructor responsible for create {@link AddedCookiePayload} POJO class.
-     *
-     * @param name cookie name
-     * @param value cookie value
-     * @param maxAge cookie max age (life)
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public AddedCookiePayload(String name, String value, int maxAge) {
         this.name = name;
         this.value = value;
         this.maxAge = maxAge;
     }
 
-    /**
-     * @return cookie name parameter
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public String getName() {
         return name;
     }
 
-
-    /**
-     * @return cookie value parameter
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public String getValue() {
         return value;
     }
 
-    /**
-     * @return cookie max age (life) parameter
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
     public int getMaxAge() {
         return maxAge;
     }

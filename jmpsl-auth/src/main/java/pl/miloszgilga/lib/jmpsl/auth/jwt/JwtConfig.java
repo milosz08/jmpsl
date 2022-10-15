@@ -56,9 +56,6 @@ public class JwtConfig {
      */
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    /**
-     * @hidden
-     */
     public JwtConfig(Environment environment) {
         tokenSecretBytes = DatatypeConverter.parseBase64Binary(environment.getRequiredProperty("jmpsl.auth.jwt.secret"));
     }

@@ -50,9 +50,6 @@ public class JwtServlet {
 
     private final String tokenIssuer;
 
-    /**
-     * @hidden
-     */
     public JwtServlet(Environment environment, JwtConfig jwtConfig) {
         this.tokenIssuer = environment.getRequiredProperty("jmpsl.auth.jwt.issuer");
         this.jwtConfig = jwtConfig;
