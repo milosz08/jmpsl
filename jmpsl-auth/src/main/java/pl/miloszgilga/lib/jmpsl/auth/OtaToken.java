@@ -41,6 +41,11 @@ public class OtaToken {
 
     private final int otaTokenLenght;
 
+    /**
+     * Create instance of OtaToken service.
+     *
+     * @param environment Spring auto-injecting {@link Environment} object
+     */
     public OtaToken(Environment environment) {
         this.otaTokenLenght = Integer.parseInt(environment.getProperty("{jmpsl.auth.ota.length}", String.valueOf(10)));
     }
