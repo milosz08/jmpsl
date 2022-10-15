@@ -34,7 +34,7 @@ extra.apply {
     set("jupiterTestVersion", "5.8.1")
 
     // maven nexus repository artifacts and additional package information's
-    set("libraryVersion", "1.0.1")
+    set("libraryVersion", "1.0.2")
     set("globalArtifactId", "pl.miloszgilga")
 }
 
