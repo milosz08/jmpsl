@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2022 by MILOSZ GILGA <https://miloszgilga.pl>
+ * Copyright (c) 2022 by multiple authors
  *
- * File name: settings.gradle.kts
- * Last modified: 13/10/2022, 15:05
+ * File name: JmpslAuthRunnerConfiguration.java
+ * Last modified: 15/10/2022, 11:05
  * Project name: jmps-library
  *
- * Licensed under the GNU GPL 3.0 license; you may not use this file except in compliance with the License.
+ * Licensed under the MIT license; you may not use this file except in compliance with the License.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,7 +16,16 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-rootProject.name = "jmps-library"
+package pl.miloszgilga.lib.jmpsl;
 
-include("jmpsl-util")
-include("jmpsl-auth")
+import org.springframework.context.annotation.ComponentScan;
+
+/**
+ * Auto-loader configuration class for scanning library packages and inserting Beans in Spring Context.
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
+ */
+@ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl.auth" })
+public class JmpslAuthRunnerConfiguration {
+}
