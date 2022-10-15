@@ -17,7 +17,9 @@
  */
 
 dependencies {
+    implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
+    implementation("javax.validation:validation-api:${rootProject.extra.get("javaxValidationVersion") as String}")
+
     implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
     implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
 }
