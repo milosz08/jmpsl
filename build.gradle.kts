@@ -69,6 +69,11 @@ allprojects {
         withJavadocJar()
         withSourcesJar()
     }
+    tasks.javadoc {
+        options {
+            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
+        }
+    }
     publishing {
         publications {
             create<MavenPublication>("maven") {
