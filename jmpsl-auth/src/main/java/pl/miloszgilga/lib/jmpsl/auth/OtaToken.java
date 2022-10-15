@@ -19,7 +19,7 @@
 package pl.miloszgilga.lib.jmpsl.auth;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 
 import java.util.Random;
 import java.util.regex.*;
@@ -39,8 +39,11 @@ public class OtaToken {
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z0-9]+");
     private static final String SIGNS = "abcdefghijklmnoprstquvwxyzABCDEFGHIJKLMNOPRSTQUWXYZ0123456789";
 
-    @Value("${jmpsl.auth.ota.length:10}")
-    private int otaTokenLenght;
+    private final int otaTokenLenght;
+
+    public OtaToken(Environment environment) {
+        this.otaTokenLenght = Integer.parseInt(environment.getProperty("{jmpsl.auth.ota.length}", String.valueOf(10)));
+    }
 
     /**
      * Method responsible for generating One-Time-Access token based on the length passed in one of the method's
