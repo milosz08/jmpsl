@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: build.gradle.kts
- * Last modified: 13/10/2022, 15:53
+ * File name: JmpslUtilRunnerConfiguration.java
+ * Last modified: 15/10/2022, 10:51
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,8 +16,16 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
+package pl.miloszgilga.lib.jmpsl;
+
+import org.springframework.context.annotation.ComponentScan;
+
+/**
+ * Auto-loader configuration class for scanning library packages and inserting Beans in Spring Context.
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
+ */
+@ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl.util" })
+public class JmpslUtilRunnerConfiguration {
 }
