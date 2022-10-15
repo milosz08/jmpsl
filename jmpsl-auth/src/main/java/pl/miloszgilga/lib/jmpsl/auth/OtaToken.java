@@ -39,12 +39,17 @@ public class OtaToken {
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z0-9]+");
     private static final String SIGNS = "abcdefghijklmnoprstquvwxyzABCDEFGHIJKLMNOPRSTQUWXYZ0123456789";
 
+    /**
+     * @hidden
+     */
     private final int otaTokenLenght;
 
     /**
      * Create instance of OtaToken service.
      *
      * @param environment Spring auto-injecting {@link Environment} object
+     * @author Miłosz Gilga
+     * @since 1.0.2
      */
     public OtaToken(Environment environment) {
         this.otaTokenLenght = Integer.parseInt(environment.getProperty("{jmpsl.auth.ota.length}", String.valueOf(10)));
