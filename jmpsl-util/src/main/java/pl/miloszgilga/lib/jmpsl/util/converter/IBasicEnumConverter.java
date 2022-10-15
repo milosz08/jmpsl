@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: build.gradle.kts
- * Last modified: 13/10/2022, 15:53
+ * File name: IBasicEnumConverter.java
+ * Last modified: 15/10/2022, 17:10
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,12 +16,15 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-dependencies {
-    implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
+package pl.miloszgilga.lib.jmpsl.util.converter;
 
-    implementation("javax.persistence:javax.persistence-api:${rootProject.extra.get("javaxPersistenceVersion") as String}")
-    implementation("javax.validation:validation-api:${rootProject.extra.get("javaxValidationVersion") as String}")
-
-    implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+/**
+ * Functional interface implements one method for getting enum name. This interface must be implemented in selected enum
+ * classes, which may be applied by {@link BasicEnumConverter} abstract class.
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
+ */
+public interface IBasicEnumConverter {
+    String getEnumName();
 }

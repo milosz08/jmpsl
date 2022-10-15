@@ -32,6 +32,7 @@ extra.apply {
     set("springVersion", "2.7.3")
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
+    set("javaxPersistenceVersion", "2.2")
     set("javaxValidationVersion", "2.0.1.Final")
 
     // maven nexus repository artifacts and additional package information's
@@ -65,14 +66,14 @@ allprojects {
     tasks.test {
         useJUnitPlatform()
     }
-    java {
-        withJavadocJar()
-        withSourcesJar()
-    }
     tasks.javadoc {
         options {
             (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
         }
+    }
+    java {
+        withJavadocJar()
+        withSourcesJar()
     }
     publishing {
         publications {
