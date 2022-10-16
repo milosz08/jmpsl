@@ -73,7 +73,7 @@ public class ServletPathUtil {
     public static URI redirectTokenUri(final String token, final String redirectPageUri, final String supplier) {
         final List<Pair<String, Object>> queryParams = List.of(
                 new Pair<>("token", token),
-                new Pair<>("error", supplier));
+                new Pair<>("supplier", supplier));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
