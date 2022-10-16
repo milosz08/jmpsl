@@ -18,10 +18,16 @@
 
 dependencies {
     implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
+    implementation("org.reflections:reflections:${rootProject.extra.get("reflectionsApiVersion") as String}")
+    implementation("ma.glasnost.orika:orika-core:${rootProject.extra.get("orikaMapperVersion") as String}")
+
+    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
 
     implementation("javax.persistence:javax.persistence-api:${rootProject.extra.get("javaxPersistenceVersion") as String}")
     implementation("javax.validation:validation-api:${rootProject.extra.get("javaxValidationVersion") as String}")
 
     implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
     implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+    implementation("org.springframework.boot:spring-boot-starter-security:${rootProject.extra.get("springVersion") as String}")
 }

@@ -32,4 +32,5 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
     implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+    implementation("org.springframework.boot:spring-boot-starter-security:${rootProject.extra.get("springVersion") as String}")
 }

@@ -33,7 +33,9 @@ extra.apply {
     set("lombokVersion", "1.18.20")
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
+    set("orikaMapperVersion", "1.5.4")
     set("javaxPersistenceVersion", "2.2")
+    set("reflectionsApiVersion", "0.10.2")
     set("javaxValidationVersion", "2.0.1.Final")
 
     // maven nexus repository artifacts and additional package information's
@@ -66,11 +68,6 @@ allprojects {
     }
     tasks.test {
         useJUnitPlatform()
-    }
-    tasks.javadoc {
-        options {
-            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
-        }
     }
     java {
         withJavadocJar()
@@ -123,6 +120,11 @@ allprojects {
     signing {
         useGpgCmd()
         sign(configurations.archives.get())
+    }
+    // disable Java DockLint annoying warnings (enable only for checking HTML tags)
+    tasks.withType<Javadoc> {
+        (options as StandardJavadocDocletOptions).addBooleanOption("Xdoclint:html", true)
+        (options as StandardJavadocDocletOptions).addStringOption("Xmaxwarns", "1")
     }
 }
 
