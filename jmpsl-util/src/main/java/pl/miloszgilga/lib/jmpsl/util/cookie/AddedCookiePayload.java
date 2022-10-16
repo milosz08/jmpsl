@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: AddedCookiePayload.java
- * Last modified: 14/10/2022, 21:17
+ * Last modified: 15/10/2022, 19:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -28,22 +28,4 @@ public class AddedCookiePayload {
     private final String name;
     private final String value;
     private final int maxAge;
-
-    public AddedCookiePayload(String name, String value, int maxAge) {
-        this.name = name;
-        this.value = value;
-        this.maxAge = maxAge;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public int getMaxAge() {
-        return maxAge;
-    }
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ValidateEnumValidator.java
- * Last modified: 15/10/2022, 15:54
+ * File name: EnumIsValidValidator.java
+ * Last modified: 15/10/2022, 19:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.

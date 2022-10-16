@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: ValidateJwtPayload.java
- * Last modified: 14/10/2022, 22:51
+ * Last modified: 15/10/2022, 19:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -33,19 +33,6 @@ public class ValidateJwtPayload {
     private final Optional<Claims> claims;
 
     /**
-     * Constructor available to create full set of {@link ValidateJwtPayload} POJO class.
-     *
-     * @param type enum type of {@link JwtValidationType} enum class
-     * @param claims claims object as {@link Optional} objects
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
-    public ValidateJwtPayload(JwtValidationType type, Optional<Claims> claims) {
-        this.type = type;
-        this.claims = claims;
-    }
-
-    /**
      * Constructor available to create {@link ValidateJwtPayload} POJO class withotut claims (claim {@link Optional})
      * object is by default empty.
      *
@@ -56,13 +43,5 @@ public class ValidateJwtPayload {
     public ValidateJwtPayload(JwtValidationType type) {
         this.type = type;
         this.claims = Optional.empty();
-    }
-
-    public JwtValidationType getType() {
-        return type;
-    }
-
-    public Optional<Claims> getClaims() {
-        return claims;
     }
 }

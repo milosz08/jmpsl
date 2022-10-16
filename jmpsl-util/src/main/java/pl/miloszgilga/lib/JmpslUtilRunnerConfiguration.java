@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: JmpslAuthRunnerConfiguration.java
- * Last modified: 15/10/2022, 11:05
+ * File name: JmpslUtilRunnerConfiguration.java
+ * Last modified: 15/10/2022, 19:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl;
+package pl.miloszgilga.lib;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -26,6 +26,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl.auth" })
-public class JmpslAuthRunnerConfiguration {
+@ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl" })
+public class JmpslUtilRunnerConfiguration {
 }

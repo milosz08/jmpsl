@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: StringUtil.java
- * Last modified: 14/10/2022, 23:44
+ * Last modified: 15/10/2022, 00:09
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -166,6 +166,8 @@ public class StringUtil {
      *
      * @param value user email string value to hash (ex. <code>example@gmail.com</code>)
      * @return user email after hashed (ex. <code>exa****@gmail.com</code>)
+     * @author Miłosz Gilga
+     * @since 1.0.2
      */
     public static String hashValue(final String value) {
         return hashValue(value, '*', '@', 3);
