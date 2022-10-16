@@ -32,7 +32,7 @@ import java.util.Optional;
 import static java.util.Objects.isNull;
 
 import static pl.miloszgilga.lib.jmpsl.util.StringUtil.EMPTY;
-import static pl.miloszgilga.lib.jmpsl.auth.jwt.JwtValidationType.EXPIRED;
+import static pl.miloszgilga.lib.jmpsl.auth.jwt.JwtValidationType.GOOD;
 
 /**
  * Spring Bean component class provide basic methods for managed JWT (which be more detailed in methods in custom
@@ -130,9 +130,9 @@ public class JwtServlet {
     public Optional<Long> validateRefreshToken(final String expiredToken, final String userIdClaimName) {
         if (isNull(userIdClaimName)) throw new NullPointerException("Passed user id claim name cannot be null.");
         final Pair<Boolean, JwtValidationType> checkedTokenValid = isValid(expiredToken);
-        if (!checkedTokenValid.getValue0() && checkedTokenValid.getValue1().equals(EXPIRED)) {
-            final Claims unsafeClaims = unsafeExtractClaims(expiredToken);
-            return Optional.of(unsafeClaims.get(userIdClaimName, Long.class));
+        if (!checkedTokenValid.getValue0() && checkedTokenValid.getValue1().equals(JwtValidationType.EXPIRED)) {
+            final ValidateJwtPayload unsafeClaims = insideValidateToken(expiredToken);
+            return Optional.of(unsafeClaims.getClaims().get().get(userIdClaimName, Long.class));
         }
         return Optional.empty();
     }
@@ -175,7 +175,7 @@ public class JwtServlet {
      */
     public Pair<Boolean, JwtValidationType> isValid(final String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
-        if (isNull(tokenAfterValidation.getClaims())) {
+        if (!tokenAfterValidation.getType().equals(GOOD)) {
             LOGGER.error(tokenAfterValidation.getType().getMessage() + " Token: {}", token);
             return new Pair<>(false, tokenAfterValidation.getType());
         }
@@ -196,11 +196,12 @@ public class JwtServlet {
     private ValidateJwtPayload insideValidateToken(final String token) {
         if (isNull(token)) throw new NullPointerException("Passed token value cannot be null.");
         try {
-            return new ValidateJwtPayload(JwtValidationType.GOOD, Optional.of(unsafeExtractClaims(token)));
+            final Claims extractedClaims = unsafeExtractClaims(token);
+            return new ValidateJwtPayload(GOOD, Optional.of(extractedClaims));
         } catch (MalformedJwtException ex) {
             return new ValidateJwtPayload(JwtValidationType.MALFORMED);
         } catch (ExpiredJwtException ex) {
-            return new ValidateJwtPayload(JwtValidationType.EXPIRED);
+            return new ValidateJwtPayload(JwtValidationType.EXPIRED, Optional.of(ex.getClaims()));
         } catch (JwtException ex) {
             return new ValidateJwtPayload(JwtValidationType.INVALID);
         } catch (IllegalArgumentException ex) {
