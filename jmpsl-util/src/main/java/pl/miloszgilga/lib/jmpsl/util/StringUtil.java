@@ -172,4 +172,20 @@ public class StringUtil {
     public static String hashValue(final String value) {
         return hashValue(value, '*', '@', 3);
     }
+
+    /**
+     * Static method responsible return default value, if first string value is null. Second value cannot be null.
+     *
+     * @param value possibly nullable string value
+     * @param defaultValue default value returning, if first value is null
+     * @return first value, if not null otherwise default value
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws NullPointerException if default value is null
+     */
+    public static String ifNullDefault(final String value, final String defaultValue) {
+        if (isNull(defaultValue)) throw new NullPointerException("Default value cannot be null");
+        return isNull(value) ? defaultValue : value;
+    }
 }
