@@ -24,6 +24,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:${rootProject.extra.get("jjwtVersion") as String}")
     implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
 
+    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+
     api("jakarta.xml.bind:jakarta.xml.bind-api:${rootProject.extra.get("xmlBinderVersion") as String}")
     runtimeOnly("org.glassfish.jaxb:jaxb-runtime:${rootProject.extra.get("xmlBinderVersion") as String}")
 

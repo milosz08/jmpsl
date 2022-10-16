@@ -18,12 +18,17 @@
 
 package pl.miloszgilga.lib.jmpsl.util.cookie;
 
+import lombok.*;
+
 /**
  * POJO payload class for storing adding cookie value. Include cookie name, cookie value and maxAge property.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Getter
+@Builder
+@AllArgsConstructor
 public class AddedCookiePayload {
     private final String name;
     private final String value;

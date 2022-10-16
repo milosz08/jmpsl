@@ -30,6 +30,7 @@ extra.apply {
     set("jTuplesVersion", "1.2")
     set("jjwtVersion", "0.11.5")
     set("springVersion", "2.7.3")
+    set("lombokVersion", "1.18.20")
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
     set("javaxPersistenceVersion", "2.2")

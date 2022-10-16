@@ -18,6 +18,8 @@
 
 package pl.miloszgilga.lib.jmpsl.auth.jwt;
 
+import lombok.*;
+
 import java.util.Optional;
 import io.jsonwebtoken.Claims;
 
@@ -28,6 +30,9 @@ import io.jsonwebtoken.Claims;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Getter
+@Builder
+@AllArgsConstructor
 public class ValidateJwtPayload {
     private final JwtValidationType type;
     private final Optional<Claims> claims;
