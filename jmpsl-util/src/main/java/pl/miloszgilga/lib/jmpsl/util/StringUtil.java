@@ -128,7 +128,7 @@ public class StringUtil {
      * @throws NullPointerException if passed string sequence is null
      */
     public static String addDot(final String value) {
-        if (isNull(value)) throw new NullPointerException("Passed string must not be null.");
+        if (isNull(value)) return "";
         if (value.charAt(value.length() - 1) == '.') return value;
         return value + ".";
     }
