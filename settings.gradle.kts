@@ -20,3 +20,5 @@ rootProject.name = "jmps-library"
 
 include("jmpsl-util")
 include("jmpsl-auth")
+include("jmpsl-oauth2")
+include("jmpsl-communication")
