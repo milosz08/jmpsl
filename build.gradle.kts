@@ -33,6 +33,7 @@ extra.apply {
     set("lombokVersion", "1.18.20")
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
+    set("freemarkerVersion", "2.3.31")
     set("orikaMapperVersion", "1.5.4")
     set("javaxPersistenceVersion", "2.2")
     set("reflectionsApiVersion", "0.10.2")
@@ -132,6 +133,8 @@ allprojects {
 rootProject.dependencies {
     api(project(":jmpsl-util"))
     api(project(":jmpsl-auth"))
+    api(project(":jmpsl-oauth2"))
+    api(project(":jmpsl-communication"))
 }
 
 // dependencies for all subprojects
