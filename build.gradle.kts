@@ -51,8 +51,8 @@ allprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
 
-    version = "${rootProject.extra.get("libraryVersion") as String}"
-    group = "${rootProject.extra.get("globalArtifactId") as String}"
+    version = rootProject.extra.get("libraryVersion") as String
+    group = rootProject.extra.get("globalArtifactId") as String
     java.sourceCompatibility = JavaVersion.VERSION_11
     java.targetCompatibility = JavaVersion.VERSION_11
     repositories {
@@ -77,12 +77,12 @@ allprojects {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                groupId = "${rootProject.extra.get("globalArtifactId") as String}"
-                artifactId = "${project.properties["libraryArtifactId"] as String}"
-                version = "${rootProject.extra.get("libraryVersion") as String}"
+                groupId = rootProject.extra.get("globalArtifactId") as String
+                artifactId = project.properties["libraryArtifactId"] as String
+                version = rootProject.extra.get("libraryVersion") as String
                 from(components["java"])
                 pom {
-                    name.set("${project.properties["libraryPomName"] as String}")
+                    name.set(project.properties["libraryPomName"] as String)
                     description.set("Java MultiPurpose Spring Library - ${project.properties["libraryPomDesc"] as String}")
                     url.set("https://github.com/Milosz08/jmps-library")
                     inceptionYear.set("2022")
@@ -132,7 +132,7 @@ allprojects {
 // dependencies only for root project (grabbed all multi-modules into one single project module)
 rootProject.dependencies {
     api(project(":jmpsl-util"))
-    api(project(":jmpsl-auth"))
+    api(project(":jmpsl-security"))
     api(project(":jmpsl-oauth2"))
     api(project(":jmpsl-communication"))
 }
