@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth.jwt;
+package pl.miloszgilga.lib.jmpsl.security.jwt;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -57,7 +57,7 @@ public class JwtConfig {
     public static final String TOKEN_PREFIX = "Bearer ";
 
     public JwtConfig(Environment environment) {
-        tokenSecretBytes = DatatypeConverter.parseBase64Binary(environment.getRequiredProperty("jmpsl.auth.jwt.secret"));
+        tokenSecretBytes = DatatypeConverter.parseBase64Binary(environment.getRequiredProperty("jmpsl.security.jwt.secret"));
     }
 
     /**

@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth;
+package pl.miloszgilga.lib.jmpsl.security;
 
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
@@ -52,7 +52,7 @@ public class OtaToken {
      * @since 1.0.2
      */
     public OtaToken(Environment environment) {
-        this.otaTokenLenght = Integer.parseInt(environment.getProperty("{jmpsl.auth.ota.length}", String.valueOf(10)));
+        this.otaTokenLenght = Integer.parseInt(environment.getProperty("jmpsl.security.ota.length", String.valueOf(10)));
     }
 
     /**

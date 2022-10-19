@@ -27,5 +27,5 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 1.0.2
  */
 @ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl" })
-public class JmpslAuthRunnerConfiguration {
+public class JmpslSecurityRunnerConfiguration {
 }

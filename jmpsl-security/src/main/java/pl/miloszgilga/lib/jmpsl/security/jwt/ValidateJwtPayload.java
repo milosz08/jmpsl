@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth.jwt;
+package pl.miloszgilga.lib.jmpsl.security.jwt;
 
 import lombok.*;
 

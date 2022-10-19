@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth.filter;
+package pl.miloszgilga.lib.jmpsl.security.filter;
 
 import org.slf4j.*;
 

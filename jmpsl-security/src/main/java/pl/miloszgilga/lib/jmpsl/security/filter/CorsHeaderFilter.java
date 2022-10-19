@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth.filter;
+package pl.miloszgilga.lib.jmpsl.security.filter;
 
 import org.slf4j.*;
 
@@ -58,7 +58,7 @@ public class CorsHeaderFilter implements Filter {
     };
 
     public CorsHeaderFilter(Environment environment) {
-        corsClient = environment.getRequiredProperty("jmpsl.auth.cors.client");
+        corsClient = environment.getRequiredProperty("jmpsl.security.cors.client");
         LOGGER.info("Successfuly loaded CORS HEADERS FILTER into Spring Context");
     }
 

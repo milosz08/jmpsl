@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.auth.jwt;
+package pl.miloszgilga.lib.jmpsl.security.jwt;
 
 import org.slf4j.*;
 import io.jsonwebtoken.*;
@@ -32,7 +32,7 @@ import java.util.Optional;
 import static java.util.Objects.isNull;
 
 import static pl.miloszgilga.lib.jmpsl.util.StringUtil.EMPTY;
-import static pl.miloszgilga.lib.jmpsl.auth.jwt.JwtValidationType.GOOD;
+import static pl.miloszgilga.lib.jmpsl.security.jwt.JwtValidationType.GOOD;
 
 /**
  * Spring Bean component class provide basic methods for managed JWT (which be more detailed in methods in custom
@@ -51,7 +51,7 @@ public class JwtServlet {
     private final String tokenIssuer;
 
     public JwtServlet(Environment environment, JwtConfig jwtConfig) {
-        this.tokenIssuer = environment.getRequiredProperty("jmpsl.auth.jwt.issuer");
+        this.tokenIssuer = environment.getRequiredProperty("jmpsl.security.jwt.issuer");
         this.jwtConfig = jwtConfig;
     }
 
