@@ -52,7 +52,7 @@ public class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, 
     public boolean isValid(String dateString, ConstraintValidatorContext context) {
         final Optional<Date> date = TimeUtil.deserialize(dateString);
         if (date.isEmpty()) return false;
-        if (isNull(dateString) || TimeUtil.isNonExpired(date.get())) {
+        if (isNull(dateString) || TimeUtil.isExpired(date.get())) {
             LOGGER.error("Attempt to add date which is after the current date.");
             return false;
         }
