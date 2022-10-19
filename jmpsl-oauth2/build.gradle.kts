@@ -18,9 +18,13 @@
 
 dependencies {
     implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-security"))
 
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
     annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+
+    implementation("javax.persistence:javax.persistence-api:${rootProject.extra.get("javaxPersistenceVersion") as String}")
+    implementation("javax.validation:validation-api:${rootProject.extra.get("javaxValidationVersion") as String}")
 
     implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
     implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
