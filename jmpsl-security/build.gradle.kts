@@ -23,6 +23,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:${rootProject.extra.get("jjwtVersion") as String}")
     implementation("io.jsonwebtoken:jjwt-jackson:${rootProject.extra.get("jjwtVersion") as String}")
     implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
+    implementation("org.reflections:reflections:${rootProject.extra.get("reflectionsApiVersion") as String}")
 
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
     annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
