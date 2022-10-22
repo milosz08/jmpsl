@@ -241,7 +241,7 @@ public class SecurityPathExcluder {
 
     /**
      * Inner method responsible for format Spring Web REST annotations into array of object look, ex:
-     * [ { foo, barr }, { foo, barr } ]
+     * [ { foo, bar }, { foo, bar } ]
      *
      * @return formatted Spring Web REST annotations data
      * @author Miłosz Gilga
