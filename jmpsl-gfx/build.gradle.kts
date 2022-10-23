@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: settings.gradle.kts
- * Last modified: 13/10/2022, 16:47
+ * File name: build.gradle.kts
+ * Last modified: 23/10/2022, 14:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,10 +16,6 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-rootProject.name = "jmps-library"
-
-include("jmpsl-util")
-include("jmpsl-security")
-include("jmpsl-oauth2")
-include("jmpsl-communication")
-include("jmpsl-gfx")
+dependencies {
+    implementation("org.springframework:spring-context:${rootProject.extra.get("springContextVersion") as String}")
+}

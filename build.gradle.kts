@@ -37,6 +37,7 @@ extra.apply {
     set("orikaMapperVersion", "1.5.4")
     set("javaxPersistenceVersion", "2.2")
     set("reflectionsApiVersion", "0.10.2")
+    set("springContextVersion", "5.3.23")
     set("javaxValidationVersion", "2.0.1.Final")
 
     // maven nexus repository artifacts and additional package information's
@@ -135,6 +136,7 @@ rootProject.dependencies {
     api(project(":jmpsl-security"))
     api(project(":jmpsl-oauth2"))
     api(project(":jmpsl-communication"))
+    api(project(":jmpsl-gfx"))
 }
 
 // dependencies for all subprojects
