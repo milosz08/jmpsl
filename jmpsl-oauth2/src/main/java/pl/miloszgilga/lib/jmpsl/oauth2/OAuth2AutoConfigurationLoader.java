@@ -55,7 +55,7 @@ public class OAuth2AutoConfigurationLoader {
         availableOAuth2Suppliers = Arrays.stream(suppliers.split(","))
                 .map(OAuth2Supplier::checkIfSupplierIsValid)
                 .collect(Collectors.toSet());
-        LOGGER.info("Successfull loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);
+        LOGGER.info("Successful loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);
     }
 
     public static Set<OAuth2Supplier> getAvailableOAuth2Suppliers() {
