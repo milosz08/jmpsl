@@ -28,6 +28,7 @@ import org.reflections.scanners.Scanners;
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.ApplicationContext;
+import pl.miloszgilga.lib.jmpsl.util.mapper.converter.*;
 
 import java.util.Set;
 import java.lang.reflect.Method;
@@ -68,13 +69,18 @@ class MapperConvertersInjector {
         final var reflections = new Reflections(configuration);
         final Set<Class<?>> convertersClazz = reflections.getTypesAnnotatedWith(MappingConverter.class);
         for (Class<?> converterClazz : convertersClazz) {
+            final IMapperConverterLoader loader = applicationContext.getBean(IMapperConverterLoader.class);
             final CustomConverter<?, ?> converter = (CustomConverter<?, ?>) applicationContext.getBean(converterClazz);
             try {
                 final Method method = converterClazz.getMethod("getConverterType");
-                converterFactory.registerConverter((String) method.invoke(converter), converter);
-                LOGGER.info("Successful loaded custom mapper: {} via reflection", converterClazz.getSimpleName());
+                final String converterName = (String) method.invoke(converter);
+                if (loader.loadConverters().stream().anyMatch(c -> c.getName().equalsIgnoreCase(converterName)) ||
+                        converterClazz.isAnnotationPresent(ImmediatelyLoadConverter.class)) {
+                    converterFactory.registerConverter(converterName, converter);
+                    LOGGER.info("Successful loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
+                }
             } catch (Exception ex) {
-                LOGGER.error("Failure loaded custom mapper: {} via reflection", converterClazz.getSimpleName());
+                LOGGER.error("Failure loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
                 LOGGER.error("Error: {}", ex.getMessage());
             }
         }
