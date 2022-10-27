@@ -59,7 +59,7 @@ public class CorsHeaderFilter implements Filter {
 
     public CorsHeaderFilter(Environment environment) {
         corsClient = environment.getRequiredProperty("jmpsl.security.cors.client");
-        LOGGER.info("Successfuly loaded CORS HEADERS FILTER into Spring Context");
+        LOGGER.info("Successful loaded CORS HEADERS FILTER into Spring Context");
     }
 
     @Override
