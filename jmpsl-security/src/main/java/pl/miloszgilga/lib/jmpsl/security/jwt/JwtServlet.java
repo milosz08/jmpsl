@@ -36,7 +36,7 @@ import static pl.miloszgilga.lib.jmpsl.security.jwt.JwtValidationType.GOOD;
 
 /**
  * Spring Bean component class provide basic methods for managed JWT (which be more detailed in methods in custom
- * Spring class component). Before run the application, set <code>jmpsl.auth.jwt.issuer</code> value in
+ * Spring class component). Before run the application, set <code>jmpsl.security.jwt.issuer</code> value in
  * <code>application.properties</code> file.
  *
  * @author Miłosz Gilga

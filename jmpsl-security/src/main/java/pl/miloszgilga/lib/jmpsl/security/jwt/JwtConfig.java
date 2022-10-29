@@ -30,8 +30,9 @@ import java.security.Key;
 
 /**
  * Spring Bean component class responsible for create configuration for JWT used in web application. Default JWT hash
- * algorithm is HS256. To run, provide secret salt <code>jmpsl.auth.jwt.secret</code> in <code>application.properties</code>
- * file. If this variable not have been initialized, application after starting throw exception.
+ * algorithm is HS256. To run, provide secret salt <code>jmpsl.security.jwt.secret</code> in
+ * <code>application.properties</code> file. If this variable not have been initialized, application after starting
+ * throw exception.
  *
  * @author Miłosz Gilga
  * @since 1.0.2

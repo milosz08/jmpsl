@@ -1,2 +1,2 @@
-## JMPSL Auth
-module for authorization and authentication classes
+## JMPSL Security
+module for authorization and authentication classes in Spring Boot applications

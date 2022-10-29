@@ -38,7 +38,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 /**
  * Custom servlet {@link Filter} added extra cors headers (available rest methods, allowed authorization header keys and
  * cors client URI). This filter is auto-inserting by Spring Context. Before use this class, insert property:
- * <code>jmpsl.auth.cors.client</code> in <code>application.properties</code> file with cors client URL address.
+ * <code>jmpsl.security.cors.client</code> in <code>application.properties</code> file with cors client URL address.
  *
  * @author Miłosz Gilga
  * @since 1.0.2

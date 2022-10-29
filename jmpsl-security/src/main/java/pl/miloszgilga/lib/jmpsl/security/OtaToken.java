@@ -26,8 +26,8 @@ import java.util.regex.*;
 
 /**
  * Spring Bean component class responsible for generated and checked One-Time-Access token. This type of token mostly
- * is used in verifications. By default token lenght is 10. To change this parameter, set <code>jmpsl.auth.ota.lenght</code>
- * parameter in <code>application.properties</code> file to selected integer value.
+ * is used in verifications. By default token lenght is 10. To change this parameter, set
+ * <code>jmpsl.security.ota.lenght</code> parameter in <code>application.properties</code> file to selected integer value.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
