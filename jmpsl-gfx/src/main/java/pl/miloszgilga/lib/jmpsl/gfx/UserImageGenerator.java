@@ -42,10 +42,12 @@ import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
  * Class storing methods responsible for generating default user image. Before run application, declare following
  * properties in <code>application.property</code> file:
  *
- * <p><code>jmpsl.gfx.user-gfx.preferred-font-link</code> - path to font *.ttf file in /resources directory</p>
- * <p><code>jmpsl.gfx.user-gfx.preferred-font-name</code> - name of custom loaded font</p>
- * <p><code>jmpsl.gfx.user-gfx.preferred-hex-colors</code> - preferred colors for image generator, as hex array</p>
- * <p><code>jmpsl.gfx.user-gfx.preferred-foreground-color</code> - preferred image initials text color, by default #fff</p>
+ * <ul>
+ *     <li><code>jmpsl.gfx.user-gfx.preferred-font-link</code> - path to font *.ttf file in /resources directory</li>
+ *     <li><code>jmpsl.gfx.user-gfx.preferred-font-name</code> - name of custom loaded font</li>
+ *     <li><code>jmpsl.gfx.user-gfx.preferred-hex-colors</code> - preferred colors for image generator, as hex array</li>
+ *     <li><code>jmpsl.gfx.user-gfx.preferred-foreground-color</code> - preferred image initials text color, by default #fff</li>
+ * </ul>
  *
  * @author Miłosz Gilga
  * @since 1.0.2
