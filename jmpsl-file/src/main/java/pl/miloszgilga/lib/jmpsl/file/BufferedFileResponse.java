@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: build.gradle.kts
- * Last modified: 23/10/2022, 14:53
+ * File name: BufferedFilePayload.java
+ * Last modified: 30/10/2022, 14:41
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,26 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-dependencies {
-    implementation(project(":jmpsl-util"))
+package pl.miloszgilga.lib.jmpsl.file;
 
-    implementation("com.hierynomus:sshj:${rootProject.extra.get("sshjVersion") as String}")
+import lombok.*;
 
-    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
-    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
-
-    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+/**
+ * Simple POJO class storing generated file data (bytes representation and SFTP server location).
+ *
+ * <ul>
+ *     <li><code>bytesRepresentation</code> - file as bytes array stream</li>
+ *     <li><code>location</code> - file location on external SFTP server</li>
+ * </ul>
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class BufferedFileResponse {
+    private byte[] bytesRepresentation;
+    private String location;
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: build.gradle.kts
- * Last modified: 23/10/2022, 14:53
+ * File name: UnableToPerformSftpActionException.java
+ * Last modified: 31/10/2022, 19:44
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,22 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-dependencies {
-    implementation(project(":jmpsl-util"))
+package pl.miloszgilga.lib.jmpsl.file.socket;
 
-    implementation("com.hierynomus:sshj:${rootProject.extra.get("sshjVersion") as String}")
+import pl.miloszgilga.lib.jmpsl.util.exception.BasicServerException;
 
-    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
-    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
-    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+/**
+ * Custom exception throws after unable to connect with SFTP server or unable to perform other general SFTP action.
+ * Extended {@link BasicServerException}, so return JSON object in response body part.
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
+ */
+public class UnableToPerformSftpActionException extends BasicServerException {
+
+    public UnableToPerformSftpActionException() {
+        super(SERVICE_UNAVAILABLE, "Unable to connect with SFTP server. Try again later.", new Object());
+    }
 }
