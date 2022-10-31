@@ -40,7 +40,7 @@ import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
 
 /**
  * Class storing methods responsible for generating default user image. Before run application, declare following
- * properties in <code>application.property</code> file:
+ * properties in <code>application.properties</code> file:
  *
  * <ul>
  *     <li><code>jmpsl.gfx.user-gfx.preferred-font-link</code> - path to font *.ttf file in /resources directory</li>
