@@ -29,15 +29,17 @@ extra.apply {
     // dependencies version
     set("jTuplesVersion", "1.2")
     set("jjwtVersion", "0.11.5")
+    set("sshjVersion", "0.34.0")
     set("springVersion", "2.7.3")
+    set("imgScalrVersion", "4.2")
     set("lombokVersion", "1.18.20")
+    set("slf4jApiVersion", "2.0.3")
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
     set("freemarkerVersion", "2.3.31")
     set("orikaMapperVersion", "1.5.4")
     set("javaxPersistenceVersion", "2.2")
     set("reflectionsApiVersion", "0.10.2")
-    set("springContextVersion", "5.3.23")
     set("javaxValidationVersion", "2.0.1.Final")
 
     // maven nexus repository artifacts and additional package information's
