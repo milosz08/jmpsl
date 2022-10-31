@@ -137,6 +137,7 @@ rootProject.dependencies {
     api(project(":jmpsl-oauth2"))
     api(project(":jmpsl-communication"))
     api(project(":jmpsl-file"))
+    api(project(":jmpsl-gfx"))
 }
 
 // dependencies for all subprojects

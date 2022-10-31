@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: settings.gradle.kts
- * Last modified: 13/10/2022, 16:47
+ * File name: build.gradle.kts
+ * Last modified: 31/10/2022, 21:34
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,11 +16,15 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-rootProject.name = "jmps-library"
+dependencies {
+    implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-file"))
 
-include("jmpsl-util")
-include("jmpsl-security")
-include("jmpsl-oauth2")
-include("jmpsl-communication")
-include("jmpsl-file")
-include("jmpsl-gfx")
+    implementation("com.hierynomus:sshj:${rootProject.extra.get("sshjVersion") as String}")
+    implementation("org.imgscalr:imgscalr-lib:${rootProject.extra.get("imgScalrVersion") as String}")
+
+    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
+
+    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
+}
