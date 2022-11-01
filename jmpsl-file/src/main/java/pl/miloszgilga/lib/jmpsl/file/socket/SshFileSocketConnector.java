@@ -28,6 +28,7 @@ import net.schmizz.sshj.sftp.StatefulSFTPClient;
 import java.io.*;
 
 import static java.util.Objects.requireNonNull;
+import static org.springframework.util.StringUtils.hasLength;
 import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
 
 /**
@@ -54,6 +55,7 @@ public class SshFileSocketConnector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SshFileSocketConnector.class);
 
+    private String appServerPath;
     private final String sshHost;
     private final String sshLogin;
     private final String serverPath;
@@ -99,7 +101,7 @@ public class SshFileSocketConnector {
     /**
      * Inner method responsible for created app SFTP directory (based <code>jmpsl.file.basic-external-server-path</code>
      * and <code>jmpsl.file.app-external-server-path</code> where first is basic server path and second is creating
-     * custom application directory. If directory already exist, skipping creating.
+     * custom application directory (optionally, by default is ROOT). If directory already exist, skipped creating.
      *
      * @param env {@link Environment} instance passed from injected bean in constructor
      * @return server path (combined basic server path and application generated directory)
@@ -110,7 +112,10 @@ public class SshFileSocketConnector {
      */
     private String createBasicSfptServerPath(Environment env) {
         final String basicServerPath = requireNonNull(env.getProperty("jmpsl.file.basic-external-server-path"));
-        final String appServerPath = requireNonNull(env.getProperty("jmpsl.file.app-external-server-path"));
+        appServerPath = env.getProperty("jmpsl.file.app-external-server-path", "");
+        if (!hasLength(appServerPath)) {
+            return basicServerPath;
+        }
         connectToSocketAndPerformAction(sftpClient -> {
             try {
                 createDirIfNotExist(sftpClient, basicServerPath, appServerPath);
