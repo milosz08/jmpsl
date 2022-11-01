@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: BufferedImageGeneratorPayload.java
- * Last modified: 31/10/2022, 20:45
+ * Last modified: 31/10/2022, 23:51
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx;
+package pl.miloszgilga.lib.jmpsl.gfx.generator;
 
 import lombok.*;
 import java.awt.*;
 
+import pl.miloszgilga.lib.jmpsl.gfx.IBufferedImagePayload;
 import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**

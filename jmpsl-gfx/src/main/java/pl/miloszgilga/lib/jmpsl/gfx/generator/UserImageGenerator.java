@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx;
+package pl.miloszgilga.lib.jmpsl.gfx.generator;
 
 import org.slf4j.*;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,8 @@ import java.util.List;
 import java.io.IOException;
 import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
+
+import pl.miloszgilga.lib.jmpsl.gfx.ImageExtension;
 
 import static java.util.Objects.*;
 import static java.awt.RenderingHints.*;

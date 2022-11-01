@@ -36,6 +36,7 @@ import javax.imageio.ImageIO;
 
 import pl.miloszgilga.lib.jmpsl.gfx.*;
 import pl.miloszgilga.lib.jmpsl.file.*;
+import pl.miloszgilga.lib.jmpsl.gfx.generator.*;
 import pl.miloszgilga.lib.jmpsl.file.socket.SshFileSocketConnector;
 import pl.miloszgilga.lib.jmpsl.file.hashcode.HashCodeFormatException;
 
