@@ -24,8 +24,7 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 
 import pl.miloszgilga.lib.jmpsl.util.TimeUtil;
-
-import static java.util.Objects.isNull;
+import static org.springframework.util.Assert.noNullElements;
 
 /**
  * Simple POJO class for storing server exception JSON object values (without error message parameters).
@@ -53,10 +52,10 @@ public class ServerExceptionResDto {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if status of req parameter is null
+     * @throws IllegalArgumentException if status of req parameter is null
      */
-    public static ServerExceptionResDto generate(final HttpStatus status, final HttpServletRequest req) {
-        if (isNull(status) || isNull(req)) throw new NullPointerException("Status or req parameter cannot be null.");
+    public static ServerExceptionResDto generate(HttpStatus status, HttpServletRequest req) {
+        noNullElements(new Object[] { status, req }, "Status or req parameter cannot be null.");
         return ServerExceptionResDto.builder()
                 .path(req.getServletPath())
                 .method(req.getMethod())

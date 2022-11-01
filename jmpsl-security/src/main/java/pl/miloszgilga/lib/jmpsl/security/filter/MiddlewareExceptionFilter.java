@@ -49,7 +49,7 @@ public class MiddlewareExceptionFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(final HttpServletRequest req, final HttpServletResponse res, final FilterChain chain) {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) {
         try {
             chain.doFilter(req, res);
         } catch (final Exception ex) {

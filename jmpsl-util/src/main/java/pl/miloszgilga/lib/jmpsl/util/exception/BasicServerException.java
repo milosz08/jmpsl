@@ -33,7 +33,7 @@ public class BasicServerException extends RuntimeException {
 
     private final HttpStatus status;
 
-    public BasicServerException(final HttpStatus status, final String message, final Object... args) {
+    public BasicServerException(HttpStatus status, String message, Object... args) {
         super(String.format(message, args));
         this.status = status;
     }

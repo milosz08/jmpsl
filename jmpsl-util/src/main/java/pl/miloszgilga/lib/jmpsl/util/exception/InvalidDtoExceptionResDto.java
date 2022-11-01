@@ -32,12 +32,12 @@ public class InvalidDtoExceptionResDto extends ServerExceptionResDto {
 
     private final List<String> errors;
 
-    public InvalidDtoExceptionResDto(final ServerExceptionResDto res, final List<String> errors) {
+    public InvalidDtoExceptionResDto(ServerExceptionResDto res, List<String> errors) {
         super(res.getServletTimestampUTC(), res.getStatusCode(), res.getStatusText(), res.getPath(), res.getMethod());
         this.errors = errors;
     }
 
-    public InvalidDtoExceptionResDto(final ServerExceptionResDto res, final String error) {
+    public InvalidDtoExceptionResDto(ServerExceptionResDto res, String error) {
         super(res.getServletTimestampUTC(), res.getStatusCode(), res.getStatusText(), res.getPath(), res.getMethod());
         this.errors = List.of(error);
     }

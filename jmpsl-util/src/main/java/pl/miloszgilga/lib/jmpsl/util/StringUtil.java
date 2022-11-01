@@ -147,7 +147,7 @@ public class StringUtil {
      *
      * @throws NullPointerException if passed string value to hash is null
      */
-    public static String hashValue(final String value, char hashValue, char delimiter, int hashCount) {
+    public static String hashValue(final String value, final char hashValue, final char delimiter, final int hashCount) {
         if (isNull(value)) throw new NullPointerException("Passed string value to hash cannot be null.");
         final String hashedPart = value.substring(0, value.indexOf(delimiter));
         int hashingCharsCount = hashCount;

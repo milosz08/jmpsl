@@ -64,7 +64,7 @@ public class OtaToken {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public String generateToken(final int tokenLength) {
+    public String generateToken(int tokenLength) {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < tokenLength; i++) {
             builder.append(SIGNS.charAt(RANDOM.nextInt(SIGNS.length())));
@@ -95,7 +95,7 @@ public class OtaToken {
      *
      * @return true, if token is valid, false if token is not valid
      */
-    public boolean isValid(final String token, final int tokenLenght) {
+    public boolean isValid(String token, int tokenLenght) {
         if (token.isBlank()) return false;
         final Matcher matcher = PATTERN.matcher(token);
         return matcher.matches() && token.length() == tokenLenght;
@@ -111,7 +111,7 @@ public class OtaToken {
      *
      * @return true, if token is valid, false if token is not valid
      */
-    public boolean isValid(final String token) {
+    public boolean isValid(String token) {
         return isValid(token, otaTokenLenght);
     }
 }

@@ -48,7 +48,7 @@ public class SecurityUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(final Set<String> roles) {
+    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(Set<String> roles) {
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
@@ -63,7 +63,7 @@ public class SecurityUtil {
      *
      * @throws IllegalArgumentException if user object is null
      */
-    public static AuthUser fabricateUser(final IAuthUserModel user) {
+    public static AuthUser fabricateUser(IAuthUserModel user) {
         Assert.notNull(user, "User object cannot be null.");
         return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
     }
@@ -78,7 +78,7 @@ public class SecurityUtil {
      * @throws Exception if spring securitu context not exist
      * @throws IllegalArgumentException if {@link HttpSecurity} object is null
      */
-    public static void enableH2ConsoleForDev(final HttpSecurity httpSecurity) throws Exception {
+    public static void enableH2ConsoleForDev(HttpSecurity httpSecurity) throws Exception {
         Assert.notNull(httpSecurity, "http security object cannot be null.");
         final String activeProfileName = SecurityAutoConfiguration.getEnv().getActiveProfiles()[0];
         if (!activeProfileName.equals(DEV.getModeName())) return;

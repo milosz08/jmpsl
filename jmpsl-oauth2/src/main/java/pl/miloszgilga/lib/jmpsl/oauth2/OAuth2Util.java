@@ -72,7 +72,7 @@ public class OAuth2Util {
      *
      * @throws IllegalArgumentException if user or dto POJO objects are null
      */
-    public static OAuth2UserExtender fabricateUser(final IAuthUserModel user, final OAuth2RegistrationDataDto dto) {
+    public static OAuth2UserExtender fabricateUser(IAuthUserModel user, OAuth2RegistrationDataDto dto) {
         Assert.notNull(user, "User object cannot be null.");
         Assert.notNull(dto, "OAuth2RegistrationDataDto cannot be null.");
         final List<SimpleGrantedAuthority> authorities = convertRolesToAuthorities(user.getAuthRoles());
@@ -93,7 +93,7 @@ public class OAuth2Util {
      *
      * @throws IllegalArgumentException if user or supplier are null
      */
-    public static OAuth2UserExtender fabricateUser(final IAuthUserModel user, final OAuth2Supplier supplier) {
+    public static OAuth2UserExtender fabricateUser(IAuthUserModel user, OAuth2Supplier supplier) {
         Assert.notNull(user, "User object cannot be null.");
         Assert.notNull(supplier, "Supplier object cannot be null.");
         return new OAuth2UserExtender(user, convertRolesToAuthorities(user.getAuthRoles()), supplier);

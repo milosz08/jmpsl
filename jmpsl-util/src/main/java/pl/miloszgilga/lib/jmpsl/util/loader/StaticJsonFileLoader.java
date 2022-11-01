@@ -53,7 +53,7 @@ public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public StaticJsonFileLoader(final IStaticJsonLoaderFiles fileName, final Class<T> mappingTypeClazz) {
+    public StaticJsonFileLoader(IStaticJsonLoaderFiles fileName, Class<T> mappingTypeClazz) {
         checkIfFileIsJson(fileName.getFileName());
         this.fileName = fileName.getFileName();
         this.mappingTypeClazz = mappingTypeClazz;
@@ -71,7 +71,7 @@ public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public StaticJsonFileLoader(final IStaticJsonLoaderFiles fileName, final Class<T> mappingTypeClazz, final String filePath) {
+    public StaticJsonFileLoader(IStaticJsonLoaderFiles fileName, Class<T> mappingTypeClazz, String filePath) {
         checkIfFileIsJson(fileName.getFileName());
         this.fileName = fileName.getFileName();
         this.mappingTypeClazz = mappingTypeClazz;
@@ -92,7 +92,7 @@ public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
         }
     }
 
-    private void checkIfFileIsJson(final String fileName) {
+    private void checkIfFileIsJson(String fileName) {
         final Matcher matcher = JSON_PATTERN.matcher(fileName);
         if (!matcher.matches()) throw new IllegalStateException("Passed file name not is JSON file. File name: " + fileName);
     }

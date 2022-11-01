@@ -26,12 +26,12 @@ package pl.miloszgilga.lib.jmpsl.security.excluder;
  */
 class RestAnnotationNotFoundException extends RuntimeException {
 
-    RestAnnotationNotFoundException(final String name, final String annotations) {
+    RestAnnotationNotFoundException(String name, String annotations) {
         super(String.format("Use @%s annotation without one of the Rest controller annotations: %s is strictly " +
                 "prohibited.", name, annotations));
     }
 
-    RestAnnotationNotFoundException(final String name) {
+    RestAnnotationNotFoundException(String name) {
         super(String.format("Use @%s annotation without @RequestMapping annotation is strictly prohibited.", name));
     }
 }

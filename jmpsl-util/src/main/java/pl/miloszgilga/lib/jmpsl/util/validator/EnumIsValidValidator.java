@@ -37,9 +37,6 @@ class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnumIsValidValidator.class);
 
-    /**
-     * @hidden
-     */
     private Set<String> availableValues;
 
     /**
@@ -50,7 +47,7 @@ class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
      * @since 1.0.2
      */
     @Override
-    public void initialize(final EnumIsValid constraintAnnotation) {
+    public void initialize(EnumIsValid constraintAnnotation) {
         this.availableValues = Stream.of(constraintAnnotation.enumClazz().getEnumConstants())
                 .map(v -> v.name().toLowerCase(Locale.ROOT))
                 .collect(Collectors.toSet());
@@ -67,7 +64,7 @@ class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
      * @since 1.0.2
      */
     @Override
-    public boolean isValid(final String value, final ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         if (isNull(value) || !availableValues.contains(value.toLowerCase(Locale.ROOT))) {
             LOGGER.error("Attept to add not existing enum value (malformed enum string data for enum parser)." +
                     "Available values: {}, passed value: {}", availableValues, value);

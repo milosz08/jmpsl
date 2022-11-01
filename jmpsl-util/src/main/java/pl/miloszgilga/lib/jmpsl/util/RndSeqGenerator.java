@@ -21,6 +21,8 @@ package pl.miloszgilga.lib.jmpsl.util;
 import java.util.Random;
 import java.util.stream.*;
 
+import static org.springframework.util.Assert.notNull;
+
 /**
  * Class storing static methods for generating random sequences. Methods of this class might be used for example in
  * generating user nicknames, email and other data, where data repeatability is strictly prohibited.
@@ -45,13 +47,11 @@ public class RndSeqGenerator {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed prefix value is null
-     * @throws IllegalArgumentException if passed seqLenght parameter is less than 1
+     * @throws IllegalArgumentException if passed prefix value is null or seqLenght parameter is less than 1
      */
-    public static String addEndRndSeq(final String prefix, final int seqLenght) {
-        if (prefix == null) throw new NullPointerException("Passed prefix value cannot be null.");
-        final String numbersSequence = generator(seqLenght);
-        return prefix + numbersSequence;
+    public static String addEndRndSeq(String prefix, int seqLenght) {
+        notNull(prefix, "Passed prefix value cannot be null.");
+        return prefix + generator(seqLenght);
     }
 
     /**
@@ -64,13 +64,11 @@ public class RndSeqGenerator {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed suffix value is null
-     * @throws IllegalArgumentException if passed seqLenght parameter is less than 1
+     * @throws IllegalArgumentException if passed suffix value is null or seqLenght parameter is less than 1
      */
-    public static String addBeforeRndSeq(final String suffix, final int seqLenght) {
-        if (suffix == null) throw new NullPointerException("Passed prefix value cannot be null.");
-        final String numbersSequence = generator(seqLenght);
-        return numbersSequence + suffix;
+    public static String addBeforeRndSeq(String suffix, int seqLenght) {
+        notNull(suffix, "Passed prefix value cannot be null.");
+        return generator(seqLenght) + suffix;
     }
 
     /**
@@ -82,9 +80,9 @@ public class RndSeqGenerator {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed suffix value is null
+     * @throws IllegalArgumentException if passed suffix value is null
      */
-    public static String addEndRndSeq(final String prefix) {
+    public static String addEndRndSeq(String prefix) {
         return addEndRndSeq(prefix, 3);
     }
 
@@ -97,9 +95,9 @@ public class RndSeqGenerator {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed suffix value is null
+     * @throws IllegalArgumentException if passed suffix value is null
      */
-    public static String addBeforeRndSeq(final String prefix) {
+    public static String addBeforeRndSeq(String prefix) {
         return addBeforeRndSeq(prefix, 3);
     }
 
@@ -114,8 +112,10 @@ public class RndSeqGenerator {
      *
      * @throws IllegalArgumentException if passed seqLenght parameter is less than 1
      */
-    private static String generator(final int seqLenght) {
-        if (seqLenght < 1) throw new IllegalArgumentException("Lenght of random numbers generator must be greater than 0");
+    private static String generator(int seqLenght) {
+        if (seqLenght < 1) {
+            throw new IllegalArgumentException("Lenght of random numbers generator must be greater than 0");
+        }
         return IntStream.generate(() -> RANDOM.nextInt(10)).limit(seqLenght)
                 .mapToObj(Integer::toString)
                 .collect(Collectors.joining());

@@ -25,6 +25,8 @@ import java.net.URI;
 import java.util.List;
 import javax.servlet.http.*;
 
+import static org.springframework.util.Assert.notNull;
+
 /**
  * Class storing static methods for utilities path servlet actions. Most of methods in this class include auto-inserting
  * {@link HttpServletRequest} and {@link HttpServletResponse} parameters by Tomcat Servlet Container.
@@ -48,9 +50,9 @@ public class ServletPathUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if message or redirectPageUri parameters are null
+     * @throws IllegalArgumentException if message or redirectPageUri parameters are null
      */
-    public static URI redirectMessageUri(final String message, final String redirectPageUri, final boolean error) {
+    public static URI redirectMessageUri(String message, String redirectPageUri, boolean error) {
         final List<Pair<String, Object>> queryParams = List.of(
                 new Pair<>("message", message),
                 new Pair<>("error", error));
@@ -68,9 +70,9 @@ public class ServletPathUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if token, supplier or redirectPageUri parameters are null
+     * @throws IllegalArgumentException if token, supplier or redirectPageUri parameters are null
      */
-    public static URI redirectTokenUri(final String token, final String redirectPageUri, final String supplier) {
+    public static URI redirectTokenUri(String token, String redirectPageUri, String supplier) {
         final List<Pair<String, Object>> queryParams = List.of(
                 new Pair<>("token", token),
                 new Pair<>("supplier", supplier));
@@ -87,9 +89,9 @@ public class ServletPathUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if message or redirectPageUri parameters are null
+     * @throws IllegalArgumentException if message or redirectPageUri parameters are null
      */
-    public static URI redirectErrorUri(final String message, final String redirectPageUri) {
+    public static URI redirectErrorUri(String message, String redirectPageUri) {
         final List<Pair<String, Object>> queryParams = List.of(new Pair<>("error", message));
         return generateBasicUri(queryParams, redirectPageUri);
     }
@@ -104,15 +106,13 @@ public class ServletPathUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if redirectPageUri string value are null
+     * @throws IllegalArgumentException if redirectPageUri string value are null
      */
-    private static URI generateBasicUri(final List<Pair<String, Object>> queryParams, final String redirectPageUri) {
-        if (redirectPageUri == null) {
-            throw new NullPointerException("RedirectPageUri cannot be null.");
-        }
+    private static URI generateBasicUri(List<Pair<String, Object>> queryParams, String redirectPageUri) {
+        notNull(redirectPageUri, "RedirectPageUri cannot be null.");
         final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(redirectPageUri);
         for(final Pair<String, Object> param : queryParams) {
-            if (param.getValue1() == null) throw new NullPointerException("Query parameter cannot be null.");
+            notNull(param.getValue1(), "Query parameter cannot be null.");
             uriComponentsBuilder.queryParam(param.getValue0(), param.getValue1());
         }
         return uriComponentsBuilder.build().toUri();

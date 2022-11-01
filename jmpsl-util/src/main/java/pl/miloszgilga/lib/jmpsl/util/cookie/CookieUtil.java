@@ -49,7 +49,7 @@ public class CookieUtil {
      * @throws NullPointerException if cookie name is null
      * @throws IllegalArgumentException if cookie name is blank (empty or contain only blank characters)
      */
-    public static Optional<Cookie> getCookie(final HttpServletRequest req, final String cookieName) {
+    public static Optional<Cookie> getCookie(HttpServletRequest req, String cookieName) {
         validateCookieName(cookieName);
         final Cookie[] cookies = req.getCookies();
         if (cookies == null || cookies.length == 0) return Optional.empty();
@@ -71,7 +71,7 @@ public class CookieUtil {
      * @throws NullPointerException if cookie name is null
      * @throws IllegalArgumentException if cookie name is blank (empty or contain only blank characters)
      */
-    public static void addCookie(final HttpServletResponse res, final AddedCookiePayload payload) {
+    public static void addCookie(HttpServletResponse res, AddedCookiePayload payload) {
         validateCookieName(payload.getName());
         final Cookie cookie = new Cookie(payload.getName(), payload.getValue());
         cookie.setPath("/");
@@ -93,7 +93,7 @@ public class CookieUtil {
      * @throws NullPointerException if cookie name is null
      * @throws IllegalArgumentException if cookie name is blank (empty or contain only blank characters)
      */
-    public static void deleteCookie(final HttpServletRequest req, final HttpServletResponse res, final String cookieName) {
+    public static void deleteCookie(HttpServletRequest req, HttpServletResponse res, String cookieName) {
         validateCookieName(cookieName);
         final Cookie[] cookies = req.getCookies();
         if (cookies == null || cookies.length == 0) return;
@@ -119,8 +119,7 @@ public class CookieUtil {
      * @throws NullPointerException if one of the cookie name is null
      * @throws IllegalArgumentException if one of the cookie name is blank (empty or contain only blank characters)
      */
-    public static void deleteMultipleCookies(final HttpServletRequest req, final HttpServletResponse res,
-                                             final Set<String> cookiesNames) {
+    public static void deleteMultipleCookies(HttpServletRequest req, HttpServletResponse res, Set<String> cookiesNames) {
         for (final String cookieName : cookiesNames) {
             deleteCookie(req, res, cookieName);
         }
@@ -134,7 +133,7 @@ public class CookieUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static String serializeCookieValue(final Object data) {
+    public static String serializeCookieValue(Object data) {
         return Base64.getUrlEncoder().encodeToString(SerializationUtils.serialize(data));
     }
 
@@ -148,7 +147,7 @@ public class CookieUtil {
      * @author Miłosz Gilga
      * @since 1.0.2          
      */
-    public static <T> T deserializeCookieValue(final Cookie cookie, final Class<T> cookieClazz) {
+    public static <T> T deserializeCookieValue(Cookie cookie, Class<T> cookieClazz) {
         return cookieClazz.cast(SerializationUtils.deserialize(Base64.getUrlDecoder().decode(cookie.getValue())));
     }
 
@@ -166,7 +165,7 @@ public class CookieUtil {
      * @throws NullPointerException if cookie name is null
      * @throws IllegalArgumentException if cookie name is blank (empty or contain only blank characters)
      */
-    public static Optional<String> getCookieValue(final HttpServletRequest req, final String cookieName) {
+    public static Optional<String> getCookieValue(HttpServletRequest req, String cookieName) {
         return getCookie(req, cookieName).map(Cookie::getValue);
     }
 
@@ -181,7 +180,7 @@ public class CookieUtil {
      * @throws NullPointerException if cookie name is null
      * @throws IllegalArgumentException if cookie name is blank (empty or contain only blank characters)
      */
-    private static void validateCookieName(final String cookieName) {
+    private static void validateCookieName(String cookieName) {
         if (cookieName == null) throw new NullPointerException("Cookie name cannot be null.");
         if (cookieName.isBlank()) {
             throw new IllegalArgumentException("Cookie name cannot be empty contains blank characters.");

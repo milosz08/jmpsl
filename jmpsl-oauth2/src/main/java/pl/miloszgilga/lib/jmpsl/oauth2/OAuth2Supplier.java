@@ -86,7 +86,7 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      *
      * @throws OAuth2SupplierNotExistException if supplier based passed string name not exist
      */
-    public static OAuth2Supplier checkIfSupplierIsValid(final String supplierName) {
+    public static OAuth2Supplier checkIfSupplierIsValid(String supplierName) {
         return Stream.of(OAuth2Supplier.values())
                 .filter(s -> s.supplierName.equals(supplierName))
                 .findFirst()
@@ -106,7 +106,7 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      *
      * @throws OAuth2SupplierNotImplementedException if supplier is not provided in this application
      */
-    public static OAuth2Supplier checkIfSupplierExist(final String supplierName, final Set<OAuth2Supplier> suppliers) {
+    public static OAuth2Supplier checkIfSupplierExist(String supplierName, Set<OAuth2Supplier> suppliers) {
         return Stream.of(OAuth2Supplier.values())
                 .filter(s -> s.supplierName.equals(supplierName) && suppliers.contains(s))
                 .findFirst()

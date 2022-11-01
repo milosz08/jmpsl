@@ -19,6 +19,7 @@
 package pl.miloszgilga.lib.jmpsl.gfx.sender;
 
 import pl.miloszgilga.lib.jmpsl.gfx.*;
+import pl.miloszgilga.lib.jmpsl.gfx.generator.*;
 
 /**
  * Universal interface defined methods for generate default user image and save and save already generated user image.

@@ -35,7 +35,7 @@ public class BasicAuthServerException extends AuthenticationException {
 
     private final HttpStatus status;
 
-    public BasicAuthServerException(final HttpStatus status, final String message, final Object... args) {
+    public BasicAuthServerException(HttpStatus status, String message, Object... args) {
         super(String.format(message, args));
         this.status = status;
     }

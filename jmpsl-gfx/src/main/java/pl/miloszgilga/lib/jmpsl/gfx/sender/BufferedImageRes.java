@@ -20,28 +20,31 @@ package pl.miloszgilga.lib.jmpsl.gfx.sender;
 
 import lombok.*;
 
-import pl.miloszgilga.lib.jmpsl.file.BufferedFileResponse;
+import pl.miloszgilga.lib.jmpsl.file.BufferedFileRes;
 
 /**
- * Simple POJO class extending {@link BufferedFileResponse} class with additional <code>userHashCode</code> property
+ * Simple POJO class extending {@link BufferedFileRes} class with additional <code>userHashCode</code> property
  * (for user images).
+ *
+ * @author Miłosz Gilga
+ * @since 1.0.2
  */
 @Getter @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BufferedImageResponse extends BufferedFileResponse {
+public class BufferedImageRes extends BufferedFileRes {
     private String userHashCode;
 
     /**
-     * Method available copy entire {@link BufferedImageResponse} instance into another {@link BufferedImageResponse}
+     * Method available copy entire {@link BufferedImageRes} instance into another {@link BufferedImageRes}
      * instance.
      *
-     * @param payload instance of {@link BufferedImageResponse} POJO class
+     * @param payload instance of {@link BufferedImageRes} POJO class
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public void copyObject(BufferedImageResponse payload) {
+    public void copyObject(BufferedImageRes payload) {
         setBytesRepresentation(payload.getBytesRepresentation());
         setLocation(payload.getLocation());
         this.userHashCode = payload.userHashCode;

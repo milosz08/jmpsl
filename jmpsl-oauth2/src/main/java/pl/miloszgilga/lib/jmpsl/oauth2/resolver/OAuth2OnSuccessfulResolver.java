@@ -34,13 +34,12 @@ import java.util.stream.Collectors;
 import pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Cookie;
 import pl.miloszgilga.lib.jmpsl.util.ServletPathUtil;
 import pl.miloszgilga.lib.jmpsl.util.cookie.CookieUtil;
-import pl.miloszgilga.lib.jmpsl.oauth2.user.OAuth2UserExtender;
 import pl.miloszgilga.lib.jmpsl.security.user.IAuthUserModel;
+import pl.miloszgilga.lib.jmpsl.oauth2.user.OAuth2UserExtender;
 
+import static java.util.Objects.requireNonNull;
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Cookie.*;
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Exception.OAuth2UriNotSupportedException;
-
-import static java.util.Objects.isNull;
 
 /**
  * Custom OAuth2 resolver run on successfull OAuth2 authentication. Generate redirect URL (base before created cookies
@@ -65,8 +64,7 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
     };
 
     public OAuth2OnSuccessfulResolver(Environment environment, IOAuth2TokenGenerator tokenGenerator) {
-        final String redirectUris = environment.getProperty("jmpsl.oauth2.redirect-uris");
-        if (isNull(redirectUris)) throw new NullPointerException("Property jmpsl.oauth2.redirect-uris cannot be null");
+        final String redirectUris = requireNonNull(environment.getProperty("jmpsl.oauth2.redirect-uris"));
         this.redirectUris = redirectUris.split(",");
         this.tokenGenerator = tokenGenerator;
     }

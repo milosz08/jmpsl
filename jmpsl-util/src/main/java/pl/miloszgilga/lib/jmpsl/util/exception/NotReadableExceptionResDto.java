@@ -32,7 +32,7 @@ public class NotReadableExceptionResDto extends ServerExceptionResDto {
 
     private final String reason;
 
-    public NotReadableExceptionResDto(final ServerExceptionResDto res, final String reason) {
+    public NotReadableExceptionResDto(ServerExceptionResDto res, String reason) {
         super(res.getServletTimestampUTC(), res.getStatusCode(), res.getStatusText(), res.getPath(), res.getMethod());
         this.reason = reason;
     }

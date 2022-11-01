@@ -26,7 +26,7 @@ import org.springframework.context.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * OAuth2 auto-configuration loader into spring context. Provide getter for returning available OAuth2 suppliers in selected
@@ -48,11 +48,8 @@ public class OAuth2AutoConfigurationLoader {
 
     OAuth2AutoConfigurationLoader(Environment environment) {
         this.environment = environment;
-        final String suppliers = environment.getProperty("jmpsl.oauth2.available-suppliers");
-        if (isNull(suppliers)) {
-            throw new NullPointerException("Property jmpsl.oauth2.available-suppliers cannot be null");
-        }
-        availableOAuth2Suppliers = Arrays.stream(suppliers.split(","))
+        final String suppliers = requireNonNull(environment.getProperty("jmpsl.oauth2.available-suppliers"));
+        availableOAuth2Suppliers = Arrays.stream(suppliers.split(", "))
                 .map(OAuth2Supplier::checkIfSupplierIsValid)
                 .collect(Collectors.toSet());
         LOGGER.info("Successful loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);

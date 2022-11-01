@@ -128,7 +128,7 @@ public class SecurityPathExcluder {
      *
      * @throws IllegalArgumentException if passed {@link HttpServletRequest} object is null
      */
-    public boolean excludePathFromJwtFilter(final HttpServletRequest req) {
+    public boolean excludePathFromJwtFilter(HttpServletRequest req) {
         Assert.notNull(req, "HttpServletRequest object cannot be null.");
         final List<String> allExcludedPaths = new ArrayList<>(disabledNoMethodPaths);
         disabledMethodPaths.forEach(p -> allExcludedPaths.add(p.getPath()));
@@ -229,7 +229,7 @@ public class SecurityPathExcluder {
      * @throws IllegalArgumentException if controllerClazz parameter is null
      * @throws RestAnnotationNotFoundException if {@link RequestMapping} annotation not found in controller declaration
      */
-    private String getPathFromClassToExclude(final Class<?> controllerClazz) {
+    private String getPathFromClassToExclude(Class<?> controllerClazz) {
         Assert.notNull(controllerClazz, "Class type of controller cannot be null.");
         return Arrays.stream(controllerClazz.getAnnotationsByType(RequestMapping.class))
                 .map(v -> v.value()[0])

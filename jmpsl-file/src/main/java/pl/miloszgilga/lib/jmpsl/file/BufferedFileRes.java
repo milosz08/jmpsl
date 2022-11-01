@@ -35,7 +35,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BufferedFileResponse {
+public class BufferedFileRes {
     private byte[] bytesRepresentation;
     private String location;
 }

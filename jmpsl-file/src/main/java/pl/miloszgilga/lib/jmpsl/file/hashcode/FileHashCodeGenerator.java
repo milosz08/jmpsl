@@ -18,11 +18,10 @@
 
 package pl.miloszgilga.lib.jmpsl.file.hashcode;
 
-import org.springframework.util.Assert;
-
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import static org.springframework.util.Assert.notNull;
 import static pl.miloszgilga.lib.jmpsl.file.hashcode.HashCodeConfigurationSettings.*;
 
 /**
@@ -87,7 +86,7 @@ public class FileHashCodeGenerator {
      * @throws IllegalArgumentException if hashCode parameter is null
      */
     public static boolean hashCodeIsValid(String hashCode, char separator, byte countOfBlocks, byte blockLength) {
-        Assert.notNull(hashCode, "Hash code parameter cannot be null.");
+        notNull(hashCode, "Hash code parameter cannot be null.");
         final StringBuilder regexPattern = new StringBuilder();
         for (int i = 0; i < countOfBlocks; i++) {
             regexPattern.append(String.format("[a-zA-Z0-9]{%s}", blockLength));

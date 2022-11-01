@@ -68,7 +68,7 @@ public class JwtServlet {
      *
      * @throws NullPointerException if passed JWT subject is null
      */
-    public String generateToken(final String subject, final Claims claims) {
+    public String generateToken(String subject, Claims claims) {
         if (isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
         return Jwts.builder()
                 .setIssuer(tokenIssuer)
@@ -87,7 +87,7 @@ public class JwtServlet {
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public String extractToken(final HttpServletRequest req) {
+    public String extractToken(HttpServletRequest req) {
         final String bearerToken = req.getHeader(JwtConfig.TOKEN_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtConfig.TOKEN_PREFIX)) {
             return bearerToken.substring(JwtConfig.TOKEN_PREFIX.length());
@@ -106,7 +106,7 @@ public class JwtServlet {
      *
      * @throws NullPointerException if passed JWT is null
      */
-    public Optional<Claims> extractClaims(final String token) {
+    public Optional<Claims> extractClaims(String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
         if (isValid(token).getValue0()) {
             return tokenAfterValidation.getClaims();
@@ -127,7 +127,7 @@ public class JwtServlet {
      *
      * @throws NullPointerException if passed expired JWT or userIdClaimName is null
      */
-    public Optional<Long> validateRefreshToken(final String expiredToken, final String userIdClaimName) {
+    public Optional<Long> validateRefreshToken(String expiredToken, String userIdClaimName) {
         if (isNull(userIdClaimName)) throw new NullPointerException("Passed user id claim name cannot be null.");
         final Pair<Boolean, JwtValidationType> checkedTokenValid = isValid(expiredToken);
         if (!checkedTokenValid.getValue0() && checkedTokenValid.getValue1().equals(JwtValidationType.EXPIRED)) {

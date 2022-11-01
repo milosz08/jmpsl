@@ -26,7 +26,7 @@ package pl.miloszgilga.lib.jmpsl.security.excluder;
  */
 class RestAnnotationMismatchException extends RuntimeException {
 
-    RestAnnotationMismatchException(final String annotations, final String name) {
+    RestAnnotationMismatchException(String annotations, String name) {
         super(String.format("To use @%s annotation, firstly declare one of the Rest controller annotations: %s.",
                 name, annotations));
     }

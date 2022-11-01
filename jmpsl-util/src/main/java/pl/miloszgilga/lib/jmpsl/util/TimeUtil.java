@@ -24,6 +24,8 @@ import java.util.*;
 import java.text.*;
 import java.time.Year;
 
+import static org.springframework.util.Assert.notNull;
+
 /**
  * Utility class added additional static methods for management time in servlet applications. Include adding minutes,
  * hours to current or passed {@link Date} object and convert string date notation to object. Class was prepared for
@@ -54,7 +56,7 @@ public class TimeUtil {
      *
      * @throws IllegalArgumentException if passed minutes to add is less than 1.
      */
-    public static Date addMinutes(final int minutes, final Date date) {
+    public static Date addMinutes(int minutes, Date date) {
         if (minutes < 1) throw new IllegalArgumentException("Passed minutes value must be greaten than 0");
         return new Date(date.getTime() + ((long) minutes * 60 * 1000));
     }
@@ -69,7 +71,7 @@ public class TimeUtil {
      *
      * @throws IllegalArgumentException if passed minutes to add is less than 1.
      */
-    public static Date addMinutes(final int minutes) {
+    public static Date addMinutes(int minutes) {
         return addMinutes(minutes, new Date());
     }
 
@@ -85,7 +87,7 @@ public class TimeUtil {
      *
      * @throws IllegalArgumentException if passed months to add is less than 1.
      */
-    public static Date addMonths(final int months, final Date date) {
+    public static Date addMonths(int months, Date date) {
         if (months < 1) throw new IllegalArgumentException("Passed months value must be greaten than 0");
         return new Date(date.getTime() + ((long) months * 31 * 24 * 60 * 60 * 1000));
     }
@@ -100,7 +102,7 @@ public class TimeUtil {
      *
      * @throws IllegalArgumentException if passed months to add is less than 1.
      */
-    public static Date addMonths(final int months) {
+    public static Date addMonths(int months) {
         return addMonths(months, new Date());
     }
 
@@ -130,10 +132,10 @@ public class TimeUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed date string notation is null
+     * @throws IllegalArgumentException if passed date string notation is null
      */
-    public static Optional<Date> deserialize(final String date) {
-        if (Objects.isNull(date)) throw new NullPointerException("Passed date string notation cannot be null.");
+    public static Optional<Date> deserialize(String date) {
+        notNull(date, "Passed date string notation cannot be null.");
         try {
             return Optional.of(DATE_FORMATTER.parse(date));
         } catch (ParseException ex) {
@@ -150,10 +152,10 @@ public class TimeUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed {@link Date} object is null
+     * @throws IllegalArgumentException if passed {@link Date} object is null
      */
-    public static String serializedUTC(final Date date) {
-        if (Objects.isNull(date)) throw new NullPointerException("Passed date object cannot be null");
+    public static String serializedUTC(Date date) {
+        notNull(date, "Passed date object cannot be null.");
         return DATE_TIME_FORMATTER.format(date);
     }
 
@@ -177,10 +179,10 @@ public class TimeUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed {@link Date} object is null
+     * @throws IllegalArgumentException if passed {@link Date} object is null
      */
     public static boolean isExpired(Date date) {
-        if (Objects.isNull(date)) throw new NullPointerException("Passed date object cannot be null");
+        notNull(date, "Passed date object cannot be null.");
         return date.after(new Date());
     }
 
@@ -193,10 +195,10 @@ public class TimeUtil {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws NullPointerException if passed {@link Date} object is null
+     * @throws IllegalArgumentException if passed {@link Date} object is null
      */
     public static boolean isNonExpired(Date date) {
-        if (Objects.isNull(date)) throw new NullPointerException("Passed date object cannot be null");
+        notNull(date, "Passed date object cannot be null.");
         return date.before(new Date());
     }
 }

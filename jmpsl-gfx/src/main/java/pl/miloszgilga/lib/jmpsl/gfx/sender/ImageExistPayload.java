@@ -25,7 +25,7 @@ import lombok.*;
  * exist.
  *
  * <ul>
- *     <li><code>dirPath</code> - base directory of image path</li>
+ *     <li><code>userHashCode</code> - user hash code from database</li>
  *     <li><code>exist</code> - boolean flag, true if exist otherwise false</li>
  * </ul>
  *
@@ -35,6 +35,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 public class ImageExistPayload {
-    private String dirPath;
+    private String userHashCode;
     private boolean exist;
 }
