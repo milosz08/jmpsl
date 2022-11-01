@@ -20,6 +20,7 @@ package pl.miloszgilga.lib.jmpsl.util;
 
 import static java.util.Locale.ROOT;
 import static java.util.Objects.isNull;
+import static org.springframework.util.Assert.noNullElements;
 
 /**
  * Class storing static methods for string operations. This class extends the standard
@@ -82,6 +83,23 @@ public class StringUtil {
             builder.append(values[i].charAt(0));
         }
         return builder.toString().toUpperCase(ROOT);
+    }
+
+    /**
+     * Static method available to generate initials based name and surname parameters. Return initials as characters
+     * array. Passed name and surname parameters cannot be null.
+     *
+     * @param name user name (extracted and capitalized first letter)
+     * @param surname user surname (extracted and capitalized first letter)
+     * @return characters array with generated user initials
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws IllegalArgumentException if name or surname is null
+     */
+    public static char[] initialsAsCharsArray(final String name, final String surname) {
+        noNullElements(new Object[] { name, surname }, "Name or surname parameter cannot be null.");
+        return initials(name, surname).toCharArray();
     }
 
     /**
