@@ -40,7 +40,8 @@ import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
  *     <li><code>jmpsl.file.ssh.socket-login</code> - ssh socket login or username</li>
  *     <li><code>jmpsl.file.ssh.known-hosts-file-name</code> - file name of known hosts (ROOT directory)</li>
  *     <li><code>jmpsl.file.ssh.user-private-key-file-name</code> - file name of user RSA private key (ROOT directory)</li>
- *     <li><code>jmpsl.file.basic-external-server-path</code> - basic server path from root to domain directory</li>
+ *     <li><code>jmpsl.file.sftp.server-url</code> - SFTP server path as URL (ROOT for static resources)</li>
+ *     <li><code>jmpsl.file.basic-external-server-path</code> - basic server path from root to domain directory (by default is "")</li>
  *     <li><code>jmpsl.file.app-external-server-path</code> - application name (directory for all application resources)</li>
  * </ul>
  *
@@ -59,6 +60,7 @@ public class SshFileSocketConnector {
     private final String sshHost;
     private final String sshLogin;
     private final String serverPath;
+    private final String sftpServerUrl;
     private final File knownHostsFile;
     private final String sshUserPrivateKeyLocation;
 
@@ -67,6 +69,7 @@ public class SshFileSocketConnector {
         sshLogin = requireNonNull(env.getProperty("jmpsl.file.ssh.socket-login"));
         knownHostsFile = new File(requireNonNull(env.getProperty("jmpsl.file.ssh.known-hosts-file-name")));
         sshUserPrivateKeyLocation = requireNonNull(env.getProperty("jmpsl.file.ssh.user-private-key-file-name"));
+        sftpServerUrl = requireNonNull(env.getProperty("jmpsl.file.sftp.server-url"));
         serverPath = createBasicSfptServerPath(env);
         LOGGER.info("Successful loaded SSH socket configuration from configuration properties file.");
     }
@@ -134,5 +137,14 @@ public class SshFileSocketConnector {
      */
     public String getServerPath() {
         return serverPath;
+    }
+
+    /**
+     * @return declared app server path (relative path to main domain, without protected directories)
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     */
+    public String getAppServerPath() {
+        return hasLength(appServerPath) ? sftpServerUrl : sftpServerUrl + "/" + appServerPath;
     }
 }
