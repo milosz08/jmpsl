@@ -80,22 +80,23 @@ public class UserImageSftpSender implements IUserImageSender {
      *
      * @param payload instance of {@link BufferedImageGeneratorPayload} class with sending image details
      * @param extension image extension as {@link ImageExtension} type (ex. png, jpeg etc.)
-     * @return instance of {@link BufferedImageResponse} with generated and saved image data
+     * @return instance of {@link BufferedImageGeneratorRes} with generated and saved image data
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
      */
     @Override
-    public BufferedImageResponse generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
-        final BufferedImageResponse imageResponse = new BufferedImageResponse();
+    public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
+        final BufferedImageRes imageResponse = new BufferedImageRes();
+        final GeneratedImageRes generatedImage = imageGenerator.generateDefaultUserImage(payload, extension);
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             final TempImageSavePayload tempImageSavePayload = new TempImageSavePayload(payload, extension);
-            tempImageSavePayload.setBytesRepresentation(imageGenerator.generateDefaultUserImage(payload, extension));
+            tempImageSavePayload.setBytesRepresentation(generatedImage.getImageBytes());
             imageResponse.copyObject(generateTempImageAndSave(sftpClient, tempImageSavePayload));
         });
         LOGGER.info("Successful created default user avatar image. User hashcode: {}", imageResponse.getUserHashCode());
-        return imageResponse;
+        return new BufferedImageGeneratorRes(imageResponse, generatedImage.getImageBackground());
     }
 
     /**
@@ -103,13 +104,13 @@ public class UserImageSftpSender implements IUserImageSender {
      * image extension to PNG format.
      *
      * @param payload instance of {@link BufferedImageGeneratorPayload} class with sending image details
-     * @return instance of {@link BufferedImageResponse} with generated and saved image data
+     * @return instance of {@link BufferedImageGeneratorRes} with generated and saved image data
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
      */
-    public BufferedImageResponse generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload) {
+    public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload) {
         return generateAndSaveDefaultUserImage(payload, PNG);
     }
 

@@ -94,7 +94,21 @@ public class GfxUtil {
         if (colors.stream().anyMatch(Objects::isNull)) {
             throw new NullPointerException("All color list instances cannot be null.");
         }
-        return "[ " + colors.stream().map(c -> String.format("#%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue()))
-                .collect(Collectors.joining(",")) + " ]";
+        return "[ " + colors.stream().map(GfxUtil::convertRgbToHex).collect(Collectors.joining(",")) + " ]";
+    }
+
+    /**
+     * Static method responsible for converting {@link Color} instance as RGB into HEX notation (with #).
+     *
+     * @param color instance of {@link Color} class as RGB color
+     * @return formatted string as HEX color, ex. #00f6h8
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws IllegalArgumentException if passed {@link Color} instance is null
+     */
+    public static String convertRgbToHex(Color color) {
+        notNull(color, "Color instance cannot be null.");
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }

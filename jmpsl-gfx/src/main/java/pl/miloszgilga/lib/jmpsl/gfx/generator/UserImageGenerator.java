@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: UserImageGenerator.java
- * Last modified: 31/10/2022, 20:54
+ * Last modified: 01/11/2022, 15:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -95,13 +95,13 @@ public class UserImageGenerator {
      *
      * @param payload instance of {@link BufferedImageGeneratorPayload} class with image properties
      * @param extension {@link ImageExtension} enum type of image (png, jpeg etc.)
-     * @return generated user image as byte array output stream
+     * @return instance of {@link GeneratedImageRes} with generated user image as byte array output stream and color
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws IllegalStateException if image size or font size is too tiny or large or initials array has not 2 elements
      */
-    public byte[] generateDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
+    public GeneratedImageRes generateDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
         if (payload.getSize() < MIN_IMAGE_SIZE || payload.getSize() > MAX_IMAGE_SIZE) {
             throw new IllegalStateException(String.format(
                     "Image size must be between %d and %d", MIN_IMAGE_SIZE, MAX_IMAGE_SIZE));
@@ -113,6 +113,7 @@ public class UserImageGenerator {
             throw new IllegalStateException("User initials must have 2 characters.");
         }
 
+        Color generatedColor;
         final String userInitials = String.valueOf(payload.getInitials());
         final BufferedImage bufferedImage = new BufferedImage(payload.getSize(), payload.getSize(), TYPE_INT_RGB);
         final Graphics2D graphics = bufferedImage.createGraphics();
@@ -123,10 +124,11 @@ public class UserImageGenerator {
 
         graphics.setFont(new Font(fontName, Font.PLAIN, payload.getFontSize()));
         if (nonNull(payload.getPreferredColor())) {
-            graphics.setPaint(payload.getPreferredColor());
+            generatedColor = payload.getPreferredColor();
         } else {
-            graphics.setPaint(preferredHexColors.get(RANDOM.nextInt(preferredHexColors.size() - 1)));
+            generatedColor = preferredHexColors.get(RANDOM.nextInt(preferredHexColors.size() - 1));
         }
+        graphics.setPaint(generatedColor);
         graphics.fillRect(0, 0, payload.getSize(), payload.getSize());
         graphics.setColor(Color.decode(foregroundImageColor));
 
@@ -137,7 +139,7 @@ public class UserImageGenerator {
         graphics.dispose();
 
         LOGGER.info("Successful generated default image for user. Image properties data: {}", payload);
-        return generateByteStreamFromBufferedImage(bufferedImage, extension);
+        return new GeneratedImageRes(generateByteStreamFromBufferedImage(bufferedImage, extension), generatedColor);
     }
 
     /**
@@ -148,14 +150,13 @@ public class UserImageGenerator {
      * metod with {@link ImageExtension} parameter.
      *
      * @param payload instance of {@link BufferedImageGeneratorPayload} class with image properties
-     * @return generated user image as byte array output stream
+     * @return instance of {@link GeneratedImageRes} with generated user image as byte array output stream and color
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws IllegalArgumentException if passed user id is null
      * @throws IllegalStateException if image size or font size is too tiny or large or initials array has not 2 elements
      */
-    public byte[] generateDefaultUserImage(BufferedImageGeneratorPayload payload) {
+    public GeneratedImageRes generateDefaultUserImage(BufferedImageGeneratorPayload payload) {
         return generateDefaultUserImage(payload, PNG);
     }
 
