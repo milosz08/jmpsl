@@ -121,15 +121,15 @@ public class UserImageSftpSender implements IUserImageSender {
      *
      * @param payload instance of {@link BufferedImageSenderPayload} class with sending image details
      * @param extension image extension as {@link ImageExtension} type (ex. png, jpeg etc.)
-     * @return instance of {@link BufferedImageResponse} with saved image data
+     * @return instance of {@link BufferedImageRes} with saved image data
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
      */
     @Override
-    public BufferedImageResponse saveUserImage(BufferedImageSenderPayload payload, ImageExtension extension) {
-        final BufferedImageResponse imageResponse = new BufferedImageResponse();
+    public BufferedImageRes saveUserImage(BufferedImageSenderPayload payload, ImageExtension extension) {
+        final BufferedImageRes imageResponse = new BufferedImageRes();
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(payload.getBytesRepresentation());
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
@@ -156,13 +156,13 @@ public class UserImageSftpSender implements IUserImageSender {
      * instance values. Image extension is set to PNG format.
      *
      * @param payload instance of {@link BufferedImageSenderPayload} class with sending image details
-     * @return instance of {@link BufferedImageResponse} with saved image data
+     * @return instance of {@link BufferedImageRes} with saved image data
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
      */
-    public BufferedImageResponse saveUserImage(BufferedImageSenderPayload payload) {
+    public BufferedImageRes saveUserImage(BufferedImageSenderPayload payload) {
         return saveUserImage(payload, PNG);
     }
 
