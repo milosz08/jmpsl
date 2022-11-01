@@ -192,9 +192,9 @@ public class UserImageSftpSender implements IUserImageSender {
         if (foundImage.isPresent()) {
             sftpClient.cd(imagesServerPath + "/" + baseDir);
             sftpClient.rm(foundImage.get());
-            return new ImageExistPayload(baseDir, true);
+            return new ImageExistPayload(payload.getUserHashCode(), true);
         }
-        return new ImageExistPayload(baseDir, false);
+        return new ImageExistPayload(payload.getUserHashCode(), false);
     }
 
     /**
@@ -213,24 +213,32 @@ public class UserImageSftpSender implements IUserImageSender {
     private BufferedImageRes generateTempImageAndSave(StatefulSFTPClient sftpClient, TempImageSavePayload payload) {
         final BufferedImageRes imageResponse = new BufferedImageRes();
         try {
-            String userStaticImageDir;
+            String userStaticImageDir, hashCode, relativeImagesPath;
+            final String userImagePathPrefix = "user" + payload.getId() + "_";
             sftpClient.cd(imagesServerPath);
 
             final ImageExistPayload imageExistPayload = checkIfImageAlreadyExist(sftpClient, payload);
-            if (imageExistPayload.getDirPath().isEmpty()) {
-                userStaticImageDir = "user" + payload.getId() + "_" + generateHashCode();
+            if (imageExistPayload.getUserHashCode().isEmpty()) {
+                hashCode = generateHashCode();
+                userStaticImageDir = userImagePathPrefix + hashCode;
                 createDirIfNotExist(sftpClient, imagesServerPath, userStaticImageDir);
             } else {
-                userStaticImageDir = imageExistPayload.getDirPath();
+                hashCode = imageExistPayload.getUserHashCode();
+                userStaticImageDir = userImagePathPrefix + imageExistPayload.getUserHashCode();
             }
             final File tempImage = createTempFile(payload.getUniqueImagePrefix() + "_", "." + payload.getExtensionName());
-            imageResponse.setLocation(imagesServerPath + "/" + userStaticImageDir + "/" + tempImage.getName());
+            if (hasLength(imagesRelativePath)) {
+                relativeImagesPath = socketConnector.getAppServerPath() + "/" + imagesRelativePath + "/";
+            } else {
+                relativeImagesPath = socketConnector.getAppServerPath() + "/";
+            }
+            imageResponse.setLocation(relativeImagesPath + userStaticImageDir + "/" + tempImage.getName());
 
             Files.write(tempImage.toPath(), payload.getBytesRepresentation());
             sftpClient.put(new FileSystemFile(tempImage), imagesServerPath + "/" + userStaticImageDir);
 
             imageResponse.setBytesRepresentation(payload.getBytesRepresentation());
-            imageResponse.setUserHashCode(userStaticImageDir);
+            imageResponse.setUserHashCode(hashCode);
             tempImage.deleteOnExit();
         } catch (IOException ex) {
             LOGGER.error("Unable to send image to external server. Server path: {}", imagesServerPath);
