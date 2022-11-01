@@ -43,6 +43,7 @@ import pl.miloszgilga.lib.jmpsl.file.hashcode.HashCodeFormatException;
 import static java.util.Objects.*;
 import static java.io.File.createTempFile;
 
+import static org.springframework.util.StringUtils.hasLength;
 import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
 import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
 import static pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator.*;
@@ -65,6 +66,7 @@ public class UserImageSftpSender implements IUserImageSender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserImageSftpSender.class);
 
+    private String imagesRelativePath;
     private final String imagesServerPath;
     private final UserImageGenerator imageGenerator;
     private final SshFileSocketConnector socketConnector;
@@ -248,9 +250,8 @@ public class UserImageSftpSender implements IUserImageSender {
     }
 
     /**
-     * Inner method responsible for creating images server path (based default application server path). if parameter
-     * <code>jmpsl.gfx.user-gfx.images-module-active</code> is setting to false, module not load and method to generating
-     * image directory. Otherwise generated images directory (if not exist yet).
+     * Inner method responsible for creating images server path (based default application server path). If property
+     * <code>jmpsl.gfx.user-gfx.static-images-content-path</code> not present, image path is ROOT directory.
      *
      * @param env instance of {@link Environment} class passed from constructor
      * @return images full server path or null, if module is disabled
@@ -258,14 +259,17 @@ public class UserImageSftpSender implements IUserImageSender {
      * @since 1.0.2
      */
     private String createImagesServerPath(Environment env) {
-        final String imagesServerPath = env.getProperty("jmpsl.gfx.user-gfx.static-images-content-path");
+        imagesRelativePath = env.getProperty("jmpsl.gfx.user-gfx.static-images-content-path", "");
+        if (!hasLength(imagesRelativePath)) {
+            return socketConnector.getServerPath();
+        }
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
-                createDirIfNotExist(sftpClient, socketConnector.getServerPath(), imagesServerPath);
+                createDirIfNotExist(sftpClient, socketConnector.getServerPath(), imagesRelativePath);
             } catch (IOException ex) {
-                LOGGER.error("Unable to create static images server path. Images path: {}", imagesServerPath);
+                LOGGER.error("Unable to create static images server path. Images path: {}", imagesRelativePath);
             }
         });
-        return socketConnector.getServerPath() + "/" + imagesServerPath;
+        return socketConnector.getServerPath() + "/" + imagesRelativePath;
     }
 }
