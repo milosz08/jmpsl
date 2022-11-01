@@ -204,14 +204,14 @@ public class UserImageSftpSender implements IUserImageSender {
      *
      * @param sftpClient instance of {@link StatefulSFTPClient} socket for perform external SFTP server actions
      * @param payload instance of {@link TempImageSavePayload} POJO class with temporary file details
-     * @return instance of {@link BufferedImageResponse} class storing generated file informations
+     * @return instance of {@link BufferedImageRes} class storing generated file informations
      * @author Miłosz Gilga
      * @since 1.0.2
      *
      * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
      */
-    private BufferedImageResponse generateTempImageAndSave(StatefulSFTPClient sftpClient, TempImageSavePayload payload) {
-        final BufferedImageResponse imageResponse = new BufferedImageResponse();
+    private BufferedImageRes generateTempImageAndSave(StatefulSFTPClient sftpClient, TempImageSavePayload payload) {
+        final BufferedImageRes imageResponse = new BufferedImageRes();
         try {
             String userStaticImageDir;
             sftpClient.cd(imagesServerPath);
