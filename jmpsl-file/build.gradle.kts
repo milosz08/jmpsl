@@ -17,7 +17,7 @@
  */
 
 dependencies {
-    implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-core"))
 
     implementation("com.hierynomus:sshj:${rootProject.extra.get("sshjVersion") as String}")
 

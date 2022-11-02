@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: Converter.java
+ * Last modified: 27/10/2022, 04:06
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,24 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+import lombok.*;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Custom mapper converter names. Insert this refer name in mapper chain converted method.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
+@Getter
+@AllArgsConstructor
+public enum Converter {
+    DATE_FROM_STRING_TO_OBJECT("date-from-string-to-object"),
+    CAPITALIZED_FIRST_LETTER("capitalized-first-letter"),
+    CHANGE_ALL_LETTERS_TO_LOWER("change-all-letters-to-lower"),
+    INSERT_NULL_IF_STRING_IS_EMPTY("unsert-null-if-string-is-empty"),
+    RETURN_EMPTY_STRING_IF_IS_NULL("return-empty-string-if-is-null");
 
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
-    }
+    private final String name;
 }

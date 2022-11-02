@@ -134,7 +134,7 @@ allprojects {
 
 // dependencies only for root project (grabbed all multi-modules into one single project module)
 rootProject.dependencies {
-    api(project(":jmpsl-util"))
+    api(project(":jmpsl-core"))
     api(project(":jmpsl-security"))
     api(project(":jmpsl-oauth2"))
     api(project(":jmpsl-communication"))

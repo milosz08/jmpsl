@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: IBasicEnumConverter.java
+ * Last modified: 15/10/2022, 19:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,15 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
-
-import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+package pl.miloszgilga.lib.jmpsl.core.converter;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Functional interface implements one method for getting enum name. This interface must be implemented in selected enum
+ * classes, which may be applied by {@link BasicEnumConverter} abstract class.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
-
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
-    }
+public interface IBasicEnumConverter {
+    String getEnumName();
 }

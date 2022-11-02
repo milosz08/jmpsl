@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Exception.*;
-import pl.miloszgilga.lib.jmpsl.util.converter.IBasicEnumConverter;
+import pl.miloszgilga.lib.jmpsl.core.converter.IBasicEnumConverter;
 
 /**
  * Enum class storing all credentials suppliers via OAuth2 service.

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: JmpslUtilRunnerConfiguration.java
+ * Last modified: 15/10/2022, 19:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,16 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib;
 
-import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Auto-loader configuration class for scanning library packages and inserting Beans in Spring Context.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
-
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
-    }
+@ComponentScan(basePackages = { "pl.miloszgilga.lib.jmpsl" })
+public class JmpslCoreRunnerConfiguration {
 }

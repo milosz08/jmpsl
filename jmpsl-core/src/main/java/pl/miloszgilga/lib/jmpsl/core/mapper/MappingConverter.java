@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: InjectableMappingConverter.java
+ * Last modified: 16/10/2022, 00:55
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,21 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib.jmpsl.core.mapper;
 
-import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+import java.lang.annotation.*;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Insert this annotation on custom converter class to automatically load at application start (and insert in Spring
+ * context). CLASS MUST BE PUBLIC!
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
-
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
-    }
+@Target(TYPE)
+@Retention(CLASS)
+public @interface MappingConverter {
 }

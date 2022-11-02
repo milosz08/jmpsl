@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: IMapperConverterLoader.java
+ * Last modified: 27/10/2022, 04:36
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,17 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+import java.util.Set;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Implemented this interface on Spring Bean and override <code>loadConterters</code> method to load specific mapper
+ * converters via reflection.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
-
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
-    }
+public interface IMapperConverterLoader {
+    Set<Converter> loadConverters();
 }

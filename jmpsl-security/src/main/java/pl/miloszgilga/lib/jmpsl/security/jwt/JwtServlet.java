@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import static java.util.Objects.isNull;
 
-import static pl.miloszgilga.lib.jmpsl.util.StringUtil.EMPTY;
+import static pl.miloszgilga.lib.jmpsl.core.StringUtil.EMPTY;
 import static pl.miloszgilga.lib.jmpsl.security.jwt.JwtValidationType.GOOD;
 
 /**

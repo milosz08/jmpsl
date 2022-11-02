@@ -18,7 +18,7 @@
 
 package pl.miloszgilga.lib.jmpsl.file.socket;
 
-import pl.miloszgilga.lib.jmpsl.util.exception.BasicServerException;
+import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
 
 import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 

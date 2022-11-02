@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * File name: BasicAuthServerException.java
+ * Last modified: 15/10/2022, 20:29
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,27 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib.jmpsl.core.exception;
+
+import lombok.Getter;
 
 import org.springframework.http.HttpStatus;
-import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+import org.springframework.security.core.AuthenticationException;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
- * JSON object in response body part.
+ * Simple server exception extending basic spring security {@link AuthenticationException} with {@link HttpStatus}
+ * parameter passed in exception constructor.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
+@Getter
+public class BasicAuthServerException extends AuthenticationException {
 
-    public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
+    private final HttpStatus status;
+
+    public BasicAuthServerException(HttpStatus status, String message, Object... args) {
+        super(String.format(message, args));
+        this.status = status;
     }
 }

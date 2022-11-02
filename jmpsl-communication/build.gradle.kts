@@ -17,7 +17,7 @@
  */
 
 dependencies {
-    implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-core"))
 
     implementation("org.freemarker:freemarker:${rootProject.extra.get("freemarkerVersion") as String}")
 

@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Cookie;
-import pl.miloszgilga.lib.jmpsl.util.ServletPathUtil;
-import pl.miloszgilga.lib.jmpsl.util.cookie.CookieUtil;
+import pl.miloszgilga.lib.jmpsl.core.ServletPathUtil;
+import pl.miloszgilga.lib.jmpsl.core.cookie.CookieUtil;
 import pl.miloszgilga.lib.jmpsl.security.user.IAuthUserModel;
 import pl.miloszgilga.lib.jmpsl.oauth2.user.OAuth2UserExtender;
 

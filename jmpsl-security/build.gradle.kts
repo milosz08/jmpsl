@@ -17,7 +17,7 @@
  */
 
 dependencies {
-    implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-core"))
 
     implementation("io.jsonwebtoken:jjwt-api:${rootProject.extra.get("jjwtVersion") as String}")
     implementation("io.jsonwebtoken:jjwt-impl:${rootProject.extra.get("jjwtVersion") as String}")

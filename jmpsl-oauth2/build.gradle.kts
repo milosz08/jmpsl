@@ -17,7 +17,7 @@
  */
 
 dependencies {
-    implementation(project(":jmpsl-util"))
+    implementation(project(":jmpsl-core"))
     implementation(project(":jmpsl-security"))
 
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")

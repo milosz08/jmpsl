@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 
 import javax.servlet.http.*;
-import pl.miloszgilga.lib.jmpsl.util.cookie.*;
+import pl.miloszgilga.lib.jmpsl.core.cookie.*;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -19,7 +19,7 @@
 package pl.miloszgilga.lib.jmpsl.oauth2;
 
 import static org.springframework.http.HttpStatus.*;
-import pl.miloszgilga.lib.jmpsl.util.exception.BasicAuthServerException;
+import pl.miloszgilga.lib.jmpsl.core.exception.BasicAuthServerException;
 
 /**
  * Custom exceptions (extends {@link BasicAuthServerException}) used in OAuth2 JMPS library module.
