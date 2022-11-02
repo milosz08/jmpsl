@@ -49,7 +49,7 @@ public class OAuth2AutoConfigurationLoader {
     OAuth2AutoConfigurationLoader(Environment environment) {
         this.environment = environment;
         final String suppliers = requireNonNull(environment.getProperty("jmpsl.oauth2.available-suppliers"));
-        availableOAuth2Suppliers = Arrays.stream(suppliers.split(", "))
+        availableOAuth2Suppliers = Arrays.stream(suppliers.split(","))
                 .map(OAuth2Supplier::checkIfSupplierIsValid)
                 .collect(Collectors.toSet());
         LOGGER.info("Successful loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);
