@@ -30,5 +30,5 @@ import pl.miloszgilga.lib.jmpsl.gfx.generator.*;
 interface IUserImageService {
     BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension);
     BufferedImageRes saveUserImage(BufferedImageSenderPayload payload, ImageExtension extension);
-    BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension);
+    void deleteUserImage(BufferedImageDeletePayload payload);
 }
