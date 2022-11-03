@@ -145,6 +145,6 @@ public class SshFileSocketConnector {
      * @since 1.0.2
      */
     public String getAppServerPath() {
-        return hasLength(appServerPath) ? sftpServerUrl : sftpServerUrl + "/" + appServerPath;
+        return hasLength(appServerPath) ? sftpServerUrl + "/" + appServerPath : sftpServerUrl;
     }
 }
