@@ -2,7 +2,7 @@
  * Copyright (c) 2022 by multiple authors
  *
  * File name: ExternalFileServerMalfunctionException.java
- * Last modified: 31/10/2022, 12:40
+ * Last modified: 02/11/2022, 14:32
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.file;
+package pl.miloszgilga.lib.jmpsl.file.exception;
 
 import org.springframework.http.HttpStatus;
 import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;

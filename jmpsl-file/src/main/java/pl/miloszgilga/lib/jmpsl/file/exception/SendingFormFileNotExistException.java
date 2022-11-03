@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: ImageExistPayload.java
- * Last modified: 31/10/2022, 19:12
+ * File name: SendingFormFileNotExistException.java
+ * Last modified: 03/11/2022, 01:01
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,25 +16,26 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.sender;
+package pl.miloszgilga.lib.jmpsl.file.exception;
 
-import lombok.*;
+import pl.miloszgilga.lib.jmpsl.core.exception.BasicServerException;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
- * Simple POJO class stored result of method in {@link UserImageSftpSender} which available for checking if image already
- * exist.
- *
- * <ul>
- *     <li><code>userHashCode</code> - user hash code from database</li>
- *     <li><code>exist</code> - boolean flag, true if exist otherwise false</li>
- * </ul>
+ * Exception throw, when user attempt to send file without actual file. Extended {@link BasicServerException}, so return
+ * JSON object in response body part.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
-@AllArgsConstructor
-public class ImageExistPayload {
-    private String userHashCode;
-    private boolean exist;
+public class SendingFormFileNotExistException extends BasicServerException {
+
+    public SendingFormFileNotExistException() {
+        super(NOT_FOUND, "You cannot send request without sending file.", new Object());
+    }
+
+    public SendingFormFileNotExistException(String message, Object... args) {
+        super(NOT_FOUND, message, args);
+    }
 }
