@@ -18,20 +18,28 @@
 
 package pl.miloszgilga.lib.jmpsl.file;
 
+import org.slf4j.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import net.schmizz.sshj.sftp.*;
 
-import java.util.List;
+import java.util.*;
 import java.io.IOException;
+
+import pl.miloszgilga.lib.jmpsl.file.exception.NotAcceptableFileExtensionException;
+import pl.miloszgilga.lib.jmpsl.file.exception.SendingFormFileNotExistException;
 
 import static org.springframework.util.Assert.*;
 
 /**
- * Class storing static util methods for manipulate files and directory's structures.
+ * Class storing static util methods for files and directory's structures.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 public class FileUtil {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     private FileUtil() {
     }
@@ -57,5 +65,65 @@ public class FileUtil {
             sftpClient.cd(path);
             sftpClient.mkdir(dirName);
         }
+    }
+
+    /**
+     * Static method responsible for checking, if passed file extension is matched with passed content types multiple
+     * arguments array (enums of {@link ContentType} class). If it is invalid, throw
+     * {@link NotAcceptableFileExtensionException} exception.
+     *
+     * @param file instance of {@link MultipartFile} data from Tomcat Servlet Container
+     * @param types multiple enum types of {@link ContentType} class
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws IllegalArgumentException if passed {@link MultipartFile} instance is null
+     * @throws IllegalStateException if types argument is empty array
+     * @throws NotAcceptableFileExtensionException if file extension is not supported
+     */
+    public static void checkIfFileExtensionIsSupported(MultipartFile file, ContentType... types) {
+        notNull(file, "Multipart file object cannot be null");
+        if (types.length == 0) throw new IllegalStateException("Content type args must be at least one.");
+        if (Arrays.stream(types).noneMatch(t -> Objects.equals(file.getContentType(), t.getContentTypeName()))) {
+            LOGGER.error("Attempt to send file with not supported extension. Extension: {}, supported extensions: {}",
+                    file.getContentType(), types);
+            throw new NotAcceptableFileExtensionException(file.getOriginalFilename(), types);
+        }
+    }
+
+    /**
+     * Static method responsible for checking, if sended file by multipart form data acually exist and is not null.
+     * If file not exist or is null, throw {@link SendingFormFileNotExistException}.
+     *
+     * @param file instance of {@link MultipartFile} with passed file in form data
+     * @param message exception message show in JSON response object
+     * @param args additional exception message formatting arguments
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws SendingFormFileNotExistException if passed file not exist or is null
+     */
+    public static void isFileExist(MultipartFile file, String message, Object... args) {
+        if (Objects.isNull(file) || file.isEmpty() || file.getSize() == 0) {
+            LOGGER.error("Attempt to send file without actual file instance.");
+            throw new SendingFormFileNotExistException(message, args);
+        }
+    }
+
+    /**
+     * Static method responsible for checking, if sended file by multipart form data acually exist and is not null.
+     * If file not exist or is null, throw {@link SendingFormFileNotExistException}.
+     *
+     * @param file instance of {@link MultipartFile} with passed file in form data
+     * @author Miłosz Gilga
+     * @since 1.0.2
+     *
+     * @throws SendingFormFileNotExistException if passed file not exist or is null
+     */
+    public static void isFileExist(MultipartFile file) {
+        if (Objects.isNull(file) || file.isEmpty() || file.getSize() == 0) {
+            LOGGER.error("Attempt to send file without actual file instance.");
+            throw new SendingFormFileNotExistException();
+        };
     }
 }
