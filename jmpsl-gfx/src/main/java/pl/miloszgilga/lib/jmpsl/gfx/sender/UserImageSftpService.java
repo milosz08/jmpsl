@@ -40,17 +40,17 @@ import pl.miloszgilga.lib.jmpsl.gfx.generator.*;
 import pl.miloszgilga.lib.jmpsl.file.socket.SshFileSocketConnector;
 import pl.miloszgilga.lib.jmpsl.file.hashcode.HashCodeFormatException;
 
-import static java.util.Objects.*;
 import static java.io.File.createTempFile;
 
 import static org.springframework.util.StringUtils.hasLength;
+
 import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
 import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
 import static pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator.*;
 import static pl.miloszgilga.lib.jmpsl.gfx.GfxUtil.generateByteStreamFromBufferedImage;
 
 /**
- * Spring Bean service responsible for generate and sending user image to external SFTP server directory. Contains
+ * Spring Bean service responsible for generate sending and deleting user image to external SFTP server directory. Contains
  * methods for generating default user image and save in external storage, and also saving already passed image (as byte
  * array stream) into external storage. Before using this class, create following properties:
  *
@@ -62,16 +62,16 @@ import static pl.miloszgilga.lib.jmpsl.gfx.GfxUtil.generateByteStreamFromBuffere
  * @since 1.0.2
  */
 @Service
-public class UserImageSftpSender implements IUserImageSender {
+public class UserImageSftpService implements IUserImageService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserImageSftpSender.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserImageSftpService.class);
 
     private String imagesRelativePath;
     private final String imagesServerPath;
     private final UserImageGenerator imageGenerator;
     private final SshFileSocketConnector socketConnector;
 
-    UserImageSftpSender(Environment env, UserImageGenerator imageGenerator, SshFileSocketConnector socketConnector) {
+    UserImageSftpService(Environment env, UserImageGenerator imageGenerator, SshFileSocketConnector socketConnector) {
         this.imageGenerator = imageGenerator;
         this.socketConnector = socketConnector;
         imagesServerPath = createImagesServerPath(env);
@@ -86,10 +86,11 @@ public class UserImageSftpSender implements IUserImageSender {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
+     * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     @Override
-    public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
+    public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload,
+                                                                     ImageExtension extension) {
         final BufferedImageRes imageResponse = new BufferedImageRes();
         final GeneratedImageRes generatedImage = imageGenerator.generateDefaultUserImage(payload, extension);
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
@@ -110,7 +111,7 @@ public class UserImageSftpSender implements IUserImageSender {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
+     * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload) {
         return generateAndSaveDefaultUserImage(payload, PNG);
@@ -127,7 +128,7 @@ public class UserImageSftpSender implements IUserImageSender {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
+     * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     @Override
     public BufferedImageRes saveUserImage(BufferedImageSenderPayload payload, ImageExtension extension) {
@@ -162,41 +163,10 @@ public class UserImageSftpSender implements IUserImageSender {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
+     * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     public BufferedImageRes saveUserImage(BufferedImageSenderPayload payload) {
         return saveUserImage(payload, PNG);
-    }
-
-    /**
-     * Inner method responsible for checking if image directory already exist. If it exists, it does not delete the
-     * directory, otherwise , it creates a new directory and returns information about the path to the created directory.
-     *
-     * @param sftpClient instance of {@link StatefulSFTPClient} socket for perform external SFTP server actions
-     * @param payload instance of {@link TempImageSavePayload} POJO class with temporary file details
-     * @return instance of {@link ImageExistPayload} with directory path and boolean flag indicated whether a directory
-     *         has been created
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws IOException if unable to create new directory on SFTP external server
-     */
-    private ImageExistPayload checkIfImageAlreadyExist(StatefulSFTPClient sftpClient, TempImageSavePayload payload)
-            throws IOException {
-        if (isNull(payload.getUserHashCode())) return new ImageExistPayload("", false);
-        if (!hashCodeIsValid(payload.getUserHashCode())) throw new HashCodeFormatException();
-
-        final String baseDir = "user" + payload.getId() + "_" + payload.getUserHashCode();
-        final List<RemoteResourceInfo> rsImages = sftpClient.ls(imagesServerPath + "/" + baseDir);
-        final Optional<String> foundImage = rsImages.stream().map(RemoteResourceInfo::getName)
-                .filter(name -> name.startsWith(payload.getUniqueImagePrefix())).findFirst();
-
-        if (foundImage.isPresent()) {
-            sftpClient.cd(imagesServerPath + "/" + baseDir);
-            sftpClient.rm(foundImage.get());
-            return new ImageExistPayload(payload.getUserHashCode(), true);
-        }
-        return new ImageExistPayload(payload.getUserHashCode(), false);
     }
 
     /**
@@ -210,7 +180,7 @@ public class UserImageSftpSender implements IUserImageSender {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws ExternalFileServerMalfunctionException if unable to save image in SFTP external server.
+     * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     private BufferedImageRes generateTempImageAndSave(StatefulSFTPClient sftpClient, TempImageSavePayload payload) {
         final BufferedImageRes imageResponse = new BufferedImageRes();

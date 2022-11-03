@@ -27,7 +27,8 @@ import pl.miloszgilga.lib.jmpsl.gfx.generator.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-interface IUserImageSender {
+interface IUserImageService {
+    BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension);
     BufferedImageRes saveUserImage(BufferedImageSenderPayload payload, ImageExtension extension);
     BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension);
 }
