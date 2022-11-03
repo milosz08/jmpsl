@@ -216,16 +216,17 @@ public class UserImageSftpService implements IUserImageService {
         try {
             String userStaticImageDir, hashCode, relativeImagesPath;
             final String userImagePathPrefix = "user" + payload.getId() + "_";
-            sftpClient.cd(imagesServerPath);
 
-            final ImageExistPayload imageExistPayload = checkIfImageAlreadyExist(sftpClient, payload);
-            if (imageExistPayload.getUserHashCode().isEmpty()) {
+            sftpClient.cd(imagesServerPath);
+            ifResourceIsPresetRemove(sftpClient, payload.getId(), payload.getUserHashCode(), payload.getUniqueImagePrefix());
+
+            if (payload.getUserHashCode().isEmpty()) {
                 hashCode = generateHashCode();
                 userStaticImageDir = userImagePathPrefix + hashCode;
                 createDirIfNotExist(sftpClient, imagesServerPath, userStaticImageDir);
             } else {
-                hashCode = imageExistPayload.getUserHashCode();
-                userStaticImageDir = userImagePathPrefix + imageExistPayload.getUserHashCode();
+                hashCode = payload.getUserHashCode();
+                userStaticImageDir = userImagePathPrefix + payload.getUserHashCode();
             }
             final File tempImage = createTempFile(payload.getUniqueImagePrefix() + "_", "." + payload.getExtensionName());
             if (hasLength(imagesRelativePath)) {
