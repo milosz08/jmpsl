@@ -19,6 +19,7 @@
 package pl.miloszgilga.lib.jmpsl.security;
 
 import org.springframework.util.Assert;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -78,9 +79,9 @@ public class SecurityUtil {
      * @throws Exception if spring securitu context not exist
      * @throws IllegalArgumentException if {@link HttpSecurity} object is null
      */
-    public static void enableH2ConsoleForDev(HttpSecurity httpSecurity) throws Exception {
+    public static void enableH2ConsoleForDev(HttpSecurity httpSecurity, Environment env) throws Exception {
         Assert.notNull(httpSecurity, "http security object cannot be null.");
-        final String activeProfileName = SecurityAutoConfiguration.getEnv().getActiveProfiles()[0];
+        final String activeProfileName = env.getActiveProfiles()[0];
         if (!activeProfileName.equals(DEV.getModeName())) return;
         httpSecurity.authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
