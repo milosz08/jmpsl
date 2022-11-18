@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Cookie.*;
+import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Env.__OAT_COOKIE_EXP;
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Exception.OAuth2AuthenticationProcessingException;
 
 /**
@@ -47,9 +48,8 @@ public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository
     private final OAuth2Cookie[] allCookies = { SESSION_REMEMBER, AFTER_LOGIN_REDIRECT_URI, AFTER_SIGNUP_REDIRECT_URI };
     private final int cookieExiredInSec;
 
-    CookieOAuth2ReqRepository(Environment environment) {
-        final int expMin = Integer.parseInt(environment.getProperty("{jmpsl.auth.oauth2.cookie-expired-minutes}", "3"));
-        this.cookieExiredInSec = expMin * 60;
+    CookieOAuth2ReqRepository(Environment env) {
+        this.cookieExiredInSec = __OAT_COOKIE_EXP.getProperty(env, Integer.class) * 60;
     }
 
     /**

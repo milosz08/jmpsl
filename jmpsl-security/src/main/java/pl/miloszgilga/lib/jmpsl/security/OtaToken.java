@@ -24,6 +24,8 @@ import org.springframework.core.env.Environment;
 import java.util.Random;
 import java.util.regex.*;
 
+import static pl.miloszgilga.lib.jmpsl.security.SecurityEnv.__SEC_OTA_LENGTH;
+
 /**
  * Spring Bean component class responsible for generated and checked One-Time-Access token. This type of token mostly
  * is used in verifications. By default token lenght is 10. To change this parameter, set
@@ -39,20 +41,10 @@ public class OtaToken {
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z0-9]+");
     private static final String SIGNS = "abcdefghijklmnoprstquvwxyzABCDEFGHIJKLMNOPRSTQUWXYZ0123456789";
 
-    /**
-     * @hidden
-     */
-    private final int otaTokenLenght;
+    private final byte otaTokenLenght;
 
-    /**
-     * Create instance of OtaToken service.
-     *
-     * @param environment Spring auto-injecting {@link Environment} object
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
-    public OtaToken(Environment environment) {
-        this.otaTokenLenght = Integer.parseInt(environment.getProperty("jmpsl.security.ota.length", String.valueOf(10)));
+    public OtaToken(Environment env) {
+        this.otaTokenLenght = __SEC_OTA_LENGTH.getProperty(env, Byte.class);
     }
 
     /**

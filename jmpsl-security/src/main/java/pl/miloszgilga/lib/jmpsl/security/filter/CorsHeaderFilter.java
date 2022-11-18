@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+import static pl.miloszgilga.lib.jmpsl.security.SecurityEnv.__SEC_CORS_CLIENT;
 
 /**
  * Custom servlet {@link Filter} added extra cors headers (available rest methods, allowed authorization header keys and
@@ -57,8 +58,8 @@ public class CorsHeaderFilter implements Filter {
             "x-requested-with", "authorization", "Content-Type", "Authorization", "credential", "X-XSRF-TOKEN",
     };
 
-    public CorsHeaderFilter(Environment environment) {
-        corsClient = environment.getRequiredProperty("jmpsl.security.cors.client");
+    public CorsHeaderFilter(Environment env) {
+        corsClient = __SEC_CORS_CLIENT.getProperty(env);
         LOGGER.info("Successful loaded CORS HEADERS FILTER into Spring Context");
     }
 

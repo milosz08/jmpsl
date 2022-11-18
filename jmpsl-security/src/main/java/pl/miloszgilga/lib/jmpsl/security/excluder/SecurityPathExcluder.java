@@ -42,6 +42,7 @@ import static org.reflections.scanners.Scanners.*;
 import static org.springframework.http.HttpMethod.*;
 
 import static pl.miloszgilga.lib.jmpsl.security.ApplicationMode.DEV;
+import static pl.miloszgilga.lib.jmpsl.security.SecurityEnv.__SEC_OAUTH2_ACTIVE;
 
 /**
  * Spring Bean configuration class responsible for reflecting and loading all excluded routes informations into array.
@@ -71,9 +72,9 @@ public class SecurityPathExcluder {
     private final List<RestMethodTypeWithPath> disabledMethodPaths = new ArrayList<>();
     private final List<String> disabledNoMethodPaths = new ArrayList<>(List.of("/", "/error"));
 
-    SecurityPathExcluder(Environment environment) {
-        isOAuth2Active = Boolean.parseBoolean(environment.getProperty("jmpsl.security.oauth2-active", "false"));
-        isDevelopmentModeActive = environment.getActiveProfiles()[0].equals(DEV.getModeName());
+    SecurityPathExcluder(Environment env) {
+        isOAuth2Active = __SEC_OAUTH2_ACTIVE.getProperty(env, Boolean.class);
+        isDevelopmentModeActive = env.getActiveProfiles()[0].equals(DEV.getModeName());
         loadAllDisabledPathsByReflections();
         LOGGER.info("Successful loaded excluded paths from Spring Security Context: {}", disabledNoMethodPaths);
         LOGGER.info("Successful loaded method excluded paths from Spring Security Context: {}", disabledMethodPaths);

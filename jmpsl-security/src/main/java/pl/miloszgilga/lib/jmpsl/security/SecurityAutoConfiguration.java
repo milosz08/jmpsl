@@ -23,6 +23,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static pl.miloszgilga.lib.jmpsl.security.SecurityEnv.__SEC_PSW_ENC_STRENGTH;
+
 /**
  * Spring auto-configuration class for JMPSL Security module. Load {@link Environment} object, set BCrypt strength
  * and create {@link BCryptPasswordEncoder} Spring Bean.
@@ -33,16 +35,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityAutoConfiguration {
 
-    private static Environment env;
-    private final int passwordStrength;
+    private final byte passwordStrength;
 
-    public SecurityAutoConfiguration(Environment environment) {
-        env = environment;
-        passwordStrength = Integer.parseInt(environment.getProperty("jmpsl.security.password-encoder-strength", "10"));
-    }
-
-    public static Environment getEnv() {
-        return env;
+    public SecurityAutoConfiguration(Environment env) {
+        passwordStrength = __SEC_PSW_ENC_STRENGTH.getProperty(env, Byte.class);
     }
 
     @Bean

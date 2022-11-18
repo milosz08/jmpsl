@@ -22,6 +22,8 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
+import static pl.miloszgilga.lib.jmpsl.mail.MailEnv.__COM_FREEMARKER_PATH;
+
 /**
  * Spring auto-configuration class for creating freemarker templates configuration bean. To determinate freemarker
  * templates def dir, insert <code>jmpsl.mail.freemarker-templates-dir</code> value in <code>application.properties</code>
@@ -35,8 +37,8 @@ class FreemarkerConfigurationInjector {
 
     private final String freemarkerTemplatesDir;
 
-    FreemarkerConfigurationInjector(Environment environment) {
-        this.freemarkerTemplatesDir = environment.getProperty("jmpsl.mail.freemarker-templates-dir", "classpath:/templates");
+    FreemarkerConfigurationInjector(Environment env) {
+        this.freemarkerTemplatesDir = __COM_FREEMARKER_PATH.getProperty(env);
     }
 
     @Primary

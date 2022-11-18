@@ -24,7 +24,6 @@ import org.javatuples.Pair;
 
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.core.env.Environment;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,10 +47,7 @@ public class JwtServlet {
     private final JwtConfig jwtConfig;
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtServlet.class);
 
-    private final String tokenIssuer;
-
-    public JwtServlet(Environment environment, JwtConfig jwtConfig) {
-        this.tokenIssuer = environment.getRequiredProperty("jmpsl.security.jwt.issuer");
+    public JwtServlet(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
     }
 
@@ -71,7 +67,7 @@ public class JwtServlet {
     public String generateToken(String subject, Claims claims) {
         if (isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
         return Jwts.builder()
-                .setIssuer(tokenIssuer)
+                .setIssuer(jwtConfig.getTokenIssuer())
                 .setSubject(subject)
                 .setClaims(claims)
                 .signWith(jwtConfig.getSignatureKey())

@@ -37,8 +37,8 @@ import pl.miloszgilga.lib.jmpsl.core.cookie.CookieUtil;
 import pl.miloszgilga.lib.jmpsl.security.user.IAuthUserModel;
 import pl.miloszgilga.lib.jmpsl.oauth2.user.OAuth2UserExtender;
 
-import static java.util.Objects.requireNonNull;
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Cookie.*;
+import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Env.__OAT_REDIR_URIS;
 import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Exception.OAuth2UriNotSupportedException;
 
 /**
@@ -63,8 +63,8 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
             SESSION_REMEMBER, AFTER_LOGIN_REDIRECT_URI, AFTER_SIGNUP_REDIRECT_URI
     };
 
-    public OAuth2OnSuccessfulResolver(Environment environment, IOAuth2TokenGenerator tokenGenerator) {
-        final String redirectUris = requireNonNull(environment.getProperty("jmpsl.oauth2.redirect-uris"));
+    public OAuth2OnSuccessfulResolver(Environment env, IOAuth2TokenGenerator tokenGenerator) {
+        final String redirectUris = __OAT_REDIR_URIS.getProperty(env);
         this.redirectUris = redirectUris.split(",");
         this.tokenGenerator = tokenGenerator;
     }

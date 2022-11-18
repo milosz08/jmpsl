@@ -27,7 +27,7 @@ import net.schmizz.sshj.sftp.StatefulSFTPClient;
 
 import java.io.*;
 
-import static java.util.Objects.requireNonNull;
+import static pl.miloszgilga.lib.jmpsl.file.FileEnv.*;
 import static org.springframework.util.StringUtils.hasLength;
 import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
 
@@ -36,11 +36,12 @@ import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
  * declare following properties in <code>application.properties</code> file:
  *
  * <ul>
- *     <li><code>jmpsl.file.ssh.socket-host</code> - ssh socket host name, ex. 192.168.10.1</li>
+ *     <li><code>jmpsl.file.ssh.active</code> - ssh socket host name, by default true</li>
+ *     <li><code>jmpsl.file.ssh.socket-host</code> - ssh socket host name, by default 127.0.0.1</li>
  *     <li><code>jmpsl.file.ssh.socket-login</code> - ssh socket login or username</li>
- *     <li><code>jmpsl.file.ssh.known-hosts-file-name</code> - file name of known hosts (ROOT directory)</li>
- *     <li><code>jmpsl.file.ssh.user-private-key-file-name</code> - file name of user RSA private key (ROOT directory)</li>
- *     <li><code>jmpsl.file.sftp.server-url</code> - SFTP server path as URL (ROOT for static resources)</li>
+ *     <li><code>jmpsl.file.ssh.known-hosts-file-name</code> - file name of known hosts, by default 'known_hosts.dat'</li>
+ *     <li><code>jmpsl.file.ssh.user-private-key-file-name</code> - file name of user RSA private key, by default 'id_rsa'</li>
+ *     <li><code>jmpsl.file.sftp.server-url</code> - SFTP server path as URL (ROOT for static resources), by default 127.0.0.1</li>
  *     <li><code>jmpsl.file.basic-external-server-path</code> - basic server path from root to domain directory (by default is "")</li>
  *     <li><code>jmpsl.file.app-external-server-path</code> - application name (directory for all application resources)</li>
  * </ul>
@@ -57,19 +58,23 @@ public class SshFileSocketConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(SshFileSocketConnector.class);
 
     private String appServerPath;
-    private final String sshHost;
-    private final String sshLogin;
-    private final String serverPath;
-    private final String sftpServerUrl;
-    private final File knownHostsFile;
-    private final String sshUserPrivateKeyLocation;
+    private String sshHost;
+    private String sshLogin;
+    private String serverPath;
+    private String sftpServerUrl;
+    private File knownHostsFile;
+    private String sshUserPrivateKeyLocation;
 
     SshFileSocketConnector(Environment env) {
-        sshHost = requireNonNull(env.getProperty("jmpsl.file.ssh.socket-host"));
-        sshLogin = requireNonNull(env.getProperty("jmpsl.file.ssh.socket-login"));
-        knownHostsFile = new File(requireNonNull(env.getProperty("jmpsl.file.ssh.known-hosts-file-name")));
-        sshUserPrivateKeyLocation = requireNonNull(env.getProperty("jmpsl.file.ssh.user-private-key-file-name"));
-        sftpServerUrl = requireNonNull(env.getProperty("jmpsl.file.sftp.server-url"));
+        if (!__JFM_SSH_ACTIVE.getProperty(env, Boolean.class)) {
+            LOGGER.info("SSH service is not active. To activate service, set 'jmpsl.file.ssh.active' to true");
+            return;
+        }
+        sshHost = __JFM_SSH_HOST.getProperty(env);
+        sshLogin =  __JFM_SSH_LOGIN.getProperty(env);
+        knownHostsFile = new File(__JFM_SSH_KNOWN_HOSTS.getProperty(env));
+        sshUserPrivateKeyLocation = __JFM_SSH_PRIVATE_KEY.getProperty(env);
+        sftpServerUrl = __JFM_SFTP_SERVER_URL.getProperty(env);
         serverPath = createBasicSfptServerPath(env);
         LOGGER.info("Successful loaded SSH socket configuration from configuration properties file.");
     }
@@ -114,8 +119,8 @@ public class SshFileSocketConnector {
      * @throws NullPointerException if basicServerPath or appServerPath properties are null
      */
     private String createBasicSfptServerPath(Environment env) {
-        final String basicServerPath = requireNonNull(env.getProperty("jmpsl.file.basic-external-server-path"));
-        appServerPath = env.getProperty("jmpsl.file.app-external-server-path", "");
+        final String basicServerPath = __JFM_SSH_BASIC_EXT_SERVER_URL.getProperty(env);
+        appServerPath = __JFM_SSH_APP_EXT_SERVER_URL.getProperty(env);
         if (!hasLength(appServerPath)) {
             return basicServerPath;
         }

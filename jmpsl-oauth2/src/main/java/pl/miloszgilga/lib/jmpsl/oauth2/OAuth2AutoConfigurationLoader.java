@@ -18,15 +18,14 @@
 
 package pl.miloszgilga.lib.jmpsl.oauth2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
+import org.slf4j.*;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
+import static pl.miloszgilga.lib.jmpsl.oauth2.OAuth2Env.__OAT_SUPPLIERS;
 
 /**
  * OAuth2 auto-configuration loader into spring context. Provide getter for returning available OAuth2 suppliers in selected
@@ -44,11 +43,11 @@ public class OAuth2AutoConfigurationLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2AutoConfigurationLoader.class);
 
     private static Set<OAuth2Supplier> availableOAuth2Suppliers = new HashSet<>();
-    private final Environment environment;
+    private final Environment env;
 
-    OAuth2AutoConfigurationLoader(Environment environment) {
-        this.environment = environment;
-        final String suppliers = requireNonNull(environment.getProperty("jmpsl.oauth2.available-suppliers"));
+    OAuth2AutoConfigurationLoader(Environment env) {
+        this.env = env;
+        final String suppliers = __OAT_SUPPLIERS.getProperty(env);
         availableOAuth2Suppliers = Arrays.stream(suppliers.split(","))
                 .map(OAuth2Supplier::checkIfSupplierIsValid)
                 .collect(Collectors.toSet());
@@ -61,7 +60,7 @@ public class OAuth2AutoConfigurationLoader {
 
     @Bean
     public CookieOAuth2ReqRepository cookieOAuth2ReqRepository() {
-        return new CookieOAuth2ReqRepository(environment);
+        return new CookieOAuth2ReqRepository(env);
     }
 
     @Bean

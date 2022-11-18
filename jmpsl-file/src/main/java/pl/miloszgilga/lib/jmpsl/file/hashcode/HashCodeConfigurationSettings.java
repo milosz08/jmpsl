@@ -21,6 +21,8 @@ package pl.miloszgilga.lib.jmpsl.file.hashcode;
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;
 
+import static pl.miloszgilga.lib.jmpsl.file.FileEnv.*;
+
 /**
  * Configuration class responsible for storing hash code properties. One of this properties are:
  *
@@ -41,9 +43,12 @@ public class HashCodeConfigurationSettings {
     private static byte hashSeqBlockLenght;
 
     HashCodeConfigurationSettings(Environment env) {
-        hashCodeSeparator = env.getProperty("jmpsl.file.hash-code.separator", "-").charAt(0);
-        hashSeqBlockCount = Byte.parseByte(env.getProperty("jmpsl.file.hash-code.count-of-sequences", "4"));
-        hashSeqBlockLenght = Byte.parseByte(env.getProperty("jmpsl.file.hash-code.sequence-length", "5"));
+        hashCodeSeparator = __JFM_HASH_SEPARATOR.getProperty(env, Character.class);
+        hashSeqBlockCount = __JFM_HASH_SEQ_COUNT.getProperty(env, Byte.class);
+        hashSeqBlockLenght = __JFM_HASH_SEQ_LENGTH.getProperty(env, Byte.class);
+        if (hashSeqBlockCount < 1 || hashSeqBlockLenght < 1) {
+            throw new IllegalArgumentException("Hash sequence length properties cannot be less than 1");
+        }
     }
 
     /**

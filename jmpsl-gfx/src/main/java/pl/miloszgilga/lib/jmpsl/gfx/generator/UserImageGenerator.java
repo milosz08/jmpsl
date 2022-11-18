@@ -37,6 +37,7 @@ import static java.awt.RenderingHints.*;
 import static java.awt.Font.TRUETYPE_FONT;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
+import static pl.miloszgilga.lib.jmpsl.gfx.GfxEnv.*;
 import static pl.miloszgilga.lib.jmpsl.gfx.GfxUtil.*;
 import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
 
@@ -81,8 +82,8 @@ public class UserImageGenerator {
     private final List<Color> preferredHexColors = new ArrayList<>();
 
     UserImageGenerator(Environment env) {
-        foregroundImageColor = env.getProperty("jmpsl.gfx.user-gfx.preferred-foreground-color", "#ffffff");
         this.env = env;
+        foregroundImageColor = __GFX_USER_FG_COLOR.getProperty(env);
         loadCustomFontFromExternalFile();
         convertAndLoadHexToRgbColorsArray();
         LOGGER.info("Successful insert properties in IserImageGenerator from application.properties file.");
@@ -170,12 +171,12 @@ public class UserImageGenerator {
      * @throws NullPointerException if <code>jmpsl.file.user-gfx.preferred-font-name</code> property is null
      */
     private void loadCustomFontFromExternalFile() {
-        final String fontPath = env.getProperty("jmpsl.gfx.user-gfx.preferred-font-link");
+        final String fontPath = __GFX_USER_FONT_LINK.getProperty(env);
         if (isNull(fontPath)) {
             fontName = getDefaultFont().getFontName();
             return;
         }
-        fontName = requireNonNull(env.getProperty("jmpsl.gfx.user-gfx.preferred-font-name"));
+        fontName = __GFX_USER_FONT_NAME.getProperty(env);
         try {
             final GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             final ClassPathResource resource = new ClassPathResource(fontPath);
@@ -194,7 +195,7 @@ public class UserImageGenerator {
      * @since 1.0.2
      */
     private void convertAndLoadHexToRgbColorsArray() {
-        final String hexColors = env.getProperty("jmpsl.gfx.user-gfx.preferred-hex-colors");
+        final String hexColors = __GFX_USER_HEX_COLORS.getProperty(env);
         if (isNull(hexColors) || hexColors.split(",").length == 0) {
             preferredHexColors.addAll(Arrays.stream(DEF_COLORS).map(Color::decode).collect(Collectors.toSet()));
             return;

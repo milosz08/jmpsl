@@ -46,6 +46,7 @@ import static org.springframework.util.Assert.*;
 import static org.springframework.util.StringUtils.hasLength;
 
 import static pl.miloszgilga.lib.jmpsl.gfx.ImageExtension.PNG;
+import static pl.miloszgilga.lib.jmpsl.gfx.GfxEnv.__GFX_SFTP_PATH;
 import static pl.miloszgilga.lib.jmpsl.file.FileUtil.createDirIfNotExist;
 import static pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator.*;
 import static pl.miloszgilga.lib.jmpsl.gfx.GfxUtil.generateByteStreamFromBufferedImage;
@@ -287,7 +288,7 @@ public class UserImageSftpService implements IUserImageService {
      * @since 1.0.2
      */
     private String createImagesServerPath(Environment env) {
-        imagesRelativePath = env.getProperty("jmpsl.gfx.user-gfx.static-images-content-path", "");
+        imagesRelativePath = __GFX_SFTP_PATH.getProperty(env);
         if (!hasLength(imagesRelativePath)) {
             return socketConnector.getServerPath();
         }

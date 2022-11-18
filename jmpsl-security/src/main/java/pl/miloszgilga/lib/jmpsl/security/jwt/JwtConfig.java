@@ -28,6 +28,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.security.Key;
 
+import static pl.miloszgilga.lib.jmpsl.security.SecurityEnv.*;
+
 /**
  * Spring Bean component class responsible for create configuration for JWT used in web application. Default JWT hash
  * algorithm is HS256. To run, provide secret salt <code>jmpsl.security.jwt.secret</code> in
@@ -41,6 +43,8 @@ import java.security.Key;
 public class JwtConfig {
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+    private final String tokenIssuer;
     private final byte[] tokenSecretBytes;
 
     /**
@@ -57,8 +61,9 @@ public class JwtConfig {
      */
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    public JwtConfig(Environment environment) {
-        tokenSecretBytes = DatatypeConverter.parseBase64Binary(environment.getRequiredProperty("jmpsl.security.jwt.secret"));
+    public JwtConfig(Environment env) {
+        tokenIssuer = __SEC_JWT_ISSUER.getProperty(env);
+        tokenSecretBytes = DatatypeConverter.parseBase64Binary(__SEC_JWT_SECRET.getProperty(env));
     }
 
     /**
@@ -70,5 +75,9 @@ public class JwtConfig {
      */
     public Key getSignatureKey() {
         return new SecretKeySpec(tokenSecretBytes, signatureAlgorithm.getJcaName());
+    }
+
+    public String getTokenIssuer() {
+        return tokenIssuer;
     }
 }
