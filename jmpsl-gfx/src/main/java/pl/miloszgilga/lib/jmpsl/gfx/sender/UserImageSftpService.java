@@ -221,7 +221,7 @@ public class UserImageSftpService implements IUserImageService {
             sftpClient.cd(imagesServerPath);
             ifResourceIsPresetRemove(sftpClient, payload.getId(), payload.getUserHashCode(), payload.getUniqueImagePrefix());
 
-            if (payload.getUserHashCode().isEmpty()) {
+            if (Objects.isNull(payload.getUserHashCode())) {
                 hashCode = generateHashCode();
                 userStaticImageDir = userImagePathPrefix + hashCode;
                 createDirIfNotExist(sftpClient, imagesServerPath, userStaticImageDir);
@@ -267,6 +267,7 @@ public class UserImageSftpService implements IUserImageService {
      */
     private void ifResourceIsPresetRemove(StatefulSFTPClient sftpClient, Long id, String userHashCode, String prefix)
             throws IOException {
+        if (Objects.isNull(userHashCode)) return;
         if (!hashCodeIsValid(userHashCode)) throw new HashCodeFormatException();
         final String baseDir = "user" + id + "_" + userHashCode;
         final List<RemoteResourceInfo> rsImages = sftpClient.ls(imagesServerPath + "/" + baseDir);
