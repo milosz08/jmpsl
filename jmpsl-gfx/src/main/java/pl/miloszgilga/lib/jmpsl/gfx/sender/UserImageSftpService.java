@@ -42,6 +42,9 @@ import pl.miloszgilga.lib.jmpsl.file.exception.ExternalFileServerMalfunctionExce
 
 import static java.io.File.createTempFile;
 
+import static org.imgscalr.Scalr.OP_ANTIALIAS;
+import static org.imgscalr.Scalr.Mode.FIT_EXACT;
+import static org.imgscalr.Scalr.Method.QUALITY;
 import static org.springframework.util.Assert.*;
 import static org.springframework.util.StringUtils.hasLength;
 
@@ -139,8 +142,8 @@ public class UserImageSftpService implements IUserImageService {
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
                 final BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-                final BufferedImage resizeResult = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT,
-                        payload.getPreferredWidth(), payload.getPreferredHeight(), Scalr.OP_ANTIALIAS);
+                final BufferedImage resizeResult = Scalr.resize(bufferedImage, QUALITY, FIT_EXACT,
+                        payload.getPreferredWidth(), payload.getPreferredHeight(), OP_ANTIALIAS);
 
                 final TempImageSavePayload tempImageSavePayload = new TempImageSavePayload(payload, extension);
                 tempImageSavePayload.setBytesRepresentation(generateByteStreamFromBufferedImage(resizeResult, extension));
