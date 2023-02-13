@@ -21,6 +21,8 @@ package pl.miloszgilga.lib.jmpsl.core.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import static java.lang.String.format;
+
 /**
  * Simple server exception extending basic {@link RuntimeException} with {@link HttpStatus} parameter passed in
  * exception constructor.
@@ -34,7 +36,7 @@ public class BasicServerException extends RuntimeException {
     private final HttpStatus status;
 
     public BasicServerException(HttpStatus status, String message, Object... args) {
-        super(String.format(message, args));
+        super(format(message, args));
         this.status = status;
     }
 }

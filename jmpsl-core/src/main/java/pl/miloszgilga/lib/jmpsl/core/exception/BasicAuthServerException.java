@@ -23,6 +23,8 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
+import static java.lang.String.format;
+
 /**
  * Simple server exception extending basic spring security {@link AuthenticationException} with {@link HttpStatus}
  * parameter passed in exception constructor.
@@ -36,7 +38,7 @@ public class BasicAuthServerException extends AuthenticationException {
     private final HttpStatus status;
 
     public BasicAuthServerException(HttpStatus status, String message, Object... args) {
-        super(String.format(message, args));
+        super(format(message, args));
         this.status = status;
     }
 }

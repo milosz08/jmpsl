@@ -52,7 +52,7 @@ public class CookieUtil {
     public static Optional<Cookie> getCookie(HttpServletRequest req, String cookieName) {
         validateCookieName(cookieName);
         final Cookie[] cookies = req.getCookies();
-        if (cookies == null || cookies.length == 0) return Optional.empty();
+        if (cookies == null) return Optional.empty();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) return Optional.of(cookie);
         }
@@ -96,7 +96,7 @@ public class CookieUtil {
     public static void deleteCookie(HttpServletRequest req, HttpServletResponse res, String cookieName) {
         validateCookieName(cookieName);
         final Cookie[] cookies = req.getCookies();
-        if (cookies == null || cookies.length == 0) return;
+        if (cookies == null) return;
         for (Cookie cookie : cookies) {
             if (!cookie.getName().equals(cookieName)) break;
             cookie.setValue("");

@@ -18,7 +18,6 @@
 
 package pl.miloszgilga.lib.jmpsl.security;
 
-import org.springframework.util.Assert;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +26,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import pl.miloszgilga.lib.jmpsl.security.user.*;
+
+import static org.springframework.util.Assert.notNull;
 import static pl.miloszgilga.lib.jmpsl.security.ApplicationMode.DEV;
 
 /**
@@ -65,7 +66,7 @@ public class SecurityUtil {
      * @throws IllegalArgumentException if user object is null
      */
     public static AuthUser fabricateUser(IAuthUserModel user) {
-        Assert.notNull(user, "User object cannot be null.");
+        notNull(user, "User object cannot be null.");
         return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
     }
 
@@ -80,9 +81,9 @@ public class SecurityUtil {
      * @throws IllegalArgumentException if {@link HttpSecurity} object is null
      */
     public static void enableH2ConsoleForDev(HttpSecurity httpSecurity, Environment env) throws Exception {
-        Assert.notNull(httpSecurity, "http security object cannot be null.");
-        final String activeProfileName = env.getActiveProfiles()[0];
-        if (!activeProfileName.equals(DEV.getModeName())) return;
+        notNull(httpSecurity, "http security object cannot be null.");
+        final boolean inNotDev = Arrays.stream(env.getActiveProfiles()).noneMatch(p -> p.equals(DEV.getModeName()));
+        if (inNotDev) return;
         httpSecurity.authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .and()
