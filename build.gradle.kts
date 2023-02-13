@@ -40,6 +40,7 @@ extra.apply {
     set("orikaMapperVersion", "1.5.4")
     set("javaxPersistenceVersion", "2.2")
     set("reflectionsApiVersion", "0.10.2")
+    set("apacheCommonsTextVersion", "1.10.0")
     set("javaxValidationVersion", "2.0.1.Final")
 
     // maven nexus repository artifacts and additional package information's

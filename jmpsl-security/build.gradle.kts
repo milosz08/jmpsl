@@ -25,6 +25,7 @@ dependencies {
     implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
     implementation("org.reflections:reflections:${rootProject.extra.get("reflectionsApiVersion") as String}")
 
+    implementation("org.apache.commons:commons-text:${rootProject.extra.get("apacheCommonsTextVersion") as String}")
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
     annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
 

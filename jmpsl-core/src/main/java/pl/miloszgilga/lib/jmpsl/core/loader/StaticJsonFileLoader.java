@@ -19,8 +19,8 @@
 package pl.miloszgilga.lib.jmpsl.core.loader;
 
 import org.slf4j.*;
+import org.apache.commons.lang3.StringUtils;
 
-import pl.miloszgilga.lib.jmpsl.core.StringUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -75,7 +75,7 @@ public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
         checkIfFileIsJson(fileName.getFileName());
         this.fileName = fileName.getFileName();
         this.mappingTypeClazz = mappingTypeClazz;
-        this.filePath = StringUtil.ifNullDefault(filePath, "/static/data/");
+        this.filePath = StringUtils.defaultIfBlank(filePath, "/static/data/");
         loadDataFromFile();
     }
 

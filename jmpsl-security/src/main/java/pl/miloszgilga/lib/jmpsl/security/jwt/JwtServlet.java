@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import static java.util.Objects.isNull;
 
-import static pl.miloszgilga.lib.jmpsl.core.StringUtil.EMPTY;
 import static pl.miloszgilga.lib.jmpsl.security.jwt.JwtValidationType.GOOD;
 
 /**
@@ -88,7 +87,7 @@ public class JwtServlet {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtConfig.TOKEN_PREFIX)) {
             return bearerToken.substring(JwtConfig.TOKEN_PREFIX.length());
         }
-        return EMPTY;
+        return org.apache.commons.lang3.StringUtils.EMPTY;
     }
 
     /**

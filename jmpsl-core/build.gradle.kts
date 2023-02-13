@@ -24,6 +24,7 @@ dependencies {
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
     annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
 
+    implementation("org.apache.commons:commons-text:${rootProject.extra.get("apacheCommonsTextVersion") as String}")
     implementation("javax.persistence:javax.persistence-api:${rootProject.extra.get("javaxPersistenceVersion") as String}")
     implementation("javax.validation:validation-api:${rootProject.extra.get("javaxValidationVersion") as String}")
 

@@ -31,32 +31,7 @@ import static org.springframework.util.Assert.noNullElements;
  */
 public class StringUtil {
 
-    /**
-     * Constant representive empty string value.
-     *
-     * @since 1.0.2
-     */
-    public static final String EMPTY = "";
-
     private StringUtil() {
-    }
-
-    /**
-     * Static method available capitalized string (passed string must be not null and cannot contain blank characters).
-     *
-     * @param value passed string value to capitalized (without blank characters)
-     * @return capitalized text from method argument
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws NullPointerException if passed string value is null
-     * @throws IllegalArgumentException if passed string contains at least one blank character
-     */
-    public static String capitalize(final String value) {
-        if (isNull(value)) throw new NullPointerException("Passed string must not be null.");
-        if (value.contains(" ")) throw new IllegalArgumentException("Passed string must not contain empty characters.");
-        final String normalized = value.toLowerCase(ROOT);
-        return Character.toString(normalized.charAt(0)).toUpperCase(ROOT) + normalized.substring(1);
     }
 
     /**
@@ -100,38 +75,6 @@ public class StringUtil {
     public static char[] initialsAsCharsArray(final String name, final String surname) {
         noNullElements(new Object[] { name, surname }, "Name or surname parameter cannot be null.");
         return initials(name, surname).toCharArray();
-    }
-
-    /**
-     * Static method responsible for checking if passed string value is blank (if string is empty or contains only blank
-     * spaces characters) and return null if value is blank, otherwise return passed value.
-     *
-     * @param value string value to check
-     * @return null if parameter value is blank, otherwise return passed value
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws NullPointerException if passed string value is null
-     */
-    public static String onBlankNull(final String value) {
-        if (isNull(value)) throw new NullPointerException("Passed string must not be null.");
-        return value.isBlank() ? null : value;
-    }
-
-    /**
-     * Static method responsible for checking if passed string value is empty (if string lenght equals 0) and return
-     * null if value is empty, otherwise return passed value.
-     *
-     * @param value string value to check
-     * @return null if parameter value is empty, otherwise return passed value
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws NullPointerException if passed string value is null
-     */
-    public static String onEmptyNull(final String value) {
-        if (isNull(value)) throw new NullPointerException("Passed string must not be null.");
-        return value.isEmpty() ? null : value;
     }
 
     /**
@@ -189,21 +132,5 @@ public class StringUtil {
      */
     public static String hashValue(final String value) {
         return hashValue(value, '*', '@', 3);
-    }
-
-    /**
-     * Static method responsible return default value, if first string value is null. Second value cannot be null.
-     *
-     * @param value possibly nullable string value
-     * @param defaultValue default value returning, if first value is null
-     * @return first value, if not null otherwise default value
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws NullPointerException if default value is null
-     */
-    public static String ifNullDefault(final String value, final String defaultValue) {
-        if (isNull(defaultValue)) throw new NullPointerException("Default value cannot be null");
-        return isNull(value) ? defaultValue : value;
     }
 }
