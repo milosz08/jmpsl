@@ -18,13 +18,13 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper;
 
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import org.springframework.context.annotation.*;
 
 /**
- * Auto-loading mapper configuration class and method creating bean of {@link MapperFactory} instance.
+ * Auto-loading mapper configuration class and method creating bean of {@link ModelMapper} instance.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
@@ -33,7 +33,13 @@ import org.springframework.context.annotation.*;
 class MapperConfigurationLoader {
 
     @Bean
-    public MapperFactory mapperFactory() {
-        return new DefaultMapperFactory.Builder().build();
+    public ModelMapper mapperFactory() {
+        final ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+            .setMatchingStrategy(MatchingStrategies.STANDARD)
+            .setFieldMatchingEnabled(true)
+            .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+            .setAmbiguityIgnored(true);
+        return modelMapper;
     }
 }

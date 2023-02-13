@@ -18,36 +18,28 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import ma.glasnost.orika.*;
-import ma.glasnost.orika.metadata.Type;
-
+import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
-
-import pl.miloszgilga.lib.jmpsl.core.mapper.*;
-import pl.miloszgilga.lib.jmpsl.core.TimeUtil;
 
 import java.util.Date;
 
-import static pl.miloszgilga.lib.jmpsl.core.mapper.converter.Converter.DATE_FROM_STRING_TO_OBJECT;
+import pl.miloszgilga.lib.jmpsl.core.mapper.*;
+
+import static pl.miloszgilga.lib.jmpsl.core.TimeUtil.deserialize;
 
 /**
  * Custom mapper converter allows to deserialize date from {@link Date} mapped A object into string date format (mapped
- * B object). Insert this converter in mapping chain factory via {@link Converter} enum name.
+ * B object).
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Component
 @MappingConverter
-public class DateFromStringToObjectConverter extends CustomConverter<String, Date> implements IReflectConverter {
+public class DateFromStringToObjectConverter extends AbstractConverter<String, Date> {
 
     @Override
-    public Date convert(String source, Type<? extends Date> destinationType, MappingContext mappingContext) {
-        return TimeUtil.deserialize(source).orElse(new Date());
-    }
-
-    @Override
-    public String getConverterType() {
-        return DATE_FROM_STRING_TO_OBJECT.getName();
+    public Date convert(String source) {
+        return deserialize(source).orElse(new Date());
     }
 }

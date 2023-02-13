@@ -18,34 +18,25 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import ma.glasnost.orika.*;
-import ma.glasnost.orika.metadata.Type;
-
+import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
 import pl.miloszgilga.lib.jmpsl.core.mapper.*;
-import pl.miloszgilga.lib.jmpsl.core.StringUtil;
 
-import static pl.miloszgilga.lib.jmpsl.core.mapper.converter.Converter.INSERT_NULL_IF_STRING_IS_EMPTY;
+import static org.apache.commons.lang3.StringUtils.trimToNull;
 
 /**
- * Custom mapper converter allows to map A string object to B, where when A object is empty string, B is null. Insert
- * this converter in mapping chain factory via {@link Converter} enum name.
+ * Custom mapper converter allows to map A string object to B, where when A object is empty string, B is null.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Component
 @MappingConverter
-public class InsertNullIfStringIsEmptyConverter extends CustomConverter<String, String> implements IReflectConverter {
+public class InsertNullIfStringIsEmptyConverter extends AbstractConverter<String, String> {
 
     @Override
-    public String convert(String source, Type<? extends String> destinationType, MappingContext mappingContext) {
-        return StringUtil.onEmptyNull(source);
-    }
-
-    @Override
-    public String getConverterType() {
-        return INSERT_NULL_IF_STRING_IS_EMPTY.getName();
+    public String convert(String source) {
+        return trimToNull(source);
     }
 }

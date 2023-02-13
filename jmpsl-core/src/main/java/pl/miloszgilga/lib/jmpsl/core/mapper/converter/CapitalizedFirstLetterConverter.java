@@ -18,34 +18,25 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import ma.glasnost.orika.*;
-import ma.glasnost.orika.metadata.Type;
-
+import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
 import pl.miloszgilga.lib.jmpsl.core.mapper.*;
-import pl.miloszgilga.lib.jmpsl.core.StringUtil;
 
-import static pl.miloszgilga.lib.jmpsl.core.mapper.converter.Converter.CAPITALIZED_FIRST_LETTER;
+import static org.apache.commons.lang3.StringUtils.capitalize;
 
 /**
- * Custom converter allows to capitalized first letter in mapping string A object. Insert this converter in mapping
- * chain factory via {@link Converter} enum name.
+ * Custom converter allows to capitalized first letter in mapping string A object.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Component
 @MappingConverter
-public class CapitalizedFirstLetterConverter extends CustomConverter<String, String> implements IReflectConverter {
+public class CapitalizedFirstLetterConverter extends AbstractConverter<String, String> {
 
     @Override
-    public String convert(String source, Type<? extends String> destinationType, MappingContext mappingContext) {
-        return StringUtil.capitalize(source);
-    }
-
-    @Override
-    public String getConverterType() {
-        return CAPITALIZED_FIRST_LETTER.getName();
+    public String convert(String source) {
+        return capitalize(source);
     }
 }

@@ -19,7 +19,7 @@
 dependencies {
     implementation("org.javatuples:javatuples:${rootProject.extra.get("jTuplesVersion") as String}")
     implementation("org.reflections:reflections:${rootProject.extra.get("reflectionsApiVersion") as String}")
-    implementation("ma.glasnost.orika:orika-core:${rootProject.extra.get("orikaMapperVersion") as String}")
+    implementation("org.modelmapper:modelmapper:${rootProject.extra.get("modelMapperVersion") as String}")
 
     implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
     annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")

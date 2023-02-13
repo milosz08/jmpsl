@@ -18,20 +18,17 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper;
 
-import ma.glasnost.orika.*;
-import ma.glasnost.orika.converter.ConverterFactory;
-
 import org.slf4j.*;
+import org.modelmapper.*;
+
 import org.reflections.util.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.ApplicationContext;
-import pl.miloszgilga.lib.jmpsl.core.mapper.converter.*;
 
 import java.util.Set;
-import java.lang.reflect.Method;
 
 /**
  * Auto-configuration class responsible for automatically loaded all mapper converters at application start. Class load
@@ -45,13 +42,11 @@ class MapperConvertersInjector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapperConvertersInjector.class);
 
-    private final ConverterFactory converterFactory;
-    private final MapperFactory mapperFactory;
+    private final ModelMapper modelMapper;
     private final ApplicationContext applicationContext;
 
-    MapperConvertersInjector(MapperFactory mapperFactory, ApplicationContext applicationContext) {
-        this.mapperFactory = mapperFactory;
-        this.converterFactory = mapperFactory.getConverterFactory();
+    MapperConvertersInjector(ModelMapper modelMapper, ApplicationContext applicationContext) {
+        this.modelMapper = modelMapper;
         this.applicationContext = applicationContext;
         loadAllConvertersByReflection();
     }
@@ -69,25 +64,14 @@ class MapperConvertersInjector {
         final var reflections = new Reflections(configuration);
         final Set<Class<?>> convertersClazz = reflections.getTypesAnnotatedWith(MappingConverter.class);
         for (Class<?> converterClazz : convertersClazz) {
-            final IMapperConverterLoader loader = applicationContext.getBean(IMapperConverterLoader.class);
-            final CustomConverter<?, ?> converter = (CustomConverter<?, ?>) applicationContext.getBean(converterClazz);
+            final AbstractConverter<?, ?> converter = (AbstractConverter<?, ?>) applicationContext.getBean(converterClazz);
             try {
-                final Method method = converterClazz.getMethod("getConverterType");
-                final String converterName = (String) method.invoke(converter);
-                if (loader.loadConverters().stream().anyMatch(c -> c.getName().equalsIgnoreCase(converterName)) ||
-                        converterClazz.isAnnotationPresent(ImmediatelyLoadConverter.class)) {
-                    converterFactory.registerConverter(converterName, converter);
-                    LOGGER.info("Successful loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
-                }
+                modelMapper.addConverter(converter);
+                LOGGER.info("Successful loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
             } catch (Exception ex) {
                 LOGGER.error("Failure loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
                 LOGGER.error("Error: {}", ex.getMessage());
             }
         }
-    }
-
-    @Bean
-    public MapperFacade mapperFacade() {
-        return mapperFactory.getMapperFacade();
     }
 }

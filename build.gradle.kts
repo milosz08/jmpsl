@@ -37,7 +37,7 @@ extra.apply {
     set("xmlBinderVersion", "2.3.2")
     set("jupiterTestVersion", "5.8.1")
     set("freemarkerVersion", "2.3.31")
-    set("orikaMapperVersion", "1.5.4")
+    set("modelMapperVersion", "3.1.1")
     set("javaxPersistenceVersion", "2.2")
     set("reflectionsApiVersion", "0.10.2")
     set("apacheCommonsTextVersion", "1.10.0")

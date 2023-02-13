@@ -18,34 +18,25 @@
 
 package pl.miloszgilga.lib.jmpsl.core.mapper.converter;
 
-import ma.glasnost.orika.*;
-import ma.glasnost.orika.metadata.Type;
+import org.modelmapper.AbstractConverter;
+import org.springframework.stereotype.Component;
 
 import java.util.Locale;
-import org.springframework.stereotype.Component;
 
 import pl.miloszgilga.lib.jmpsl.core.mapper.*;
 
-import static pl.miloszgilga.lib.jmpsl.core.mapper.converter.Converter.CHANGE_ALL_LETTERS_TO_LOWER;
-
 /**
- * Custom mapper converter allows to change all mapping string A object value letters to lower. Insert this converter
- * in mapping chain factory via {@link Converter} enum name.
+ * Custom mapper converter allows to change all mapping string A object value letters to lower.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Component
 @MappingConverter
-public class ChangeAllLettersToLowerConverter extends CustomConverter<String, String> implements IReflectConverter {
+public class ChangeAllLettersToLowerConverter extends AbstractConverter<String, String> {
 
     @Override
-    public String convert(String source, Type<? extends String> destinationType, MappingContext mappingContext) {
+    protected String convert(String source) {
         return source.toLowerCase(Locale.ROOT);
-    }
-
-    @Override
-    public String getConverterType() {
-        return CHANGE_ALL_LETTERS_TO_LOWER.getName();
     }
 }
