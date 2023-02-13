@@ -77,7 +77,14 @@ public enum SecurityEnv implements IEnvEnumExtender {
      *
      * @since 1.0.2
      */
-    __SEC_CORS_CLIENT("jmpsl.security.cors.client", null, true);
+    __SEC_CORS_CLIENT("jmpsl.security.cors.client", null, true),
+
+    /**
+     * Define CORS max age. By default is 3600 milis.
+     *
+     * @since 1.0.2
+     */
+    __SEC_CORS_MAX_AGE("jmpsl.security.cors.max-age", "3600", true);
 
     private final String name;
     private final String defaultValue;

@@ -43,7 +43,8 @@ public class EnvPropertyHandler {
             new EnvCastData<>(Double.class, Double::valueOf),
             new EnvCastData<>(Float.class, Float::valueOf),
             new EnvCastData<>(Character.class, rawData -> rawData.charAt(0)),
-            new EnvCastData<>(Byte.class, Byte::valueOf)
+            new EnvCastData<>(Byte.class, Byte::valueOf),
+            new EnvCastData<>(Long.class, Long::valueOf)
     );
 
     private EnvPropertyHandler() { }
