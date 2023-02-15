@@ -20,8 +20,8 @@ package org.jmpsl.core.validator;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
-import javax.validation.*;
+import java.time.LocalDate;
+import jakarta.validation.*;
 import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.FIELD;
@@ -29,7 +29,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Custom javax validation annotation which can be used for checked if passed date as string is valid (after parse into
- * {@link Date} object) and if this date is before the current date. This annotation must be use together with
+ * {@link LocalDate} object) and if this date is before the current date. This annotation must be use together with
  * {@link Valid} annotation in the {@link RequestBody} in sample controller method.
  *
  * @author Miłosz Gilga

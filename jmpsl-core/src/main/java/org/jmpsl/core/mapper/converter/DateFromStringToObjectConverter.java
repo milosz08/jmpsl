@@ -21,25 +21,24 @@ package org.jmpsl.core.mapper.converter;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import pl.miloszgilga.lib.jmpsl.core.mapper.*;
-
-import static pl.miloszgilga.lib.jmpsl.core.TimeUtil.deserialize;
+import org.jmpsl.core.DateTimeUtil;
+import org.jmpsl.core.mapper.MappingConverter;
 
 /**
- * Custom mapper converter allows to deserialize date from {@link Date} mapped A object into string date format (mapped
- * B object).
+ * Custom mapper converter allows to deserialize date from {@link LocalDate} mapped A object into string date format
+ * (mapped B object).
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Component
 @MappingConverter
-public class DateFromStringToObjectConverter extends AbstractConverter<String, Date> {
+public class DateFromStringToObjectConverter extends AbstractConverter<String, LocalDate> {
 
     @Override
-    public Date convert(String source) {
-        return deserialize(source).orElse(new Date());
+    public LocalDate convert(String source) {
+        return DateTimeUtil.deserializedLocalDate(source).orElse(LocalDate.now());
     }
 }

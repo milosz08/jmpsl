@@ -16,16 +16,16 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.core.validator;
+package org.jmpsl.core.validator;
 
 import org.slf4j.*;
 
 import java.util.*;
-import javax.validation.*;
+import java.time.LocalDate;
+import jakarta.validation.*;
 
 import static java.util.Objects.isNull;
-
-import pl.miloszgilga.lib.jmpsl.core.TimeUtil;
+import static org.jmpsl.core.DateTimeUtil.deserializedLocalDate;
 
 /**
  * Custom validator class implementing javax constraint validator interface for checking, if passed string date value
@@ -50,9 +50,9 @@ public class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, 
      */
     @Override
     public boolean isValid(String dateString, ConstraintValidatorContext context) {
-        final Optional<Date> date = TimeUtil.deserialize(dateString);
+        final Optional<LocalDate> date = deserializedLocalDate(dateString);
         if (date.isEmpty()) return false;
-        if (isNull(dateString) || TimeUtil.isExpired(date.get())) {
+        if (isNull(dateString) || date.get().isAfter(LocalDate.now())) {
             LOGGER.error("Attempt to add date which is after the current date.");
             return false;
         }
