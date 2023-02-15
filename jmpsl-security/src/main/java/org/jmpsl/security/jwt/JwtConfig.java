@@ -21,7 +21,7 @@ package org.jmpsl.security.jwt;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;

@@ -21,7 +21,7 @@ package org.jmpsl.core.exception;
 import lombok.*;
 
 import org.springframework.http.HttpStatus;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static org.springframework.util.Assert.noNullElements;
 import static org.jmpsl.core.DateTimeUtil.serializedLocalDate;

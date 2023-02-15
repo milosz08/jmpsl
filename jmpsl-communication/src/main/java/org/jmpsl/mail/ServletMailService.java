@@ -29,8 +29,8 @@ import java.util.Map;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import static org.jmpsl.mail.MailException.UnableToSendEmailException;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;

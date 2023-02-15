@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: CookieOAuth2ReqRepository.java
- * Last modified: 18/10/2022, 21:35
+ * Last modified: 18/11/2022, 02:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 
-import javax.servlet.http.*;
-import pl.miloszgilga.lib.jmpsl.core.cookie.*;
+import jakarta.servlet.http.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 import org.jmpsl.core.cookie.AddedCookiePayload;
 
 import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
 import static org.jmpsl.oauth2.OAuth2Cookie.*;
 import static org.jmpsl.core.cookie.CookieUtil.*;

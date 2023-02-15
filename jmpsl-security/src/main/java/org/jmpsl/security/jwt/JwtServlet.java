@@ -25,7 +25,7 @@ import org.javatuples.Pair;
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 import static java.util.Objects.isNull;

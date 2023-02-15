@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import javax.servlet.http.*;
+import jakarta.servlet.http.*;
 
 import static org.springframework.util.Assert.notNull;
 

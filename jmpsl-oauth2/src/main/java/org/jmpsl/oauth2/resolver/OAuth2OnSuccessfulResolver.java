@@ -19,7 +19,7 @@
 package org.jmpsl.oauth2.resolver;
 
 import org.slf4j.*;
-import javax.servlet.http.*;
+import jakarta.servlet.http.*;
 
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Bean;

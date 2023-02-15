@@ -48,14 +48,15 @@ public class OAuth2UserInfoFactory {
      */
     public static OAuth2UserInfoBase getInstance(final OAuth2Supplier supplier, final Map<String, Object> attrs) {
         Assert.notNull(supplier, "Supplier object cannot be null.");
-        switch (supplier) {
-            case FACEBOOK:      return new FacebookOAuth2UserInfo(attrs);
-            case GITHUB:        return new GithubOAuth2UserInfo(attrs);
-            case GOOGLE:        return new GoogleOAuth2UserInfo(attrs);
-            case LINKEDIN:      return new LinkedInOAuth2UserInfo(attrs);
-            default:
+        return switch (supplier) {
+            case FACEBOOK -> new FacebookOAuth2UserInfo(attrs);
+            case GITHUB -> new GithubOAuth2UserInfo(attrs);
+            case GOOGLE -> new GoogleOAuth2UserInfo(attrs);
+            case LINKEDIN -> new LinkedInOAuth2UserInfo(attrs);
+            default -> {
                 LOGGER.error("Attempt to login via unsupported supplier. Unsupported supplier: {}", supplier);
                 throw new OAuth2SupplierNotExistException();
-        }
+            }
+        };
     }
 }

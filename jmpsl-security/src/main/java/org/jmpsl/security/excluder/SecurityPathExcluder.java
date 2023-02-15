@@ -29,7 +29,7 @@ import org.springframework.security.web.util.matcher.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.*;
 import java.lang.reflect.Method;
@@ -111,9 +111,9 @@ public class SecurityPathExcluder {
             requestMatchers.add(new AntPathRequestMatcher(path.getPath(), path.getHttpMethod().name()));
         }
         httpSecurity
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers(requestMatchers.toArray(new RequestMatcher[0])).permitAll()
-                .antMatchers(disabledNoMethodPaths.toArray(new String[0])).permitAll()
+                .requestMatchers(disabledNoMethodPaths.toArray(new String[0])).permitAll()
                 .anyRequest().authenticated();
         return httpSecurity;
     }

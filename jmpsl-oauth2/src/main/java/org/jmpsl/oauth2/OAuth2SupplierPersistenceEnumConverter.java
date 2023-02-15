@@ -18,8 +18,8 @@
 
 package org.jmpsl.oauth2;
 
-import javax.persistence.*;
-import pl.miloszgilga.lib.jmpsl.core.converter.BasicEnumConverter;
+import jakarta.persistence.*;
+import org.jmpsl.core.converter.BasicEnumConverter;
 
 /**
  * Custom Javax persistence converted for {@link OAuth2Supplier} enum class. To use this converter in JPA

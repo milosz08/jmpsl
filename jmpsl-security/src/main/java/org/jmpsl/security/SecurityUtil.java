@@ -84,10 +84,10 @@ public class SecurityUtil {
         notNull(httpSecurity, "http security object cannot be null.");
         final boolean inNotDev = Arrays.stream(env.getActiveProfiles()).noneMatch(p -> p.equals(DEV.getModeName()));
         if (inNotDev) return;
-        httpSecurity.authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
+        httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/h2-console/**").permitAll()
                 .and()
-                .csrf().ignoringAntMatchers("/h2-console/**")
+                .csrf().ignoringRequestMatchers("/h2-console/**")
                 .and()
                 .headers().frameOptions().sameOrigin();
     }

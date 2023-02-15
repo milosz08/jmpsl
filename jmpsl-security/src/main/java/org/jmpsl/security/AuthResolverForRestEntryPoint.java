@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.security.web.*;
 import org.springframework.security.core.AuthenticationException;
 
-import javax.servlet.http.*;
+import jakarta.servlet.http.*;
 
 /**
  * Custom authentication entry point for REST Spring boot security context. DI instance must be declared in Spring

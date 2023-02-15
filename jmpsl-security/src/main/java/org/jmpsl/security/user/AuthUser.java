@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: AuthUser.java
- * Last modified: 19/10/2022, 00:37
+ * Last modified: 14/02/2023, 20:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.security.user;
+package org.jmpsl.security.user;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.io.*;
 import java.util.List;
-import java.io.Serializable;
 
 /**
  * Spring Security User extended class with implementation of {@link IAuthUserModel} field. Use this class for
@@ -32,7 +32,7 @@ import java.io.Serializable;
  * @since 1.0.2
  */
 public class AuthUser extends User implements Serializable {
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     private final IAuthUserModel userModel;
 

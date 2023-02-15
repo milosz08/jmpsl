@@ -18,7 +18,7 @@
 
 package org.jmpsl.core.converter;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 import java.util.stream.Stream;
 

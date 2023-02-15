@@ -20,7 +20,7 @@ package org.jmpsl.core.validator;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.*;
+import jakarta.validation.*;
 import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.FIELD;

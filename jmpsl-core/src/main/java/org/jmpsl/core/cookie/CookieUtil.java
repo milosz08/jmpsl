@@ -22,7 +22,7 @@ import org.springframework.util.SerializationUtils;
 
 import java.io.*;
 import java.util.*;
-import javax.servlet.http.*;
+import jakarta.servlet.http.*;
 
 /**
  * Class with static method implementing cookie basic servlet management. Method available add cookie, get cookie and

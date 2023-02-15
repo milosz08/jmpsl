@@ -19,7 +19,7 @@
 package org.jmpsl.oauth2.validator;
 
 import org.slf4j.*;
-import javax.validation.*;
+import jakarta.validation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;

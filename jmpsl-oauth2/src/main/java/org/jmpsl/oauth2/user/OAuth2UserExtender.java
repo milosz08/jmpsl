@@ -39,7 +39,7 @@ import org.jmpsl.oauth2.OAuth2Supplier;
  * @since 1.0.2
  */
 public class OAuth2UserExtender extends AuthUser implements OAuth2User, OidcUser, Serializable {
-    private static final long serialVersionUID = 1L;
+    @Serial private static final long serialVersionUID = 1L;
 
     private final OidcIdToken oidcIdToken;
     private final OAuth2Supplier supplier;
