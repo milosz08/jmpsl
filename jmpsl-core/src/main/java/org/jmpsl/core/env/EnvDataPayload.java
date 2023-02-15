@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: EnvDataPayload.java
- * Last modified: 18.11.2022, 03:30
+ * Last modified: 18/11/2022, 04:01
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.core.env;
+package org.jmpsl.core.env;
 
 import org.springframework.core.env.Environment;
 

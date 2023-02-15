@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: TempImageSavePayload.java
- * Last modified: 31/10/2022, 19:12
+ * Last modified: 31/10/2022, 23:51
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,12 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.sender;
+package org.jmpsl.gfx.sender;
 
 import lombok.*;
 
-import pl.miloszgilga.lib.jmpsl.gfx.ImageExtension;
-import pl.miloszgilga.lib.jmpsl.gfx.IBufferedImagePayload;
-import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
+import org.jmpsl.gfx.*;
+import org.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**
  * Simple POJO record representing temporary file informations for generated file and save on external SFTP server.

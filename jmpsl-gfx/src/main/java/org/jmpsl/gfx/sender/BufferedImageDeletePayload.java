@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: BufferedImageDeletePayload.java
- * Last modified: 02/11/2022, 18:52
+ * Last modified: 03/11/2022, 00:29
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.sender;
+package org.jmpsl.gfx.sender;
 
 import lombok.*;
 
-import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
+import org.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**
  * Simple POJO record representing structure for deleting user image from external SSH/SFTP static resources server.

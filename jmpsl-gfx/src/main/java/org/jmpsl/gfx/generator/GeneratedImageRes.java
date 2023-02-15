@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: GeneratedImageRes.java
- * Last modified: 01/11/2022, 15:57
+ * Last modified: 01/11/2022, 16:03
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.generator;
+package org.jmpsl.gfx.generator;
 
 import java.awt.*;
 

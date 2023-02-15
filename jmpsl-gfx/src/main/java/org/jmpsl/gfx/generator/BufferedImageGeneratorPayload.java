@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: BufferedImageGeneratorPayload.java
- * Last modified: 31/10/2022, 23:51
+ * Last modified: 01/11/2022, 17:08
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.generator;
+package org.jmpsl.gfx.generator;
 
 import lombok.*;
 import java.awt.*;
 
-import pl.miloszgilga.lib.jmpsl.gfx.IBufferedImagePayload;
-import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
+import org.jmpsl.gfx.IBufferedImagePayload;
+import org.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**
  * Simple POJO record storing image generator payload (sending from application). This class implements

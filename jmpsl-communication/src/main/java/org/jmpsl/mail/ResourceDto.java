@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
- * File name: InlineResourceDto.java
- * Last modified: 18/10/2022, 15:08
+ * File name: ResourceDto.java
+ * Last modified: 18/10/2022, 17:59
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.mail;
+package org.jmpsl.mail;
 
 import lombok.*;
 import java.io.File;

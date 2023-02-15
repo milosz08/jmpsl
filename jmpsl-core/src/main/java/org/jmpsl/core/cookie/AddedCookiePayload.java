@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022 by multiple authors
+ * Copyright (c) 2023 by multiple authors
  *
  * File name: AddedCookiePayload.java
- * Last modified: 15/10/2022, 19:53
+ * Last modified: 02/11/2022, 14:32
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.core.cookie;
+package org.jmpsl.core.cookie;
 
 import lombok.*;
 
