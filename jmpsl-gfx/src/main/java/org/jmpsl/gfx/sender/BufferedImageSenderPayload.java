@@ -24,7 +24,7 @@ import pl.miloszgilga.lib.jmpsl.gfx.IBufferedImagePayload;
 import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**
- * Simple POJO class storing image sending payload (sending from application). This class implements
+ * Simple POJO record storing image sending payload (sending from application). This class implements
  * {@link IBufferedImagePayload} interface and override methods (by lombok annotation). Fields:
  *
  * <ul>
@@ -39,14 +39,24 @@ import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
 @Builder
-@AllArgsConstructor
-public class BufferedImageSenderPayload implements IBufferedImagePayload {
-    private byte[] bytesRepresentation;
-    private int preferredWidth;
-    private int preferredHeight;
-    private Long id;
-    private String imageUniquePrefix;
-    private String userHashCode;
+public record BufferedImageSenderPayload(
+    byte[] bytesRepresentation, int preferredWidth, int preferredHeight, Long id, String imageUniquePrefix,
+    String userHashCode
+) implements IBufferedImagePayload {
+
+    @Override
+    public String getImageUniquePrefix() {
+        return imageUniquePrefix;
+    }
+
+    @Override
+    public String getUserHashCode() {
+        return userHashCode;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

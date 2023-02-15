@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: EnvDataPayload.java
- * Last modified: 18.11.2022, 03:30
+ * File name: InlineResourceDto.java
+ * Last modified: 18/10/2022, 15:08
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,22 +16,17 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.core.env;
+package pl.miloszgilga.lib.jmpsl.mail;
 
 import lombok.*;
-import org.springframework.core.env.Environment;
+import java.io.File;
 
 /**
- * Simple POJO class storing environemnt variable parts (name, default value etc.).
+ * Simple POJO record representing mail resource data (resource name with extension) ex. inline resource or attachment.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
-@AllArgsConstructor
-public class EnvDataPayload {
-    private Environment env;
-    private String name;
-    private String defValue;
-    private boolean required;
+@Builder
+public record ResourceDto(String mimeVariableName, File fileHandler) {
 }

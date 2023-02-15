@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: InlineResourceDto.java
- * Last modified: 18/10/2022, 15:08
+ * File name: BufferedImageGeneratorRes.java
+ * Last modified: 01/11/2022, 15:58
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,21 +16,18 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.mail;
+package pl.miloszgilga.lib.jmpsl.gfx.generator;
 
 import lombok.*;
-import java.io.File;
+import java.awt.*;
+import org.jmpsl.gfx.sender.BufferedImageRes;
 
 /**
- * Simple POJO class representing mail resource data (resource name with extension) ex. inline resource or attachment.
+ * Simple POJO record storing generated buffered image details as {@link BufferedImageRes} instance and generated image
+ * color as {@link Color} instance.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
-@Builder
-@AllArgsConstructor
-public class ResourceDto {
-    private String mimeVariableName;
-    private File fileHandler;
+public record BufferedImageGeneratorRes(BufferedImageRes bufferedImageRes, Color generateImageBackground) {
 }

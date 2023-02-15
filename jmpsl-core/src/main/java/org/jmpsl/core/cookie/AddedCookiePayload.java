@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: GeneratedImageRes.java
- * Last modified: 01/11/2022, 15:57
+ * File name: AddedCookiePayload.java
+ * Last modified: 15/10/2022, 19:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,20 +16,16 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package pl.miloszgilga.lib.jmpsl.gfx.generator;
+package pl.miloszgilga.lib.jmpsl.core.cookie;
 
 import lombok.*;
-import java.awt.*;
 
 /**
- * Simple POJO class storing generated image bytes representation and background as {@link Color} instance.
+ * POJO payload record for storing adding cookie value. Include cookie name, cookie value and maxAge property.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
-@AllArgsConstructor
-public class GeneratedImageRes {
-    private byte[] imageBytes;
-    private Color imageBackground;
+@Builder
+public record AddedCookiePayload(String name, String value, int maxAge) {
 }

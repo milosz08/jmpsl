@@ -25,7 +25,7 @@ import pl.miloszgilga.lib.jmpsl.gfx.IBufferedImagePayload;
 import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**
- * Simple POJO class representing temporary file informations for generated file and save on external SFTP server.
+ * Simple POJO record representing temporary file informations for generated file and save on external SFTP server.
  * Stored following parameters:
  *
  * <ul>
@@ -39,20 +39,12 @@ import pl.miloszgilga.lib.jmpsl.file.hashcode.FileHashCodeGenerator;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Data
 @Builder
-@AllArgsConstructor
-public class TempImageSavePayload {
-    private byte[] bytesRepresentation;
-    private String uniqueImagePrefix;
-    private Long id;
-    private String extensionName;
-    private String userHashCode;
-
-    public TempImageSavePayload(IBufferedImagePayload payload, ImageExtension extension) {
-        this.uniqueImagePrefix = payload.getImageUniquePrefix();
-        this.extensionName = extension.getImageExtension();
-        this.userHashCode = payload.getUserHashCode();
-        this.id = payload.getId();
+public record TempImageSavePayload(
+    byte[] bytesRepresentation, String uniqueImagePrefix, Long id, String extensionName, String userHashCode
+) {
+    public TempImageSavePayload(byte[] bytes, IBufferedImagePayload payload, ImageExtension extension) {
+        this(bytes, payload.getImageUniquePrefix(), payload.getId(), payload.getUserHashCode(),
+            extension.getImageExtension());
     }
 }
