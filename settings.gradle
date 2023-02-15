@@ -16,11 +16,11 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-rootProject.name = "jmps-library"
+rootProject.name = 'jmps-library'
 
-include("jmpsl-core")
-include("jmpsl-security")
-include("jmpsl-oauth2")
-include("jmpsl-communication")
-include("jmpsl-file")
-include("jmpsl-gfx")
+include('jmpsl-core')
+include('jmpsl-security')
+include('jmpsl-oauth2')
+include('jmpsl-communication')
+include('jmpsl-file')
+include('jmpsl-gfx')

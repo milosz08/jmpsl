@@ -1,0 +1,155 @@
+/*
+ * Copyright (c) 2022 by multiple authors
+ *
+ * File name: build.gradle.kts
+ * Last modified: 13/10/2022, 18:31
+ * Project name: jmps-library
+ *
+ * Licensed under the MIT license; you may not use this file except in compliance with the License.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * THE ABOVE COPYRIGHT NOTICE AND THIS PERMISSION NOTICE SHALL BE INCLUDED IN ALL
+ * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
+ */
+
+plugins {
+    id 'java-library'
+    id 'signing'
+    id 'maven-publish'
+    id 'co.uzzu.dotenv.gradle' version '2.0.0'
+    id 'org.springframework.boot' version '3.0.2' apply false
+    id 'io.spring.dependency-management' version '1.1.0' apply false
+}
+
+ext {
+    springVersion                   = '3.0.2'
+    jakartaPersistenceVersion       = '3.1.0'
+    jakartaValidationVersion        = '3.0.2'
+
+    // dependencies version
+    jTuplesVersion                  = '1.2'
+    jjwtVersion                     = '0.11.5'
+    sshjVersion                     = '0.34.0'
+    imgScalrVersion                 = '4.2'
+    lombokVersion                   = '1.18.20'
+    slf4jApiVersion                 = '2.0.3'
+    jakartaXmlBinderVersion         = '4.0.0'
+    jupiterTestVersion              = '5.8.1'
+    freemarkerVersion               = '2.3.31'
+    modelMapperVersion              = '3.1.1'
+    reflectionsApiVersion           = '0.10.2'
+    apacheCommonsTextVersion        = '1.10.0'
+
+    // maven nexus repository artifacts and additional package information's
+    libraryVersion                  = '1.0.2'
+    globalArtifactId                = 'org.jmpsl'
+}
+
+allprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'signing'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    version     = rootProject.ext.libraryVersion
+    group       = rootProject.ext.globalArtifactId
+
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.targetCompatibility = JavaVersion.VERSION_17
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
+    // remove .plain.jar file from repository package
+    tasks.jar {
+        enabled = true
+        archiveClassifier.set('')
+    }
+    tasks.test {
+        useJUnitPlatform()
+    }
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId     = rootProject.ext.globalArtifactId
+                artifactId  = project.properties["libraryArtifactId"]
+                version     = rootProject.ext.libraryVersion
+                from components.java
+                pom {
+                    name            = project.properties["libraryPomName"]
+                    description     = "Java MultiPurpose Spring Library - ${project.properties["libraryPomDesc"]}"
+                    url             = 'https://github.com/Milosz08/jmps-library'
+                    inceptionYear   = '2022'
+                    licenses {
+                        license {
+                            name    = 'MIT License'
+                            url     = 'https://opensource.org/licenses/mit-license.php'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id      = 'milosz08'
+                            name    = 'Miłosz Gilga'
+                            email   = 'personal@miloszgilga.pl'
+                        }
+                    }
+                    scm {
+                        connection              = 'scm:git:git:github.com/Milosz08/jmps-library.git'
+                        developerConnection     = 'scm:git:ssh://github.com/Milosz08/jmps-library.git'
+                        url                     = 'https://github.com/Milosz08/jmps-library'
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name    = 'OSSRH'
+                url     = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                credentials {
+                    username = env.OSSRH_USERNAME.value
+                    password = env.OSSRH_PASSWORD.value
+                }
+            }
+        }
+    }
+    signing {
+        useGpgCmd()
+        sign configurations.archives
+    }
+    // disable Java DockLint annoying warnings (enable only for checking HTML tags)
+    tasks.withType(Javadoc).configureEach {
+        (options as StandardJavadocDocletOptions).addBooleanOption('Xdoclint:html', true)
+        (options as StandardJavadocDocletOptions).addStringOption('Xmaxwarns', '1')
+    }
+}
+
+// dependencies only for root project (grabbed all multi-modules into one single project module)
+rootProject.dependencies {
+    api project(':jmpsl-core')
+    api project(':jmpsl-security')
+    api project(':jmpsl-oauth2')
+    api project(':jmpsl-communication')
+    api project(':jmpsl-file')
+    api project(':jmpsl-gfx')
+}
+
+// dependencies for all subprojects
+subprojects {
+    dependencies {
+        testImplementation  "org.junit.jupiter:junit-jupiter-api:${jupiterTestVersion}"
+        testRuntimeOnly     "org.junit.jupiter:junit-jupiter-engine:${jupiterTestVersion}"
+    }
+}

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2022 by multiple authors
  *
- * File name: build.gradle.kts
- * Last modified: 18/10/2022, 14:56
+ * File name: build.gradle
+ * Last modified: 23/10/2022, 14:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -17,14 +17,12 @@
  */
 
 dependencies {
-    implementation(project(":jmpsl-core"))
+    implementation          project(':jmpsl-core')
 
-    implementation("org.freemarker:freemarker:${rootProject.extra.get("freemarkerVersion") as String}")
+    implementation          "com.hierynomus:sshj:${sshjVersion}"
+    implementation          "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+    implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
 
-    implementation("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
-    annotationProcessor("org.projectlombok:lombok:${rootProject.extra.get("lombokVersion") as String}")
-
-    implementation("org.springframework.boot:spring-boot-starter:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.springframework.boot:spring-boot-starter-web:${rootProject.extra.get("springVersion") as String}")
-    implementation("org.springframework.boot:spring-boot-starter-mail:${rootProject.extra.get("springVersion") as String}")
+    implementation          "org.springframework.boot:spring-boot-starter-web:${springVersion}"
 }
