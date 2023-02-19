@@ -20,7 +20,6 @@ package org.jmpsl.security.jwt;
 
 import org.slf4j.*;
 import io.jsonwebtoken.*;
-import org.javatuples.Pair;
 
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import static java.util.Objects.isNull;
 
+import static java.util.Optional.empty;
 import static org.jmpsl.security.jwt.JwtValidationType.*;
 
 /**
@@ -41,12 +41,12 @@ import static org.jmpsl.security.jwt.JwtValidationType.*;
  * @since 1.0.2
  */
 @Service
-public class JwtServlet {
+public class JwtService {
 
     private final JwtConfig jwtConfig;
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtService.class);
 
-    public JwtServlet(JwtConfig jwtConfig) {
+    public JwtService(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
     }
 
@@ -103,10 +103,10 @@ public class JwtServlet {
      */
     public Optional<Claims> extractClaims(String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
-        if (isValid(token).getValue0()) {
+        if (isValid(token).isValid()) {
             return tokenAfterValidation.getClaims();
         }
-        return Optional.empty();
+        return empty();
     }
 
     /**
@@ -124,17 +124,16 @@ public class JwtServlet {
      */
     public Optional<Long> validateRefreshToken(String expiredToken, String userIdClaimName) {
         if (isNull(userIdClaimName)) throw new NullPointerException("Passed user id claim name cannot be null.");
-        final Pair<Boolean, JwtValidationType> checkedTokenValid = isValid(expiredToken);
-        if (!checkedTokenValid.getValue0() && checkedTokenValid.getValue1().equals(JwtValidationType.EXPIRED)) {
-            final ValidateJwtPayload unsafeClaims = insideValidateToken(expiredToken);
-            return Optional.of(unsafeClaims.getClaims().get().get(userIdClaimName, Long.class));
-        }
-        return Optional.empty();
+        final JwtValidPayload checkedTokenValid = isValid(expiredToken);
+        if (checkedTokenValid.isValid() || !checkedTokenValid.checkType(EXPIRED)) return empty();
+        final ValidateJwtPayload unsafeClaims = insideValidateToken(expiredToken);
+        if (unsafeClaims.getClaims().isEmpty()) return empty();
+        return Optional.of(unsafeClaims.getClaims().get().get(userIdClaimName, Long.class));
     }
 
     /**
      * Method responsible for extracting claims from JWT. This method is UNSAFE (may throw exception from jjwts library).
-     * To extract claims with full safety, use {@link #extractClaims} method from {@link JwtServlet} class.
+     * To extract claims with full safety, use {@link #extractClaims} method from {@link JwtService} class.
      *
      * @param token generated raw JWT (without "Bearer" prefix)
      * @return extracted claims object from passed JWT in method parameter
@@ -168,13 +167,13 @@ public class JwtServlet {
      *
      * @throws NullPointerException if passed JWT is null
      */
-    public Pair<Boolean, JwtValidationType> isValid(final String token) {
+    public JwtValidPayload isValid(final String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
         if (!tokenAfterValidation.getType().equals(GOOD)) {
             LOGGER.error(tokenAfterValidation.getType().getMessage() + " Token: {}", token);
-            return new Pair<>(false, tokenAfterValidation.getType());
+            return new JwtValidPayload(false, tokenAfterValidation.getType());
         }
-        return new Pair<>(true, tokenAfterValidation.getType());
+        return new JwtValidPayload(true, tokenAfterValidation.getType());
     }
 
     /**

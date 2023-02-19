@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: RestMethodTypeWithPath.java
- * Last modified: 14/02/2023, 20:59
+ * File name: RefreshTokenPayloadDto.java
+ * Last modified: 19/02/2023, 15:24
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,26 +16,11 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.security.excluder;
+package org.jmpsl.security.jwt;
 
-import lombok.*;
-import org.springframework.http.HttpMethod;
+import java.time.ZonedDateTime;
 
-/**
- * Simple POJO class for stored path and {@link HttpMethod} data used by reflection excluded paths loader.
- *
- * @author Miłosz Gilga
- * @since 1.0.2
- */
-@Data
-@Builder
-@AllArgsConstructor
-class RestMethodTypeWithPath {
-    private String path;
-    private HttpMethod httpMethod;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @Override
-    public String toString() {
-        return "{ " + path + ", " + httpMethod + " }";
-    }
+public record RefreshTokenPayloadDto(String token, ZonedDateTime expiredDate) {
 }

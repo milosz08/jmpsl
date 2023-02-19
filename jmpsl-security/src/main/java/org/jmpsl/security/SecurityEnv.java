@@ -73,6 +73,20 @@ public enum SecurityEnv implements IEnvEnumExtender {
     __SEC_JWT_ISSUER("jmpsl.security.jwt.issuer", null, true),
 
     /**
+     * Define Json Web Token expiration time (in minutes). By default it is 5 minutes.
+     *
+     * @since 1.0.2
+     */
+    __SEC_JWT_EXPIRED_MINUTES("jmpsl.security.jwt.expired-minutes", "5", false),
+
+    /**
+     * Define Refresh token expiration time (in days). By default it is 90 days (circa about 3 months).
+     *
+     * @since 1.0.2
+     */
+    __SEC_REFRESH_TOKEN_EXPIRED_DAYS("jmpsl.security.jwt.refresh-token-expired-days", "90", false),
+
+    /**
      * Define CORS policy client (front-end application url). Property required.
      *
      * @since 1.0.2
