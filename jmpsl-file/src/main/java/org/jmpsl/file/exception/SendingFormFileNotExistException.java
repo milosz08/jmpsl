@@ -18,18 +18,17 @@
 
 package org.jmpsl.file.exception;
 
-import org.jmpsl.core.exception.BasicServerException;
-
+import org.jmpsl.core.exception.RestServiceServerException;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
- * Exception throw, when user attempt to send file without actual file. Extended {@link BasicServerException}, so return
+ * Exception throw, when user attempt to send file without actual file. Extended {@link RestServiceServerException}, so return
  * JSON object in response body part.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class SendingFormFileNotExistException extends BasicServerException {
+public class SendingFormFileNotExistException extends RestServiceServerException {
 
     public SendingFormFileNotExistException() {
         super(NOT_FOUND, "You cannot send request without sending file.", new Object());

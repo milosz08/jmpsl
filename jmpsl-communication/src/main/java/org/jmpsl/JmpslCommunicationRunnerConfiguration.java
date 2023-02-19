@@ -26,6 +26,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@ComponentScan(basePackages = { "org.jmpsl.mail" })
+@ComponentScan(basePackages = { "org.jmpsl.communication" })
 public class JmpslCommunicationRunnerConfiguration {
 }

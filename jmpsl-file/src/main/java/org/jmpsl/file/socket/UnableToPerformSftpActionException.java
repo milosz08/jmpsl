@@ -18,18 +18,18 @@
 
 package org.jmpsl.file.socket;
 
-import org.jmpsl.core.exception.BasicServerException;
+import org.jmpsl.core.exception.RestServiceServerException;
 
 import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
 /**
  * Custom exception throws after unable to connect with SFTP server or unable to perform other general SFTP action.
- * Extended {@link BasicServerException}, so return JSON object in response body part.
+ * Extended {@link RestServiceServerException}, so return JSON object in response body part.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class UnableToPerformSftpActionException extends BasicServerException {
+public class UnableToPerformSftpActionException extends RestServiceServerException {
 
     public UnableToPerformSftpActionException() {
         super(SERVICE_UNAVAILABLE, "Unable to connect with SFTP server. Try again later.", new Object());

@@ -2,7 +2,7 @@
  * Copyright (c) 2023 by multiple authors
  *
  * File name: MailRequestDto.java
- * Last modified: 18/10/2022, 18:43
+ * Last modified: 15/02/2023, 02:06
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,12 +16,13 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.mail;
+package org.jmpsl.communication.mail;
 
 import lombok.*;
 import java.util.*;
 
 import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
 /**
  * Simple POJO class responsible for stored all data for sending email, including sender, recievier and additional
@@ -45,10 +46,10 @@ public class MailRequestDto {
         Set<String> sendTo, String sendFrom, String messageSubject, List<ResourceDto> inlineResources,
         List<ResourceDto> attachments
     ) {
-        if (isNull(sendTo) || sendTo.isEmpty())
-            throw new IllegalStateException("List of SendTo parameters cannot be null or empty.");
-        if (isNull(sendFrom) || sendFrom.isBlank())
-            throw new IllegalStateException("SendFrom parameter cannot be null or empty.");
+        String exMessage = "";
+        if (isNull(sendTo) || sendTo.isEmpty()) exMessage = "List of SendTo parameters cannot be null or empty.";
+        if (isNull(sendFrom) || sendFrom.isBlank()) exMessage = "SendFrom parameter cannot be null or empty.";
+        if (isEmpty(exMessage)) throw new IllegalStateException(exMessage);
         this.sendTo = sendTo;
         this.sendFrom = sendFrom;
         this.messageSubject = messageSubject;

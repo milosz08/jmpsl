@@ -2,7 +2,7 @@
  * Copyright (c) 2023 by multiple authors
  *
  * File name: ServletMailService.java
- * Last modified: 18/10/2022, 18:34
+ * Last modified: 15/02/2023, 02:11
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.mail;
+package org.jmpsl.communication.mail;
 
 import org.slf4j.*;
 import freemarker.template.*;
@@ -32,7 +32,7 @@ import java.nio.charset.StandardCharsets;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
-import static org.jmpsl.mail.MailException.UnableToSendEmailException;
+import static org.jmpsl.communication.mail.MailException.UnableToSendEmailException;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 /**

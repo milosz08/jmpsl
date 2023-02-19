@@ -2,7 +2,7 @@
  * Copyright (c) 2023 by multiple authors
  *
  * File name: FreemarkerConfigurationInjector.java
- * Last modified: 18/11/2022, 04:39
+ * Last modified: 15/02/2023, 01:57
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.mail;
+package org.jmpsl.communication.mail;
 
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
-import static org.jmpsl.mail.MailEnv.__COM_FREEMARKER_PATH;
+import static org.jmpsl.communication.CommunicationEnv.__COM_FREEMARKER_PATH;
 
 /**
  * Spring auto-configuration class for creating freemarker templates configuration bean. To determinate freemarker

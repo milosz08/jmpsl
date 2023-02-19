@@ -19,10 +19,10 @@
 package org.jmpsl.oauth2;
 
 import static org.springframework.http.HttpStatus.*;
-import org.jmpsl.core.exception.BasicAuthServerException;
+import org.jmpsl.core.exception.RestServiceAuthServerException;
 
 /**
- * Custom exceptions (extends {@link BasicAuthServerException}) used in OAuth2 JMPS library module.
+ * Custom exceptions (extends {@link RestServiceAuthServerException}) used in OAuth2 JMPS library module.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
@@ -30,13 +30,13 @@ import org.jmpsl.core.exception.BasicAuthServerException;
 public class OAuth2Exception {
 
     /**
-     * Custom exception extending {@link BasicAuthServerException}, returning JSON POJO object message and throw after
+     * Custom exception extending {@link RestServiceAuthServerException}, returning JSON POJO object message and throw after
      * unexpected OAuth2 processing error (unable to authorize user).
      *
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static class OAuth2AuthenticationProcessingException extends BasicAuthServerException {
+    public static class OAuth2AuthenticationProcessingException extends RestServiceAuthServerException {
         public OAuth2AuthenticationProcessingException() {
             super(UNAUTHORIZED, "Unable to authorize user via OAuth2 service. Try again later.", new Object());
         }
@@ -60,26 +60,26 @@ public class OAuth2Exception {
     }
 
     /**
-     * Custom exception extending {@link BasicAuthServerException}, returning JSON POJO object message and throw after
+     * Custom exception extending {@link RestServiceAuthServerException}, returning JSON POJO object message and throw after
      * attempt to login via unusupported OAuth2 supplier.
      *
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static class OAuth2SupplierNotImplementedException extends BasicAuthServerException {
+    public static class OAuth2SupplierNotImplementedException extends RestServiceAuthServerException {
         public OAuth2SupplierNotImplementedException() {
             super(NOT_FOUND, "Passed OAuth2 service is not supported.", new Object());
         }
     }
 
     /**
-     * Custom exception extending {@link BasicAuthServerException}, returning JSON POJO object message and throw after
+     * Custom exception extending {@link RestServiceAuthServerException}, returning JSON POJO object message and throw after
      * attempt to redirect into usupported URI after successful authorize via OAuth2.
      *
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static class OAuth2UriNotSupportedException extends BasicAuthServerException {
+    public static class OAuth2UriNotSupportedException extends RestServiceAuthServerException {
         public OAuth2UriNotSupportedException() {
             super(BAD_REQUEST, "Redirect URI is not supported by OAuth2 service.", new Object());
         }

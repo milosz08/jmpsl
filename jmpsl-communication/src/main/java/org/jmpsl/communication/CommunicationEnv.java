@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: MailEnv.java
- * Last modified: 14/02/2023, 21:03
+ * File name: CommunicationEnv.java
+ * Last modified: 15/02/2023, 00:52
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.mail;
+package org.jmpsl.communication;
 
 import lombok.*;
 import org.springframework.core.env.Environment;

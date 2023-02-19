@@ -27,7 +27,7 @@ import org.jmpsl.core.exception.BasicServerException;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
- * Exception throw, when user sent file with unsupported extension. Extended {@link BasicServerException}, so return
+ * Exception throw, when user sent file with unsupported extension. Extended {@link RestServiceServerException}, so return
  * JSON object in response body part.
  *
  * @author Miłosz Gilga

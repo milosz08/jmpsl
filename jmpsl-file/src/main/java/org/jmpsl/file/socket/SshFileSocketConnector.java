@@ -97,11 +97,11 @@ public class SshFileSocketConnector {
             try (final StatefulSFTPClient sftpClient = (StatefulSFTPClient) sshClient.newStatefulSFTPClient()) {
                 executor.execute(sftpClient);
             } catch (IOException ex) {
-                LOGGER.error("ERROR! Unable to invoke stateful SFTP client execution from SSHClient socket.");
+                LOGGER.error("Unable to invoke stateful SFTP client execution from SSHClient socket.");
                 throw new UnableToPerformSftpActionException();
             }
         } catch (IOException ex) {
-            LOGGER.error("ERROR! Unable to connect with SSH socket. Check connecting parameters.");
+            LOGGER.error("Unable to connect with SSH socket. Check connecting parameters.");
             throw new UnableToPerformSftpActionException();
         }
     }

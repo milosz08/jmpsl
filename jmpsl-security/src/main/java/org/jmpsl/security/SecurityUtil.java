@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 import org.jmpsl.security.user.*;
 
 import static org.springframework.util.Assert.notNull;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 import static org.jmpsl.security.ApplicationMode.DEV;
 
 /**
@@ -84,11 +86,9 @@ public class SecurityUtil {
         notNull(httpSecurity, "http security object cannot be null.");
         final boolean inNotDev = Arrays.stream(env.getActiveProfiles()).noneMatch(p -> p.equals(DEV.getModeName()));
         if (inNotDev) return;
-        httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/h2-console/**").permitAll()
-                .and()
-                .csrf().ignoringRequestMatchers("/h2-console/**")
-                .and()
-                .headers().frameOptions().sameOrigin();
+        httpSecurity
+            .authorizeHttpRequests(auth -> auth.requestMatchers(antMatcher("/h2-console/**")).permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers(antMatcher("/h2-console/**")))
+            .headers(headers -> headers.frameOptions().sameOrigin());
     }
 }

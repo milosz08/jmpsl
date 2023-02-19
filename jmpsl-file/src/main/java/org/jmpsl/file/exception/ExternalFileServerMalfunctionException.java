@@ -19,16 +19,16 @@
 package org.jmpsl.file.exception;
 
 import org.springframework.http.HttpStatus;
-import org.jmpsl.core.exception.BasicServerException;
+import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
- * Custom exception throws after SFTP image sending malfunction. Extended {@link BasicServerException}, so return
+ * Custom exception throws after SFTP image sending malfunction. Extended {@link RestServiceServerException}, so return
  * JSON object in response body part.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class ExternalFileServerMalfunctionException extends BasicServerException {
+public class ExternalFileServerMalfunctionException extends RestServiceServerException {
 
     public ExternalFileServerMalfunctionException() {
         super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());

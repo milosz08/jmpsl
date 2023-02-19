@@ -22,7 +22,6 @@ dependencies {
     implementation      "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
     implementation      "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     implementation      "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
-    implementation      "org.javatuples:javatuples:${jTuplesVersion}"
     implementation      "org.reflections:reflections:${reflectionsApiVersion}"
 
     implementation      "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
