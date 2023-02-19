@@ -23,7 +23,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
-import static java.lang.String.format;
+import java.util.*;
 
 /**
  * Simple server exception extending basic spring security {@link AuthenticationException} with {@link HttpStatus}
@@ -33,12 +33,22 @@ import static java.lang.String.format;
  * @since 1.0.2
  */
 @Getter
-public class BasicAuthServerException extends AuthenticationException {
+public class RestServiceAuthServerException extends AuthenticationException {
 
     private final HttpStatus status;
+    private final String patternLocaleMessage;
+    private Map<String, Object> variables = new HashMap<>();
 
-    public BasicAuthServerException(HttpStatus status, String message, Object... args) {
-        super(format(message, args));
+    public RestServiceAuthServerException(HttpStatus status, String patterLocaleMessage) {
+        super(patterLocaleMessage);
         this.status = status;
+        this.patternLocaleMessage = patterLocaleMessage;
+    }
+
+    public RestServiceAuthServerException(HttpStatus status, String patterLocaleMessage, Map<String, Object> variables) {
+        super(patterLocaleMessage);
+        this.status = status;
+        this.patternLocaleMessage = patterLocaleMessage;
+        this.variables = variables;
     }
 }

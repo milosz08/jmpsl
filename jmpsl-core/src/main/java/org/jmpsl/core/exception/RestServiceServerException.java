@@ -21,7 +21,7 @@ package org.jmpsl.core.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import static java.lang.String.format;
+import java.util.*;
 
 /**
  * Simple server exception extending basic {@link RuntimeException} with {@link HttpStatus} parameter passed in
@@ -31,12 +31,22 @@ import static java.lang.String.format;
  * @since 1.0.2
  */
 @Getter
-public class BasicServerException extends RuntimeException {
+public class RestServiceServerException extends RuntimeException {
 
     private final HttpStatus status;
+    private final String patternLocaleMessage;
+    private Map<String, Object> variables = new HashMap<>();
 
-    public BasicServerException(HttpStatus status, String message, Object... args) {
-        super(format(message, args));
+    public RestServiceServerException(HttpStatus status, String patterLocaleMessage) {
+        super(patterLocaleMessage);
         this.status = status;
+        this.patternLocaleMessage = patterLocaleMessage;
+    }
+
+    public RestServiceServerException(HttpStatus status, String patterLocaleMessage, Map<String, Object> variables) {
+        super(patterLocaleMessage);
+        this.status = status;
+        this.patternLocaleMessage = patterLocaleMessage;
+        this.variables = variables;
     }
 }

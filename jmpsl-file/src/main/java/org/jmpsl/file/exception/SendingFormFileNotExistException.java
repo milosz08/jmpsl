@@ -31,10 +31,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class SendingFormFileNotExistException extends RestServiceServerException {
 
     public SendingFormFileNotExistException() {
-        super(NOT_FOUND, "You cannot send request without sending file.", new Object());
-    }
-
-    public SendingFormFileNotExistException(String message, Object... args) {
-        super(NOT_FOUND, message, args);
+        super(NOT_FOUND, "jmpsl.file.exception.SendingFormFileNotExistException");
     }
 }

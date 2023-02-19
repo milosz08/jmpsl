@@ -84,7 +84,7 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      * @author Miłosz Gilga
      * @since 1.0.2
      *
-     * @throws OAuth2SupplierNotExistException if supplier based passed string name not exist
+     * @throws OAuth2SupplierNotImplementedException if supplier based passed string name not exist
      */
     public static OAuth2Supplier checkIfSupplierIsValid(String supplierName) {
         return Stream.of(OAuth2Supplier.values())
@@ -92,7 +92,7 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
                 .findFirst()
                 .orElseThrow(() -> {
                     LOGGER.error("Passed supplier: {} is not valid credentials supplier name.", supplierName);
-                    throw new OAuth2SupplierNotExistException();
+                    throw new OAuth2SupplierNotImplementedException();
                 });
     }
 

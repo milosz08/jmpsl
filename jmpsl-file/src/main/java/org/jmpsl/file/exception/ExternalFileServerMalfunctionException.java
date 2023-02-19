@@ -31,6 +31,6 @@ import org.jmpsl.core.exception.RestServiceServerException;
 public class ExternalFileServerMalfunctionException extends RestServiceServerException {
 
     public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, "Unable to send file. Try again later.", new Object());
+        super(HttpStatus.SERVICE_UNAVAILABLE, "jmpsl.file.exception.ExternalFileServerMalfunctionException");
     }
 }

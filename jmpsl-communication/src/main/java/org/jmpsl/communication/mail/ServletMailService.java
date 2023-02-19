@@ -101,6 +101,6 @@ public class ServletMailService {
         } catch (Exception ex) {
             LOGGER.error("Unexpected mail sender exception. {}, Request parameters: {}", ex.getMessage(), reqDto);
         }
-        throw new UnableToSendEmailException();
+        throw new UnableToSendEmailException(reqDto.getSendTo());
     }
 }

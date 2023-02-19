@@ -24,7 +24,7 @@ import java.util.Map;
 import org.springframework.util.Assert;
 
 import org.jmpsl.oauth2.OAuth2Supplier;
-import static org.jmpsl.oauth2.OAuth2Exception.OAuth2SupplierNotExistException;
+import static org.jmpsl.oauth2.OAuth2Exception.OAuth2SupplierNotImplementedException;
 
 /**
  * Factory pattern class responsible for generate {@link OAuth2UserInfoBase} objects based passed supplier and
@@ -55,7 +55,7 @@ public class OAuth2UserInfoFactory {
             case LINKEDIN -> new LinkedInOAuth2UserInfo(attrs);
             default -> {
                 LOGGER.error("Attempt to login via unsupported supplier. Unsupported supplier: {}", supplier);
-                throw new OAuth2SupplierNotExistException();
+                throw new OAuth2SupplierNotImplementedException();
             }
         };
     }

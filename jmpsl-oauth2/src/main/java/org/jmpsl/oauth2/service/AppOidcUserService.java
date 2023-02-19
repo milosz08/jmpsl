@@ -63,7 +63,7 @@ public class AppOidcUserService extends OidcUserService {
         } catch (AuthenticationException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new OAuth2AuthenticationProcessingException(ex.getMessage());
+            throw new OAuth2AuthenticationProcessingException();
         }
     }
 }

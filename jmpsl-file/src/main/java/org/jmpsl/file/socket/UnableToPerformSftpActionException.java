@@ -32,6 +32,6 @@ import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 public class UnableToPerformSftpActionException extends RestServiceServerException {
 
     public UnableToPerformSftpActionException() {
-        super(SERVICE_UNAVAILABLE, "Unable to connect with SFTP server. Try again later.", new Object());
+        super(SERVICE_UNAVAILABLE, "jmpsl.file.exception.UnableToPerformSftpActionException");
     }
 }

@@ -38,24 +38,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2AuthenticationProcessingException extends RestServiceAuthServerException {
         public OAuth2AuthenticationProcessingException() {
-            super(UNAUTHORIZED, "Unable to authorize user via OAuth2 service. Try again later.", new Object());
-        }
-
-        public OAuth2AuthenticationProcessingException(final String message, final Object... args) {
-            super(UNAUTHORIZED, message, args);
-        }
-    }
-
-    /**
-     * Custom exception extending {@link BasicAuthServerException}, returning JSON POJO object message and throw after
-     * unable to find OAuth2 authentication provider/supplier.
-     *
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
-    public static class OAuth2SupplierNotExistException extends BasicAuthServerException {
-        public OAuth2SupplierNotExistException() {
-            super(NOT_FOUND, "Passed OAuth2 service is invalid.", new Object());
+            super(UNAUTHORIZED, "jmpsl.oauth2.exception.OAuth2AuthenticationProcessingException");
         }
     }
 
@@ -68,7 +51,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2SupplierNotImplementedException extends RestServiceAuthServerException {
         public OAuth2SupplierNotImplementedException() {
-            super(NOT_FOUND, "Passed OAuth2 service is not supported.", new Object());
+            super(NOT_FOUND, "jmpsl.oauth2.exception.OAuth2SupplierNotImplementedException");
         }
     }
 
@@ -81,7 +64,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2UriNotSupportedException extends RestServiceAuthServerException {
         public OAuth2UriNotSupportedException() {
-            super(BAD_REQUEST, "Redirect URI is not supported by OAuth2 service.", new Object());
+            super(BAD_REQUEST, "jmpsl.oauth2.exception.OAuth2UriNotSupportedException");
         }
     }
 }

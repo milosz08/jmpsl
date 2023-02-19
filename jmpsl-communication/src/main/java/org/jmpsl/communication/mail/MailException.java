@@ -18,11 +18,14 @@
 
 package org.jmpsl.communication.mail;
 
-import org.jmpsl.core.exception.BasicServerException;
+import java.util.*;
+import org.jmpsl.core.exception.RestServiceServerException;
+
+import static java.lang.String.join;
 import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
 /**
- * Email exceptions generating JSON object from {@link BasicServerException} object structure model.
+ * Email exceptions generating JSON object from {@link RestServiceServerException} object structure model.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
@@ -31,14 +34,15 @@ public class MailException {
 
     /**
      * Exception for unable to send email (when email template is malformed, SMTP server not responding or other email
-     * services malfunctions). Exception generated JSON object from {@link BasicServerException} object structure model.
+     * services malfunctions). Exception generated JSON object from {@link RestServiceServerException} object structure model.
      *
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public static class UnableToSendEmailException extends BasicServerException {
-        public UnableToSendEmailException() {
-            super(SERVICE_UNAVAILABLE, "Unable connect to SMTP mail server. Try again later.", new Object());
+    public static class UnableToSendEmailException extends RestServiceServerException {
+        public UnableToSendEmailException(Set<String> emailRecipents) {
+            super(SERVICE_UNAVAILABLE, "jmpsl.communication.exception.UnableToSendEmailException",
+                Map.of("emailAddress", join(", ", emailRecipents)));
         }
     }
 }

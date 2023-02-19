@@ -86,26 +86,7 @@ public class FileUtil {
         if (Arrays.stream(types).noneMatch(t -> Objects.equals(file.getContentType(), t.getContentTypeName()))) {
             LOGGER.error("Attempt to send file with not supported extension. Extension: {}, supported extensions: {}",
                     file.getContentType(), types);
-            throw new NotAcceptableFileExtensionException(file.getOriginalFilename(), types);
-        }
-    }
-
-    /**
-     * Static method responsible for checking, if sended file by multipart form data acually exist and is not null.
-     * If file not exist or is null, throw {@link SendingFormFileNotExistException}.
-     *
-     * @param file instance of {@link MultipartFile} with passed file in form data
-     * @param message exception message show in JSON response object
-     * @param args additional exception message formatting arguments
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws SendingFormFileNotExistException if passed file not exist or is null
-     */
-    public static void isFileExist(MultipartFile file, String message, Object... args) {
-        if (Objects.isNull(file) || file.isEmpty() || file.getSize() == 0) {
-            LOGGER.error("Attempt to send file without actual file instance.");
-            throw new SendingFormFileNotExistException(message, args);
+            throw new NotAcceptableFileExtensionException(types);
         }
     }
 

@@ -41,6 +41,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static org.jmpsl.gfx.GfxEnv.*;
 import static org.jmpsl.gfx.GfxUtil.*;
 import static org.jmpsl.gfx.ImageExtension.PNG;
+import static org.jmpsl.gfx.generator.ImageGeneratorException.*;
 
 /**
  * Class storing methods responsible for generating default user image. Before run application, declare following
@@ -105,15 +106,10 @@ public class UserImageGenerator {
      */
     public GeneratedImageRes generateDefaultUserImage(BufferedImageGeneratorPayload payload, ImageExtension extension) {
         if (payload.size() < MIN_IMAGE_SIZE || payload.size() > MAX_IMAGE_SIZE) {
-            throw new IllegalStateException(String.format(
-                    "Image size must be between %d and %d", MIN_IMAGE_SIZE, MAX_IMAGE_SIZE));
+            throw new ImageNotSupportedDimensionsException();
         }
-        if (payload.fontSize() < 1 || payload.fontSize() > MAX_FONT_SIZE) {
-            throw new IllegalStateException(String.format("Font size must be between 0 and %d", MAX_FONT_SIZE));
-        }
-        if (payload.initials().length != 2) {
-            throw new IllegalStateException("User initials must have 2 characters.");
-        }
+        if (payload.fontSize() < 1 || payload.fontSize() > MAX_FONT_SIZE) throw new FontSizeNotSupportedException();
+        if (payload.initials().length != 2) throw new TooMuchInitialsCharactersException();
 
         Color generatedColor;
         final String userInitials = String.valueOf(payload.initials());

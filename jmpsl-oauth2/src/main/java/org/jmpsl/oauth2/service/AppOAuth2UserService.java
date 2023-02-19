@@ -73,7 +73,7 @@ public class AppOAuth2UserService extends DefaultOAuth2UserService {
         } catch (AuthenticationException ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new OAuth2AuthenticationProcessingException(ex.getMessage());
+            throw new OAuth2AuthenticationProcessingException();
         }
     }
 
