@@ -18,10 +18,12 @@
 
 dependencies {
     implementation      project(':jmpsl-core')
+    implementation      project(':jmpsl-communication')
 
     implementation      "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
     implementation      "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     implementation      "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+    implementation      "com.google.code.gson:gson:${gsonVersion}"
     implementation      "org.reflections:reflections:${reflectionsApiVersion}"
 
     implementation      "org.apache.commons:commons-text:${apacheCommonsTextVersion}"

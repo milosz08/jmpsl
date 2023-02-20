@@ -23,8 +23,10 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.ZoneId;
+
+import static java.time.ZonedDateTime.now;
 import static org.springframework.util.Assert.noNullElements;
-import static org.jmpsl.core.DateTimeUtil.serializedLocalDate;
 
 /**
  * Simple POJO class for storing server exception JSON object values (without error message parameters).
@@ -36,10 +38,9 @@ import static org.jmpsl.core.DateTimeUtil.serializedLocalDate;
 @Builder
 @AllArgsConstructor
 public class ServerExceptionResDto {
-    private final String servletTimestampUTC;
-    private final int statusCode;
-    private final String statusText;
-    private final String path;
+    private final String timestamp;
+    private final int status;
+    private final String error;
     private final String method;
 
     /**
@@ -57,11 +58,10 @@ public class ServerExceptionResDto {
     public static ServerExceptionResDto generate(HttpStatus status, HttpServletRequest req) {
         noNullElements(new Object[] { status, req }, "Status or req parameter cannot be null.");
         return ServerExceptionResDto.builder()
-                .path(req.getServletPath())
                 .method(req.getMethod())
-                .statusCode(status.value())
-                .statusText(status.name())
-                .servletTimestampUTC(serializedLocalDate())
+                .status(status.value())
+                .error(status.name())
+                .timestamp(now(ZoneId.of("UTC")).toString())
                 .build();
     }
 }

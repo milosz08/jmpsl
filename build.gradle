@@ -43,6 +43,7 @@ ext {
     modelMapperVersion              = '3.1.1'
     reflectionsApiVersion           = '0.10.2'
     apacheCommonsTextVersion        = '1.10.0'
+    gsonVersion                     = '2.10.1'
 
     // maven nexus repository artifacts and additional package information's
     libraryVersion                  = '1.0.2'

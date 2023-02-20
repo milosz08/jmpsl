@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: TimeUtil.java
- * Last modified: 02/11/2022, 14:32
+ * File name: DateTimeUtil.java
+ * Last modified: 20/02/2023, 01:57
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import java.util.*;
 import java.time.*;
 import java.time.format.*;
 
-import static java.time.LocalDate.now;
 import static org.springframework.util.Assert.notNull;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
@@ -40,8 +39,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 public class DateTimeUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeUtil.class);
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = ofPattern("dd/MM/yyyy HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = ofPattern("dd/MM/yyyy");
 
     private DateTimeUtil() {
@@ -67,31 +64,5 @@ public class DateTimeUtil {
             LOGGER.error("Unable to parse date string to object base date string parameter: {}" + date);
         }
         return Optional.empty();
-    }
-
-    /**
-     * Static method responsible for serialized {@link LocalDate} passed in method parameter.
-     *
-     * @param date passed {@link LocalDate} object to serialize
-     * @return serialized passed {@link LocalDate} object
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     *
-     * @throws IllegalArgumentException if passed {@link LocalDate} object is null
-     */
-    public static String serializedLocalDate(LocalDate date) {
-        notNull(date, "Passed date object cannot be null.");
-        return date.format(DATE_TIME_FORMATTER);
-    }
-
-    /**
-     * Static method responsible for serialized current date (as {@link LocalDate} object)
-     *
-     * @return serialized passed {@link LocalDate} object
-     * @author Miłosz Gilga
-     * @since 1.0.2
-     */
-    public static String serializedLocalDate() {
-        return serializedLocalDate(now());
     }
 }
