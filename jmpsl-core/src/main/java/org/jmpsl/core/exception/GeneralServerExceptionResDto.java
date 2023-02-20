@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: InvalidDtoExceptionResDto.java
- * Last modified: 02/11/2022, 14:32
+ * File name: GeneralServerExceptionResDto.java
+ * Last modified: 20/02/2023, 01:14
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -19,26 +19,20 @@
 package org.jmpsl.core.exception;
 
 import lombok.Getter;
-import java.util.List;
 
 /**
- * Simple POJO class for jakarta validator errors from request's DTO objects. Rewirte to JSON in REST template.
+ * Simple POJO class for misc server errors returned to the client in JSON format. Rewirte to JSON in REST template.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
 @Getter
-public class InvalidDtoExceptionResDto extends ServerExceptionResDto {
+public class GeneralServerExceptionResDto extends ServerExceptionResDto {
 
-    private final List<String> errors;
+    private final String message;
 
-    public InvalidDtoExceptionResDto(ServerExceptionResDto res, List<String> errors) {
+    public GeneralServerExceptionResDto(ServerExceptionResDto res, String message) {
         super(res.getServletTimestampUTC(), res.getStatusCode(), res.getStatusText(), res.getPath(), res.getMethod());
-        this.errors = errors;
-    }
-
-    public InvalidDtoExceptionResDto(ServerExceptionResDto res, String error) {
-        super(res.getServletTimestampUTC(), res.getStatusCode(), res.getStatusText(), res.getPath(), res.getMethod());
-        this.errors = List.of(error);
+        this.message = message;
     }
 }
