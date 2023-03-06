@@ -17,23 +17,27 @@
  */
 
 dependencies {
-    implementation      project(':jmpsl-core')
-    implementation      project(':jmpsl-communication')
+    implementation          project(':jmpsl-core')
+    implementation          project(':jmpsl-communication')
 
-    implementation      "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
-    implementation      "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
-    implementation      "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
-    implementation      "com.google.code.gson:gson:${gsonVersion}"
-    implementation      "org.reflections:reflections:${reflectionsApiVersion}"
+    implementation          "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
 
-    implementation      "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
-    implementation      "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation          "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+    implementation          "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+    implementation          "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+    implementation          "com.google.code.gson:gson:${gsonVersion}"
+    implementation          "org.reflections:reflections:${reflectionsApiVersion}"
+    implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
 
-    api                 "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBinderVersion}"
-    runtimeOnly         "org.glassfish.jaxb:jaxb-runtime:${jakartaXmlBinderVersion}"
+    implementation          "jakarta.servlet:jakarta.servlet-api:${jakartaServletVersion}"
+    api                     "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBinderVersion}"
+    runtimeOnly             "org.glassfish.jaxb:jaxb-runtime:${jakartaXmlBinderVersion}"
 
-    implementation      "org.springframework.boot:spring-boot-starter:${springVersion}"
-    implementation      "org.springframework.boot:spring-boot-starter-web:${springVersion}"
-    implementation      "org.springframework.boot:spring-boot-starter-security:${springVersion}"
+    implementation          "org.springframework:spring-web:${springVersion}"
+    implementation          "org.springframework:spring-webmvc:${springVersion}"
+    implementation          "org.springframework:spring-context:${springVersion}"
+    implementation          "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    implementation          "org.springframework.security:spring-security-config:${springSecurityVersion}"
+
 }

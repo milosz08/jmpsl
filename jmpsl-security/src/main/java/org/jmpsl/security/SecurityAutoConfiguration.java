@@ -18,12 +18,11 @@
 
 package org.jmpsl.security;
 
-import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import static org.jmpsl.security.SecurityEnv.__SEC_PSW_ENC_STRENGTH;
 
 /**
  * Spring auto-configuration class for JMPSL Security module. Load {@link Environment} object, set BCrypt strength
@@ -38,7 +37,7 @@ public class SecurityAutoConfiguration {
     private final byte passwordStrength;
 
     public SecurityAutoConfiguration(Environment env) {
-        passwordStrength = __SEC_PSW_ENC_STRENGTH.getProperty(env, Byte.class);
+        passwordStrength = SecurityEnv.__SEC_PSW_ENC_STRENGTH.getProperty(env, Byte.class);
     }
 
     @Bean

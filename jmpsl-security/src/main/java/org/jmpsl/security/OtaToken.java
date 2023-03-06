@@ -20,11 +20,11 @@ package org.jmpsl.security;
 
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static org.jmpsl.security.SecurityEnv.__SEC_OTA_LENGTH;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
 /**
  * Spring Bean component class responsible for generated and checked One-Time-Access token. This type of token mostly
@@ -41,7 +41,7 @@ public class OtaToken {
     private final byte otaTokenLenght;
 
     public OtaToken(Environment env) {
-        this.otaTokenLenght = __SEC_OTA_LENGTH.getProperty(env, Byte.class);
+        this.otaTokenLenght = SecurityEnv.__SEC_OTA_LENGTH.getProperty(env, Byte.class);
     }
 
     /**
@@ -54,7 +54,7 @@ public class OtaToken {
      * @since 1.0.2
      */
     public String generateToken(int tokenLength) {
-        return randomAlphanumeric(tokenLength);
+        return RandomStringUtils.randomAlphanumeric(tokenLength);
     }
 
     /**

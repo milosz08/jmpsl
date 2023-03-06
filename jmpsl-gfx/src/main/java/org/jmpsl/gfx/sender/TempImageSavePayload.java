@@ -18,9 +18,10 @@
 
 package org.jmpsl.gfx.sender;
 
-import lombok.*;
+import lombok.Builder;
 
-import org.jmpsl.gfx.*;
+import org.jmpsl.gfx.ImageExtension;
+import org.jmpsl.gfx.IBufferedImagePayload;
 import org.jmpsl.file.hashcode.FileHashCodeGenerator;
 
 /**

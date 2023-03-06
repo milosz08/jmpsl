@@ -23,7 +23,9 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+
 
 /**
  * Simple server exception extending basic spring security {@link AuthenticationException} with {@link HttpStatus}

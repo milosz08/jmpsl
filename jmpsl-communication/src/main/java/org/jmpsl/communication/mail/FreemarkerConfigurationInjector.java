@@ -18,11 +18,13 @@
 
 package org.jmpsl.communication.mail;
 
-import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
-import static org.jmpsl.communication.CommunicationEnv.__COM_FREEMARKER_PATH;
+import org.jmpsl.communication.CommunicationEnv;
 
 /**
  * Spring auto-configuration class for creating freemarker templates configuration bean. To determinate freemarker
@@ -38,7 +40,7 @@ class FreemarkerConfigurationInjector {
     private final String freemarkerTemplatesDir;
 
     FreemarkerConfigurationInjector(Environment env) {
-        this.freemarkerTemplatesDir = __COM_FREEMARKER_PATH.getProperty(env);
+        this.freemarkerTemplatesDir = CommunicationEnv.__COM_FREEMARKER_PATH.getProperty(env);
     }
 
     @Primary

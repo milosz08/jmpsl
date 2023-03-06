@@ -18,24 +18,24 @@
 
 package org.jmpsl.security.resolver;
 
-import com.google.gson.Gson;
-import org.springframework.stereotype.Component;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.security.web.SecurityFilterChain;
+import com.google.gson.Gson;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 import java.io.IOException;
-import jakarta.servlet.http.*;
+import java.nio.charset.StandardCharsets;
 
-import org.jmpsl.communication.locale.LocaleMessageService;
+import org.jmpsl.core.exception.ServerExceptionResDto;
 import org.jmpsl.core.exception.GeneralServerExceptionResDto;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.jmpsl.core.exception.ServerExceptionResDto.generate;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import org.jmpsl.communication.locale.LocaleMessageService;
 
 /**
  * Custom access denied entry point for REST Spring boot security context. DI instance must be declared in Spring
@@ -57,10 +57,10 @@ public class AccessDeniedResolverForRest extends AccessDeniedHandlerImpl {
     @Override
     public void handle(HttpServletRequest req, HttpServletResponse res, AccessDeniedException ex) throws IOException {
         final String message = localeMessageService.getMessage("jmpsl.security.AuthorizationException");
-        final var resDto = new GeneralServerExceptionResDto(generate(FORBIDDEN, req), message);
-        res.setStatus(FORBIDDEN.value());
-        res.setContentType(APPLICATION_JSON_VALUE);
-        res.setCharacterEncoding(UTF_8.toString());
+        final var resDto = new GeneralServerExceptionResDto(ServerExceptionResDto.generate(HttpStatus.FORBIDDEN, req), message);
+        res.setStatus(HttpStatus.FORBIDDEN.value());
+        res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         new Gson().toJson(resDto, GeneralServerExceptionResDto.class, res.getWriter());
     }
 }

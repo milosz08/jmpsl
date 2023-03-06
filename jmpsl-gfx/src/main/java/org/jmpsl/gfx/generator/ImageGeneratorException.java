@@ -18,8 +18,10 @@
 
 package org.jmpsl.gfx.generator;
 
-import org.jmpsl.core.exception.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import org.springframework.http.HttpStatus;
+
+import org.jmpsl.core.exception.RestServiceServerException;
+import org.jmpsl.core.exception.RestServiceAuthServerException;
 
 /**
  * Custom exceptions (extends {@link RestServiceServerException}) used in image generator JMPS library module.
@@ -38,7 +40,7 @@ public class ImageGeneratorException {
      */
     public static class ImageNotSupportedDimensionsException extends RestServiceServerException {
         public ImageNotSupportedDimensionsException() {
-            super(BAD_REQUEST, "jmpsl.gfx.exception.ImageNotSupportedDimensionsException");
+            super(HttpStatus.BAD_REQUEST, "jmpsl.gfx.exception.ImageNotSupportedDimensionsException");
         }
     }
 
@@ -51,7 +53,7 @@ public class ImageGeneratorException {
      */
     public static class FontSizeNotSupportedException extends RestServiceServerException {
         public FontSizeNotSupportedException() {
-            super(BAD_REQUEST, "jmpsl.gfx.exception.FontSizeNotSupportedException");
+            super(HttpStatus.BAD_REQUEST, "jmpsl.gfx.exception.FontSizeNotSupportedException");
         }
     }
 
@@ -64,7 +66,7 @@ public class ImageGeneratorException {
      */
     public static class TooMuchInitialsCharactersException extends RestServiceServerException {
         public TooMuchInitialsCharactersException() {
-            super(BAD_REQUEST, "jmpsl.gfx.exception.TooMuchInitialsCharactersException");
+            super(HttpStatus.BAD_REQUEST, "jmpsl.gfx.exception.TooMuchInitialsCharactersException");
         }
     }
 

@@ -18,11 +18,12 @@
 
 package org.jmpsl.security.user;
 
-import java.lang.annotation.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import java.lang.annotation.Target;
+import java.lang.annotation.Retention;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.RetentionPolicy;
 
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 /**
  * Annotation used in controller REST entry methods for getting authentication principals from Spring security
@@ -31,8 +32,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Target(PARAMETER)
-@Retention(RUNTIME)
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
 @AuthenticationPrincipal
 public @interface CurrentUser {
 }

@@ -18,12 +18,10 @@
 
 package org.jmpsl.file.hashcode;
 
+import org.springframework.util.Assert;
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.regex.Pattern;
-
-import static org.springframework.util.Assert.notNull;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-
-import static org.jmpsl.file.hashcode.HashCodeConfigurationSettings.*;
 
 /**
  * Class storing methods responsible for generate hash (random characters blocks separated with declared separator) and
@@ -50,7 +48,7 @@ public class FileHashCodeGenerator {
     public static String generateHashCode(char separator, byte countOfBlocks, byte blockLength) {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < countOfBlocks; i++) {
-            builder.append(randomAlphanumeric(blockLength));
+            builder.append(RandomStringUtils.randomAlphanumeric(blockLength));
             if (i == countOfBlocks - 1) break;
             builder.append(separator);
         }
@@ -65,7 +63,8 @@ public class FileHashCodeGenerator {
      * @since 1.0.2
      */
     public static String generateHashCode() {
-        return generateHashCode(getHashCodeSeparator(), getHashSeqBlockCount(), getHashSeqBlockLenght());
+        return generateHashCode(HashCodeConfigurationSettings.getHashCodeSeparator(),
+            HashCodeConfigurationSettings.getHashSeqBlockCount(),HashCodeConfigurationSettings.getHashSeqBlockLenght());
     }
 
     /**
@@ -82,7 +81,7 @@ public class FileHashCodeGenerator {
      * @throws IllegalArgumentException if hashCode parameter is null
      */
     public static boolean hashCodeIsValid(String hashCode, char separator, byte countOfBlocks, byte blockLength) {
-        notNull(hashCode, "Hash code parameter cannot be null.");
+        Assert.notNull(hashCode, "Hash code parameter cannot be null.");
         final StringBuilder regexPattern = new StringBuilder();
         for (int i = 0; i < countOfBlocks; i++) {
             regexPattern.append(String.format("[a-zA-Z0-9]{%s}", blockLength));
@@ -104,6 +103,7 @@ public class FileHashCodeGenerator {
      * @throws IllegalArgumentException if hashCode parameter is null
      */
     public static boolean hashCodeIsValid(String hashCode) {
-        return hashCodeIsValid(hashCode, getHashCodeSeparator(), getHashSeqBlockCount(), getHashSeqBlockLenght());
+        return hashCodeIsValid(hashCode, HashCodeConfigurationSettings.getHashCodeSeparator(),
+            HashCodeConfigurationSettings.getHashSeqBlockCount(), HashCodeConfigurationSettings.getHashSeqBlockLenght());
     }
 }

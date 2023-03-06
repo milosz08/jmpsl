@@ -18,10 +18,9 @@
 
 package org.jmpsl.communication.locale;
 
-import java.util.Map;
+import org.springframework.util.Assert;
 
-import static java.lang.String.valueOf;
-import static org.springframework.util.Assert.notNull;
+import java.util.Map;
 
 /**
  * Locale class with utilities static method.
@@ -48,10 +47,10 @@ public class LocaleUtil {
      * @throws IllegalArgumentException if passed message or variables are null
      */
     public static String extractVariablesFromMessage(String message, Map<String, Object> variables) {
-        notNull(message, "Message object cannot be null");
-        notNull(variables, "Variables map cannot be null");
+        Assert.notNull(message, "Message object cannot be null");
+        Assert.notNull(variables, "Variables map cannot be null");
         for (final Map.Entry<String, Object> variable : variables.entrySet()) {
-            message = message.replace("{{" + variable.getKey() + "}}", valueOf(variable.getValue()));
+            message = message.replace("{{" + variable.getKey() + "}}", String.valueOf(variable.getValue()));
         }
         return message;
     }

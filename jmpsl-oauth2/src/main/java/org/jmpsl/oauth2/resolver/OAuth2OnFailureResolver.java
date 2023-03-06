@@ -18,23 +18,24 @@
 
 package org.jmpsl.oauth2.resolver;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-import jakarta.servlet.http.*;
 import java.io.IOException;
 
-import java.util.*;
+import java.util.Set;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.jmpsl.oauth2.OAuth2Cookie;
 import org.jmpsl.core.ServletPathUtil;
 import org.jmpsl.core.cookie.CookieUtil;
-
-import static org.jmpsl.oauth2.OAuth2Cookie.*;
 
 /**
  * Custom OAuth2 resolver run on failure OAuth2 authentication. Generate redirect URL (base before created cookies
@@ -44,21 +45,22 @@ import static org.jmpsl.oauth2.OAuth2Cookie.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Component
 public class OAuth2OnFailureResolver extends SimpleUrlAuthenticationFailureHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2OnFailureResolver.class);
-
     private static final OAuth2Cookie[] COOKIES_TO_DELETE = {
-            SESSION_REMEMBER, AFTER_LOGIN_REDIRECT_URI, AFTER_SIGNUP_REDIRECT_URI
+        OAuth2Cookie.SESSION_REMEMBER, OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI, OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI
     };
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse res, AuthenticationException ex)
             throws IOException {
 
-        final String targetUrl = CookieUtil.getCookieValue(req, AFTER_LOGIN_REDIRECT_URI.getCookieName()).orElse("/");
-        LOGGER.error("OAuth2 authorization failure: Error: {}", ex.getMessage());
+        final String targetUrl = CookieUtil
+            .getCookieValue(req, OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI.getCookieName())
+            .orElse("/");
+        log.error("OAuth2 authorization failure: Error: {}", ex.getMessage());
         deleteOAuth2AuthorizationRequestCookies(req, res);
 
         final String redirectPath = ServletPathUtil.redirectErrorUri(ex.getLocalizedMessage(), targetUrl).toString();
@@ -75,8 +77,8 @@ public class OAuth2OnFailureResolver extends SimpleUrlAuthenticationFailureHandl
      */
     private void deleteOAuth2AuthorizationRequestCookies(final HttpServletRequest req, final HttpServletResponse res) {
         final Set<String> cookiesToDelete = Arrays.stream(COOKIES_TO_DELETE)
-                .map(OAuth2Cookie::getCookieName)
-                .collect(Collectors.toSet());
+            .map(OAuth2Cookie::getCookieName)
+            .collect(Collectors.toSet());
         CookieUtil.deleteMultipleCookies(req, res, cookiesToDelete);
     }
 }

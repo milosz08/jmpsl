@@ -18,8 +18,9 @@
 
 package org.jmpsl.gfx.generator;
 
-import lombok.*;
-import java.awt.*;
+import lombok.Builder;
+
+import java.awt.Color;
 
 import org.jmpsl.gfx.IBufferedImagePayload;
 import org.jmpsl.file.hashcode.FileHashCodeGenerator;

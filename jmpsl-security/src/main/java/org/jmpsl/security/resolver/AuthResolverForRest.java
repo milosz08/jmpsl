@@ -20,21 +20,22 @@ package org.jmpsl.security.resolver;
 
 import com.google.gson.Gson;
 
-import org.springframework.security.web.*;
-import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.core.AuthenticationException;
 
-import org.jmpsl.communication.locale.LocaleMessageService;
-import org.jmpsl.core.exception.GeneralServerExceptionResDto;
-
 import java.io.IOException;
-import jakarta.servlet.http.*;
+import java.nio.charset.StandardCharsets;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.jmpsl.core.exception.ServerExceptionResDto.generate;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import org.jmpsl.core.exception.ServerExceptionResDto;
+import org.jmpsl.core.exception.GeneralServerExceptionResDto;
+import org.jmpsl.communication.locale.LocaleMessageService;
 
 /**
  * Custom authentication entry point for REST Spring boot security context. DI instance must be declared in Spring
@@ -56,10 +57,10 @@ public class AuthResolverForRest implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException ex) throws IOException {
         final String message = localeMessageService.getMessage("jmpsl.security.AuthenticationException");
-        final var resDto = new GeneralServerExceptionResDto(generate(UNAUTHORIZED, req), message);
-        res.setStatus(UNAUTHORIZED.value());
-        res.setContentType(APPLICATION_JSON_VALUE);
-        res.setCharacterEncoding(UTF_8.toString());
+        final var resDto = new GeneralServerExceptionResDto(ServerExceptionResDto.generate(HttpStatus.UNAUTHORIZED, req), message);
+        res.setStatus(HttpStatus.UNAUTHORIZED.value());
+        res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        res.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         new Gson().toJson(resDto, GeneralServerExceptionResDto.class, res.getWriter());
     }
 }

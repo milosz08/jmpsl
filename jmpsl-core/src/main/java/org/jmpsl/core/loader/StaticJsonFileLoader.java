@@ -18,13 +18,15 @@
 
 package org.jmpsl.core.loader;
 
-import org.slf4j.*;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.*;
-import java.util.regex.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Custom class available loading static json file and parsing to simple POJO class based T type sended in class
@@ -34,9 +36,9 @@ import java.util.regex.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StaticJsonFileLoader.class);
     private static final Pattern JSON_PATTERN = Pattern.compile(".*\\.json");
 
     private T loadedData;
@@ -85,10 +87,10 @@ public class StaticJsonFileLoader<T extends IStaticJsonLoaderModel> {
             try (final InputStream inputStream = StaticJsonFileLoader.class.getResourceAsStream(filePath + fileName)) {
                 if (inputStream == null) throw new IOException();
                 loadedData = objectMapper.readValue(new String(inputStream.readAllBytes()), mappingTypeClazz);
-                LOGGER.info("Static data file: {} was loaded successfuly", fileName);
+                log.info("Static data file: {} was loaded successfuly", fileName);
             }
         } catch (IOException ex) {
-            LOGGER.error("File: {} not exist or is corrupted or is not JSON file", fileName);
+            log.error("File: {} not exist or is corrupted or is not JSON file", fileName);
         }
     }
 

@@ -21,8 +21,9 @@ package org.jmpsl.security.user;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.io.*;
 import java.util.List;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Spring Security User extended class with implementation of {@link IAuthUserModel} field. Use this class for
@@ -38,7 +39,7 @@ public class AuthUser extends User implements Serializable {
 
     public AuthUser(IAuthUserModel user, List<SimpleGrantedAuthority> authorities) {
         super(user.getAuthUsername(), user.getAuthPassword(), user.isAccountEnabled(), user.isAccountNotExpired(),
-                user.isCredentialsNotExpired(), user.isAccountNonLocked(), authorities);
+            user.isCredentialsNotExpired(), user.isAccountNonLocked(), authorities);
         this.userModel = user;
     }
 

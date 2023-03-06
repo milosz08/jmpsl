@@ -19,9 +19,11 @@
 package org.jmpsl.core.exception;
 
 import lombok.Getter;
+
 import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Simple server exception extending basic {@link RuntimeException} with {@link HttpStatus} parameter passed in

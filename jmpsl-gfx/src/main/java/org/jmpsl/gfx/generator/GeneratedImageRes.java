@@ -18,7 +18,7 @@
 
 package org.jmpsl.gfx.generator;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Simple POJO record storing generated image bytes representation and background as {@link Color} instance.

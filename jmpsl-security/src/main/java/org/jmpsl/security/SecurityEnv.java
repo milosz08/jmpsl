@@ -18,11 +18,14 @@
 
 package org.jmpsl.security;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
+
 import org.springframework.core.env.Environment;
 
-import org.jmpsl.core.env.*;
-import static org.jmpsl.core.env.EnvPropertyHandler.getPostTypedProperty;
+import org.jmpsl.core.env.EnvDataPayload;
+import org.jmpsl.core.env.IEnvEnumExtender;
+import org.jmpsl.core.env.EnvPropertyHandler;
 
 /**
  * Enum responsible for storing all environment variables from <code>application.properties</code> file for JMPSL
@@ -106,11 +109,11 @@ public enum SecurityEnv implements IEnvEnumExtender {
 
     @Override
     public String getProperty(Environment env) {
-        return getPostTypedProperty(new EnvDataPayload(env, name, defaultValue, isRequired), String.class);
+        return EnvPropertyHandler.getPostTypedProperty(new EnvDataPayload(env, name, defaultValue, isRequired), String.class);
     }
 
     @Override
     public <T> T getProperty(Environment env, Class<T> targetClazz) {
-        return getPostTypedProperty(new EnvDataPayload(env, name, defaultValue, isRequired), targetClazz);
+        return EnvPropertyHandler.getPostTypedProperty(new EnvDataPayload(env, name, defaultValue, isRequired), targetClazz);
     }
 }

@@ -18,7 +18,8 @@
 
 package org.jmpsl.core.env;
 
-import lombok.*;
+import lombok.Data;
+import lombok.AllArgsConstructor;
 
 /**
  * Simple POJO class storing available single casted property datatype.

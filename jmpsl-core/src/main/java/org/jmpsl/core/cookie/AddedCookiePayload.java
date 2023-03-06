@@ -18,7 +18,7 @@
 
 package org.jmpsl.core.cookie;
 
-import lombok.*;
+import lombok.Builder;
 
 /**
  * POJO payload record for storing adding cookie value. Include cookie name, cookie value and maxAge property.

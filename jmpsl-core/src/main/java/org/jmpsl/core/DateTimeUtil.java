@@ -18,14 +18,15 @@
 
 package org.jmpsl.core;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
-import java.time.*;
-import java.time.format.*;
+import org.springframework.util.Assert;
 
-import static org.springframework.util.Assert.notNull;
-import static java.time.format.DateTimeFormatter.ofPattern;
+import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Utility class added additional static methods for management time in servlet applications. Include adding minutes,
@@ -36,10 +37,10 @@ import static java.time.format.DateTimeFormatter.ofPattern;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class DateTimeUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeUtil.class);
-    private static final DateTimeFormatter DATE_FORMATTER = ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private DateTimeUtil() {
     }
@@ -57,11 +58,11 @@ public class DateTimeUtil {
      * @throws IllegalArgumentException if passed date string notation is null
      */
     public static Optional<LocalDate> deserializedLocalDate(String date) {
-        notNull(date, "Passed date string notation cannot be null.");
+        Assert.notNull(date, "Passed date string notation cannot be null.");
         try {
             return Optional.of(LocalDate.parse(date, DATE_FORMATTER));
         } catch (DateTimeParseException ex) {
-            LOGGER.error("Unable to parse date string to object base date string parameter: {}" + date);
+            log.error("Unable to parse date string to object base date string parameter: {}" + date);
         }
         return Optional.empty();
     }

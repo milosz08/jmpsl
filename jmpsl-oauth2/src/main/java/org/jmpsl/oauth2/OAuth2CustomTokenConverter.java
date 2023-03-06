@@ -20,13 +20,14 @@ package org.jmpsl.oauth2;
 
 import org.springframework.util.StringUtils;
 import org.springframework.core.convert.converter.Converter;
+
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 
 import java.util.*;
-import java.util.stream.*;
-
-import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * OAuth2 custom converter available to convert source parameters with extracting self-signed JWT token and place in
@@ -37,8 +38,11 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
  */
 public class OAuth2CustomTokenConverter implements Converter<Map<String, Object>, OAuth2AccessTokenResponse> {
 
-    private final TokenType defAccessToken = TokenType.BEARER;
-    private final String[] tokenParameters = { ACCESS_TOKEN, TOKEN_TYPE, EXPIRES_IN, REFRESH_TOKEN, SCOPE };
+    private final OAuth2AccessToken.TokenType defAccessToken = OAuth2AccessToken.TokenType.BEARER;
+    private final String[] tokenParameters = {
+        OAuth2ParameterNames.ACCESS_TOKEN, OAuth2ParameterNames.TOKEN_TYPE, OAuth2ParameterNames.EXPIRES_IN,
+        OAuth2ParameterNames.REFRESH_TOKEN, OAuth2ParameterNames.SCOPE
+    };
 
     /**
      * Overrided method responsible for generating OAuth2 {@link OAuth2AccessTokenResponse} object with self-signed
@@ -51,26 +55,26 @@ public class OAuth2CustomTokenConverter implements Converter<Map<String, Object>
      */
     @Override
     public OAuth2AccessTokenResponse convert(final Map<String, Object> sourceParameters) {
-        final String accessToken = (String) sourceParameters.get(ACCESS_TOKEN);
-        final int expiredAfter = (Integer) sourceParameters.get(EXPIRES_IN);
+        final String accessToken = (String) sourceParameters.get(OAuth2ParameterNames.ACCESS_TOKEN);
+        final int expiredAfter = (Integer) sourceParameters.get(OAuth2ParameterNames.EXPIRES_IN);
 
         Set<String> scopes = Collections.emptySet();
-        if (sourceParameters.containsKey(SCOPE)) {
-            final String scope = (String) sourceParameters.get(SCOPE);
+        if (sourceParameters.containsKey(OAuth2ParameterNames.SCOPE)) {
+            final String scope = (String) sourceParameters.get(OAuth2ParameterNames.SCOPE);
             scopes = Arrays.stream(StringUtils.delimitedListToStringArray(scope, " ")).collect(Collectors.toSet());
         }
 
         final Map<String, Object> additionalParameters = new LinkedHashMap<>();
         sourceParameters.entrySet().stream()
-                .filter(e -> !getTokenResponseParameters().contains(e.getKey()))
-                .forEach(e -> additionalParameters.put(e.getKey(), e.getValue()));
+            .filter(e -> !getTokenResponseParameters().contains(e.getKey()))
+            .forEach(e -> additionalParameters.put(e.getKey(), e.getValue()));
 
         return OAuth2AccessTokenResponse.withToken(accessToken)
-                .tokenType(defAccessToken)
-                .expiresIn(expiredAfter)
-                .scopes(scopes)
-                .additionalParameters(additionalParameters)
-                .build();
+            .tokenType(defAccessToken)
+            .expiresIn(expiredAfter)
+            .scopes(scopes)
+            .additionalParameters(additionalParameters)
+            .build();
     }
 
     /**

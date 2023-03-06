@@ -18,26 +18,26 @@
 
 package org.jmpsl.oauth2.service;
 
-import org.springframework.http.*;
-import org.springframework.core.env.Environment;
-import org.springframework.security.oauth2.client.userinfo.*;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-
 import org.springframework.util.Assert;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
-import org.jmpsl.oauth2.OAuth2Supplier;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 
 import java.util.*;
 
-import static java.util.Objects.requireNonNull;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import org.jmpsl.oauth2.OAuth2Supplier;
+import org.jmpsl.oauth2.OAuth2AutoConfigurationLoader;
 
-import static org.jmpsl.oauth2.OAuth2Supplier.*;
 import static org.jmpsl.oauth2.OAuth2Exception.OAuth2AuthenticationProcessingException;
-import static org.jmpsl.oauth2.OAuth2AutoConfigurationLoader.getAvailableOAuth2Suppliers;
 
 /**
  * Service for OAuth2 Spring Security verificator. To implemented in Spring Security filterChain method,
@@ -48,7 +48,7 @@ import static org.jmpsl.oauth2.OAuth2AutoConfigurationLoader.getAvailableOAuth2S
  */
 public class AppOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final Set<OAuth2Supplier> availableSuppliers = getAvailableOAuth2Suppliers();
+    private final Set<OAuth2Supplier> availableSuppliers = OAuth2AutoConfigurationLoader.getAvailableOAuth2Suppliers();
 
     private final Environment environment;
     private final IOAuth2LoaderService oAuth2LoaderService;
@@ -64,8 +64,8 @@ public class AppOAuth2UserService extends DefaultOAuth2UserService {
         try {
             final Map<String, Object> attributes = new HashMap<>(oAuth2User.getAttributes());
             final String supplierRaw = userRequest.getClientRegistration().getRegistrationId();
-            final OAuth2Supplier supplier = checkIfSupplierExist(supplierRaw, availableSuppliers);
-            if (supplier.equals(LINKEDIN)) {
+            final OAuth2Supplier supplier = OAuth2Supplier.checkIfSupplierExist(supplierRaw, availableSuppliers);
+            if (supplier.equals(OAuth2Supplier.LINKEDIN)) {
                 populateEmailAddressLinkedIn(userRequest, attributes);
             }
 
@@ -94,10 +94,10 @@ public class AppOAuth2UserService extends DefaultOAuth2UserService {
         Assert.notNull(emailEndpointUri, "LinkedIn email address end point required in application.properties file.");
         final RestTemplate restTemplate = new RestTemplate();
         final HttpHeaders headers = new HttpHeaders();
-        headers.add(AUTHORIZATION, "Bearer " + userRequest.getAccessToken().getTokenValue());
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + userRequest.getAccessToken().getTokenValue());
         final HttpEntity<?> entity = new HttpEntity<>("", headers);
-        final ResponseEntity<Map> response = restTemplate.exchange(emailEndpointUri, GET, entity, Map.class);
-        final List<?> list = (List<?>) requireNonNull(response.getBody()).get("elements");
+        final ResponseEntity<Map> response = restTemplate.exchange(emailEndpointUri, HttpMethod.GET, entity, Map.class);
+        final List<?> list = (List<?>) Objects.requireNonNull(response.getBody()).get("elements");
         final Map map = (Map<?, ?>) ((Map<?, ?>) list.get(0)).get("handle~");
         attrs.putAll(map);
     }

@@ -19,11 +19,10 @@
 package org.jmpsl.core.mapper.converter;
 
 import org.modelmapper.AbstractConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import org.jmpsl.core.mapper.MappingConverter;
-
-import static org.apache.commons.lang3.StringUtils.capitalize;
 
 /**
  * Custom converter allows to capitalized first letter in mapping string A object.
@@ -37,6 +36,6 @@ public class CapitalizedFirstLetterConverter extends AbstractConverter<String, S
 
     @Override
     public String convert(String source) {
-        return capitalize(source);
+        return StringUtils.capitalize(source);
     }
 }

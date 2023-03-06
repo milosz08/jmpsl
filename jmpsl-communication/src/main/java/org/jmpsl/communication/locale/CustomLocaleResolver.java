@@ -24,9 +24,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
 
-import static java.util.Locale.*;
 
 /**
  * External configuration class for resolve locale by Http request header "Accept-Language". If header does not exist,
@@ -47,9 +47,9 @@ public class CustomLocaleResolver extends AcceptHeaderLocaleResolver {
     @Override
     public Locale resolveLocale(HttpServletRequest req) {
         final String acceptLang = req.getHeader("Accept-Language");
-        if (StringUtils.isEmpty(acceptLang)) return getDefault();
+        if (StringUtils.isEmpty(acceptLang)) return Locale.getDefault();
         final List<Locale.LanguageRange> localeRangeList = Locale.LanguageRange.parse(acceptLang);
-        final Locale currentLocale = lookup(localeRangeList, supportedLocales);
+        final Locale currentLocale = Locale.lookup(localeRangeList, supportedLocales);
         LocaleContextHolder.setLocale(currentLocale);
         return currentLocale;
     }

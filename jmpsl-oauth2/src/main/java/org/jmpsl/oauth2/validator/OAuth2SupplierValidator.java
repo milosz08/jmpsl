@@ -18,13 +18,16 @@
 
 package org.jmpsl.oauth2.validator;
 
-import org.slf4j.*;
-import jakarta.validation.*;
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.jmpsl.oauth2.*;
+import org.jmpsl.oauth2.OAuth2Supplier;
+import org.jmpsl.oauth2.OAuth2AutoConfigurationLoader;
 
 /**
  * Custom Javax Validator responsible for validate OAuth2 supplier passed in DTOs (as string). Validator checking
@@ -33,9 +36,9 @@ import org.jmpsl.oauth2.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class OAuth2SupplierValidator implements ConstraintValidator<ValidateOAuth2Supplier, String> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2SupplierValidator.class);
     private static final Set<OAuth2Supplier> SUPPLIERS = OAuth2AutoConfigurationLoader.getAvailableOAuth2Suppliers();
 
     private Set<String> availableSuppliers;
@@ -58,7 +61,7 @@ public class OAuth2SupplierValidator implements ConstraintValidator<ValidateOAut
     @Override
     public boolean isValid(String supplierName, ConstraintValidatorContext context) {
         if (!availableSuppliers.contains(supplierName)) {
-            LOGGER.error("Attempt refer to unexisting OAuth2 credentials supplier name. Supplier name: {}", supplierName);
+            log.error("Attempt refer to unexisting OAuth2 credentials supplier name. Supplier name: {}", supplierName);
             return false;
         }
         return true;

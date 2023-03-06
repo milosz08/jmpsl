@@ -18,11 +18,16 @@
 
 package org.jmpsl.communication.mail;
 
-import lombok.*;
-import java.util.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.ToString;
 
-import static java.util.Objects.isNull;
-import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Simple POJO class responsible for stored all data for sending email, including sender, recievier and additional
@@ -47,9 +52,9 @@ public class MailRequestDto {
         List<ResourceDto> attachments
     ) {
         String exMessage = "";
-        if (isNull(sendTo) || sendTo.isEmpty()) exMessage = "List of SendTo parameters cannot be null or empty.";
-        if (isNull(sendFrom) || sendFrom.isBlank()) exMessage = "SendFrom parameter cannot be null or empty.";
-        if (isEmpty(exMessage)) throw new IllegalStateException(exMessage);
+        if (Objects.isNull(sendTo) || sendTo.isEmpty()) exMessage = "List of SendTo parameters cannot be null or empty.";
+        if (Objects.isNull(sendFrom) || sendFrom.isBlank()) exMessage = "SendFrom parameter cannot be null or empty.";
+        if (ObjectUtils.isEmpty(exMessage)) throw new IllegalStateException(exMessage);
         this.sendTo = sendTo;
         this.sendFrom = sendFrom;
         this.messageSubject = messageSubject;

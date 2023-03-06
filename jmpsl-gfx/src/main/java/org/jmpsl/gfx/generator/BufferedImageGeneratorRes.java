@@ -18,7 +18,8 @@
 
 package org.jmpsl.gfx.generator;
 
-import java.awt.*;
+import java.awt.Color;
+
 import org.jmpsl.gfx.sender.BufferedImageRes;
 
 /**

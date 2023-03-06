@@ -18,11 +18,19 @@
 
 package org.jmpsl.core.cookie;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.util.SerializationUtils;
 
-import java.io.*;
-import java.util.*;
-import jakarta.servlet.http.*;
+import java.util.Set;
+import java.util.Base64;
+import java.util.Optional;
+import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+
 
 /**
  * Class with static method implementing cookie basic servlet management. Method available add cookie, get cookie and
@@ -152,7 +160,7 @@ public class CookieUtil {
      */
     public static <T> T deserializeCookieValue(Cookie cookie, Class<T> cookieClazz) {
         final byte[] bytes = Base64.getUrlDecoder().decode(cookie.getValue());
-        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+        try (final ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
             return cookieClazz.cast(ois.readObject());
         } catch (IOException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);

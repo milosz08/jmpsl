@@ -18,27 +18,30 @@
 
 package org.jmpsl.oauth2.resolver;
 
-import org.slf4j.*;
-import jakarta.servlet.http.*;
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-import java.util.*;
 import java.net.URI;
-import java.io.IOException;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.io.IOException;
 
+import org.jmpsl.oauth2.OAuth2Env;
 import org.jmpsl.oauth2.OAuth2Cookie;
+import org.jmpsl.oauth2.user.OAuth2UserExtender;
 import org.jmpsl.core.ServletPathUtil;
 import org.jmpsl.core.cookie.CookieUtil;
 import org.jmpsl.security.user.IAuthUserModel;
-import org.jmpsl.oauth2.user.OAuth2UserExtender;
 
-import static org.jmpsl.oauth2.OAuth2Cookie.*;
-import static org.jmpsl.oauth2.OAuth2Env.__OAT_REDIR_URIS;
 import static org.jmpsl.oauth2.OAuth2Exception.OAuth2UriNotSupportedException;
 
 /**
@@ -52,19 +55,18 @@ import static org.jmpsl.oauth2.OAuth2Exception.OAuth2UriNotSupportedException;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2OnFailureResolver.class);
 
     private final String[] redirectUris;
     private final IOAuth2TokenGenerator tokenGenerator;
 
     private static final OAuth2Cookie[] COOKIES_TO_DELETE = {
-            SESSION_REMEMBER, AFTER_LOGIN_REDIRECT_URI, AFTER_SIGNUP_REDIRECT_URI
+        OAuth2Cookie.SESSION_REMEMBER, OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI, OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI
     };
 
     public OAuth2OnSuccessfulResolver(Environment env, IOAuth2TokenGenerator tokenGenerator) {
-        final String redirectUris = __OAT_REDIR_URIS.getProperty(env);
+        final String redirectUris = OAuth2Env.__OAT_REDIR_URIS.getProperty(env);
         this.redirectUris = redirectUris.split(",");
         this.tokenGenerator = tokenGenerator;
     }
@@ -75,13 +77,13 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
 
         final String targetUrl = determineTargetUrl(req, res, auth);
         if (res.isCommitted()) {
-            LOGGER.info("Response has already been committed. Unable to redirect to address: {}", targetUrl);
+            log.info("Response has already been committed. Unable to redirect to address: {}", targetUrl);
             return;
         }
         clearAuthenticationAttributes(req);
         final Set<String> cookiesToDelete = Arrays.stream(COOKIES_TO_DELETE)
-                .map(OAuth2Cookie::getCookieName)
-                .collect(Collectors.toSet());
+            .map(OAuth2Cookie::getCookieName)
+            .collect(Collectors.toSet());
         CookieUtil.deleteMultipleCookies(req, res, cookiesToDelete);
         getRedirectStrategy().sendRedirect(req, res, targetUrl);
     }
@@ -95,10 +97,10 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
 
         if (userModel.isAccountEnabled()) {
             return ServletPathUtil.redirectTokenUri(token,checkIfRedirectUriIsValidAndReturn(req,
-                    AFTER_LOGIN_REDIRECT_URI.getCookieName()), credentialsSupplier).toString();
+                OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI.getCookieName()), credentialsSupplier).toString();
         }
         return ServletPathUtil.redirectTokenUri(token, checkIfRedirectUriIsValidAndReturn(req,
-                AFTER_SIGNUP_REDIRECT_URI.getCookieName()), credentialsSupplier).toString();
+            OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI.getCookieName()), credentialsSupplier).toString();
     }
 
     /**
@@ -114,7 +116,7 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
         return Arrays.stream(redirectUris).noneMatch(reqUri -> {
             final URI authorizedUri = URI.create(reqUri);
             return authorizedUri.getHost().equalsIgnoreCase(redirectClientUri.getHost()) &&
-                    authorizedUri.getPort() == redirectClientUri.getPort();
+                authorizedUri.getPort() == redirectClientUri.getPort();
         });
     }
 
@@ -131,7 +133,7 @@ public class OAuth2OnSuccessfulResolver extends SimpleUrlAuthenticationSuccessHa
     private String checkIfRedirectUriIsValidAndReturn(final HttpServletRequest req, final String cookieName) {
         final Optional<String> redirectUri = CookieUtil.getCookieValue(req, cookieName);
         if (redirectUri.isEmpty() || checkIfUserIsAuthorizedViaRequestUri(redirectUri.get())) {
-            LOGGER.error("Attempt to authenticate via OAuth2 by not supported URI.");
+            log.error("Attempt to authenticate via OAuth2 by not supported URI.");
             throw new OAuth2UriNotSupportedException();
         }
         return redirectUri.orElse(getDefaultTargetUrl());

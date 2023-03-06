@@ -19,6 +19,7 @@
 package org.jmpsl.core.exception;
 
 import lombok.Getter;
+
 import java.util.List;
 
 /**

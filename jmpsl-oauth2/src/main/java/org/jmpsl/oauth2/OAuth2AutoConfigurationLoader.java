@@ -18,14 +18,16 @@
 
 package org.jmpsl.oauth2;
 
-import org.slf4j.*;
-import org.springframework.context.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.stream.Collectors;
-
-import static org.jmpsl.oauth2.OAuth2Env.__OAT_SUPPLIERS;
 
 /**
  * OAuth2 auto-configuration loader into spring context. Provide getter for returning available OAuth2 suppliers in selected
@@ -37,21 +39,20 @@ import static org.jmpsl.oauth2.OAuth2Env.__OAT_SUPPLIERS;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Configuration
 public class OAuth2AutoConfigurationLoader {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2AutoConfigurationLoader.class);
 
     private static Set<OAuth2Supplier> availableOAuth2Suppliers = new HashSet<>();
     private final Environment env;
 
     OAuth2AutoConfigurationLoader(Environment env) {
         this.env = env;
-        final String suppliers = __OAT_SUPPLIERS.getProperty(env);
+        final String suppliers = OAuth2Env.__OAT_SUPPLIERS.getProperty(env);
         availableOAuth2Suppliers = Arrays.stream(suppliers.split(","))
                 .map(OAuth2Supplier::checkIfSupplierIsValid)
                 .collect(Collectors.toSet());
-        LOGGER.info("Successful loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);
+        log.info("Successful loaded OAuth2 available providers. Loaded providers: [ {} ]", suppliers);
     }
 
     public static Set<OAuth2Supplier> getAvailableOAuth2Suppliers() {

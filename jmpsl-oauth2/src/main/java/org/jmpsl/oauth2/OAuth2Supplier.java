@@ -18,14 +18,16 @@
 
 package org.jmpsl.oauth2;
 
-import lombok.*;
-import org.slf4j.*;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.jmpsl.oauth2.OAuth2Exception.*;
 import org.jmpsl.core.converter.IBasicEnumConverter;
+
+import static org.jmpsl.oauth2.OAuth2Exception.OAuth2SupplierNotImplementedException;
 
 /**
  * Enum class storing all credentials suppliers via OAuth2 service.
@@ -33,6 +35,7 @@ import org.jmpsl.core.converter.IBasicEnumConverter;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Getter
 @AllArgsConstructor
 public enum OAuth2Supplier implements IBasicEnumConverter {
@@ -72,7 +75,6 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      */
     LOCAL("local");
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2Supplier.class);
     private final String supplierName;
 
     /**
@@ -88,12 +90,12 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      */
     public static OAuth2Supplier checkIfSupplierIsValid(String supplierName) {
         return Stream.of(OAuth2Supplier.values())
-                .filter(s -> s.supplierName.equals(supplierName))
-                .findFirst()
-                .orElseThrow(() -> {
-                    LOGGER.error("Passed supplier: {} is not valid credentials supplier name.", supplierName);
-                    throw new OAuth2SupplierNotImplementedException();
-                });
+            .filter(s -> s.supplierName.equals(supplierName))
+            .findFirst()
+            .orElseThrow(() -> {
+                log.error("Passed supplier: {} is not valid credentials supplier name.", supplierName);
+                throw new OAuth2SupplierNotImplementedException();
+            });
     }
 
     /**
@@ -108,12 +110,12 @@ public enum OAuth2Supplier implements IBasicEnumConverter {
      */
     public static OAuth2Supplier checkIfSupplierExist(String supplierName, Set<OAuth2Supplier> suppliers) {
         return Stream.of(OAuth2Supplier.values())
-                .filter(s -> s.supplierName.equals(supplierName) && suppliers.contains(s))
-                .findFirst()
-                .orElseThrow(() -> {
-                    LOGGER.error("Passed supplier: {} is not implemented in this application.", supplierName);
-                    throw new OAuth2SupplierNotImplementedException();
-                });
+            .filter(s -> s.supplierName.equals(supplierName) && suppliers.contains(s))
+            .findFirst()
+            .orElseThrow(() -> {
+                log.error("Passed supplier: {} is not implemented in this application.", supplierName);
+                throw new OAuth2SupplierNotImplementedException();
+            });
     }
 
     @Override

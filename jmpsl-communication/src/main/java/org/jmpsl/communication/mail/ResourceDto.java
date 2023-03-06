@@ -18,7 +18,8 @@
 
 package org.jmpsl.communication.mail;
 
-import lombok.*;
+import lombok.Builder;
+
 import java.io.File;
 
 /**

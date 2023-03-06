@@ -18,12 +18,13 @@
 
 package org.jmpsl.oauth2.user;
 
-import org.slf4j.*;
-import java.util.Map;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
+import java.util.Map;
+
 import org.jmpsl.oauth2.OAuth2Supplier;
+
 import static org.jmpsl.oauth2.OAuth2Exception.OAuth2SupplierNotImplementedException;
 
 /**
@@ -33,9 +34,8 @@ import static org.jmpsl.oauth2.OAuth2Exception.OAuth2SupplierNotImplementedExcep
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class OAuth2UserInfoFactory {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2UserInfoFactory.class);
 
     /**
      * Static factory method responsible for generate and return {@link OAuth2UserInfoBase} user info object.
@@ -54,7 +54,7 @@ public class OAuth2UserInfoFactory {
             case GOOGLE -> new GoogleOAuth2UserInfo(attrs);
             case LINKEDIN -> new LinkedInOAuth2UserInfo(attrs);
             default -> {
-                LOGGER.error("Attempt to login via unsupported supplier. Unsupported supplier: {}", supplier);
+                log.error("Attempt to login via unsupported supplier. Unsupported supplier: {}", supplier);
                 throw new OAuth2SupplierNotImplementedException();
             }
         };

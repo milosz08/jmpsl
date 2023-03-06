@@ -18,14 +18,17 @@
 
 package org.jmpsl.core.validator;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 import java.time.LocalDate;
-import jakarta.validation.*;
 
-import static java.util.Objects.isNull;
-import static org.jmpsl.core.DateTimeUtil.deserializedLocalDate;
+import org.jmpsl.core.DateTimeUtil;
 
 /**
  * Custom validator class implementing javax constraint validator interface for checking, if passed string date value
@@ -34,9 +37,8 @@ import static org.jmpsl.core.DateTimeUtil.deserializedLocalDate;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, String> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateIsBeforeValidator.class);
 
     /**
      * Override javax constraint validator method for determinate valid date. if passed date is before the current date
@@ -50,10 +52,10 @@ public class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, 
      */
     @Override
     public boolean isValid(String dateString, ConstraintValidatorContext context) {
-        final Optional<LocalDate> date = deserializedLocalDate(dateString);
+        final Optional<LocalDate> date = DateTimeUtil.deserializedLocalDate(dateString);
         if (date.isEmpty()) return false;
-        if (isNull(dateString) || date.get().isAfter(LocalDate.now())) {
-            LOGGER.error("Attempt to add date which is after the current date.");
+        if (Objects.isNull(dateString) || date.get().isAfter(LocalDate.now())) {
+            log.error("Attempt to add date which is after the current date.");
             return false;
         }
         return true;

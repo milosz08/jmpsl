@@ -18,41 +18,42 @@
 
 package org.jmpsl.gfx.sender;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
 import org.imgscalr.Scalr;
+import org.jmpsl.file.FileUtil;
+
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
 
-import net.schmizz.sshj.sftp.*;
 import net.schmizz.sshj.xfer.FileSystemFile;
+import net.schmizz.sshj.sftp.RemoteResourceInfo;
+import net.schmizz.sshj.sftp.StatefulSFTPClient;
 
-import java.io.*;
-import java.util.*;
-import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.nio.file.Files;
+import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import org.jmpsl.gfx.*;
-import org.jmpsl.gfx.generator.*;
-import org.jmpsl.file.hashcode.*;
+import org.jmpsl.gfx.GfxEnv;
+import org.jmpsl.gfx.GfxUtil;
+import org.jmpsl.gfx.ImageExtension;
+import org.jmpsl.gfx.generator.GeneratedImageRes;
+import org.jmpsl.gfx.generator.UserImageGenerator;
+import org.jmpsl.gfx.generator.BufferedImageGeneratorRes;
+import org.jmpsl.gfx.generator.BufferedImageGeneratorPayload;
 import org.jmpsl.file.socket.SshFileSocketConnector;
+import org.jmpsl.file.hashcode.FileHashCodeGenerator;
+import org.jmpsl.file.hashcode.HashCodeFormatException;
 import org.jmpsl.file.exception.ExternalFileServerMalfunctionException;
-
-import static java.io.File.createTempFile;
-
-import static org.imgscalr.Scalr.OP_ANTIALIAS;
-import static org.imgscalr.Scalr.Mode.FIT_EXACT;
-import static org.imgscalr.Scalr.Method.QUALITY;
-import static org.springframework.util.Assert.*;
-import static org.springframework.util.StringUtils.hasLength;
-
-import static org.jmpsl.gfx.ImageExtension.PNG;
-import static org.jmpsl.gfx.GfxEnv.__GFX_SFTP_PATH;
-import static org.jmpsl.file.FileUtil.createDirIfNotExist;
-import static org.jmpsl.file.hashcode.FileHashCodeGenerator.*;
-import static org.jmpsl.gfx.GfxUtil.generateByteStreamFromBufferedImage;
 
 /**
  * Spring Bean service responsible for generate sending and deleting user image to external SFTP server directory. Contains
@@ -66,10 +67,9 @@ import static org.jmpsl.gfx.GfxUtil.generateByteStreamFromBufferedImage;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Service
 public class UserImageSftpService implements IUserImageService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserImageSftpService.class);
 
     private String imagesRelativePath;
     private final String imagesServerPath;
@@ -104,7 +104,7 @@ public class UserImageSftpService implements IUserImageService {
                 payload, extension);
             imageResponse.copyObject(generateTempImageAndSave(sftpClient, tempImageSavePayload));
         });
-        LOGGER.info("Successful created default user avatar image. User hashcode: {}", imageResponse.getUserHashCode());
+        log.info("Successful created default user avatar image. User hashcode: {}", imageResponse.getUserHashCode());
         return new BufferedImageGeneratorRes(imageResponse, generatedImage.imageBackground());
     }
 
@@ -120,7 +120,7 @@ public class UserImageSftpService implements IUserImageService {
      * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     public BufferedImageGeneratorRes generateAndSaveDefaultUserImage(BufferedImageGeneratorPayload payload) {
-        return generateAndSaveDefaultUserImage(payload, PNG);
+        return generateAndSaveDefaultUserImage(payload, ImageExtension.PNG);
     }
 
     /**
@@ -143,19 +143,19 @@ public class UserImageSftpService implements IUserImageService {
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
                 final BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-                final BufferedImage resizeResult = Scalr.resize(bufferedImage, QUALITY, FIT_EXACT,
-                        payload.preferredWidth(), payload.preferredHeight(), OP_ANTIALIAS);
+                final BufferedImage resizeResult = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT,
+                    payload.preferredWidth(), payload.preferredHeight(), Scalr.OP_ANTIALIAS);
 
                 final TempImageSavePayload tempImageSavePayload = new TempImageSavePayload(
-                    generateByteStreamFromBufferedImage(resizeResult, extension), payload, extension);
+                    GfxUtil.generateByteStreamFromBufferedImage(resizeResult, extension), payload, extension);
                 imageResponse.copyObject(generateTempImageAndSave(sftpClient, tempImageSavePayload));
 
             } catch (IOException ex) {
-                LOGGER.error("Unable to send image to external server. Server path: {}", imagesServerPath);
+                log.error("Unable to send image to external server. Server path: {}", imagesServerPath);
                 throw new ExternalFileServerMalfunctionException();
             }
         });
-        LOGGER.info("Successful send user avatar image. User id: {}", imageResponse.getUserHashCode());
+        log.info("Successful send user avatar image. User id: {}", imageResponse.getUserHashCode());
         return imageResponse;
     }
 
@@ -172,19 +172,19 @@ public class UserImageSftpService implements IUserImageService {
      */
     @Override
     public void deleteUserImage(BufferedImageDeletePayload payload) {
-        notNull(payload, "Payload object cannot be null.");
-        noNullElements(new Object[] { payload.userHashCode(), payload.uniqueImagePrefix(), payload.id() },
+        Assert.notNull(payload, "Payload object cannot be null.");
+        Assert.noNullElements(new Object[] { payload.userHashCode(), payload.uniqueImagePrefix(), payload.id() },
                 "Payload data (userHashCode, uniqueImagePrefix, id) cannot be null.");
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
                 ifResourceIsPresetRemove(sftpClient, payload.id(), payload.userHashCode(),
-                        payload.uniqueImagePrefix());
+                    payload.uniqueImagePrefix());
             } catch (IOException ex) {
-                LOGGER.error("Unable to remove image from external server. Image payload data: {}", payload);
+                log.error("Unable to remove image from external server. Image payload data: {}", payload);
                 throw new ExternalFileServerMalfunctionException();
             }
         });
-        LOGGER.info("Successful remove selected user image from external SFTP server. Image payload data: {}", payload);
+        log.info("Successful remove selected user image from external SFTP server. Image payload data: {}", payload);
     }
 
     /**
@@ -200,7 +200,7 @@ public class UserImageSftpService implements IUserImageService {
      * @throws ExternalFileServerMalfunctionException if unable to save image on SFTP external server.
      */
     public BufferedImageRes saveUserImage(BufferedImageSenderPayload payload) {
-        return saveUserImage(payload, PNG);
+        return saveUserImage(payload, ImageExtension.PNG);
     }
 
     /**
@@ -226,15 +226,15 @@ public class UserImageSftpService implements IUserImageService {
             ifResourceIsPresetRemove(sftpClient, payload.id(), payload.userHashCode(), payload.uniqueImagePrefix());
 
             if (Objects.isNull(payload.userHashCode())) {
-                hashCode = generateHashCode();
+                hashCode = FileHashCodeGenerator.generateHashCode();
                 userStaticImageDir = userImagePathPrefix + hashCode;
-                createDirIfNotExist(sftpClient, imagesServerPath, userStaticImageDir);
+                FileUtil.createDirIfNotExist(sftpClient, imagesServerPath, userStaticImageDir);
             } else {
                 hashCode = payload.userHashCode();
                 userStaticImageDir = userImagePathPrefix + payload.userHashCode();
             }
-            final File tempImage = createTempFile(payload.uniqueImagePrefix() + "_", "." + payload.extensionName());
-            if (hasLength(imagesRelativePath)) {
+            final File tempImage = File.createTempFile(payload.uniqueImagePrefix() + "_", "." + payload.extensionName());
+            if (StringUtils.hasLength(imagesRelativePath)) {
                 relativeImagesPath = socketConnector.getAppServerPath() + "/" + imagesRelativePath + "/";
             } else {
                 relativeImagesPath = socketConnector.getAppServerPath() + "/";
@@ -248,7 +248,7 @@ public class UserImageSftpService implements IUserImageService {
             imageResponse.setUserHashCode(hashCode);
             tempImage.deleteOnExit();
         } catch (IOException ex) {
-            LOGGER.error("Unable to send image to external server. Server path: {}", imagesServerPath);
+            log.error("Unable to send image to external server. Server path: {}", imagesServerPath);
             throw new ExternalFileServerMalfunctionException();
         }
         return imageResponse;
@@ -272,7 +272,7 @@ public class UserImageSftpService implements IUserImageService {
     private void ifResourceIsPresetRemove(StatefulSFTPClient sftpClient, Long id, String userHashCode, String prefix)
             throws IOException {
         if (Objects.isNull(userHashCode)) return;
-        if (!hashCodeIsValid(userHashCode)) throw new HashCodeFormatException();
+        if (!FileHashCodeGenerator.hashCodeIsValid(userHashCode)) throw new HashCodeFormatException();
         final String baseDir = "user" + id + "_" + userHashCode;
         final List<RemoteResourceInfo> rsImages = sftpClient.ls(imagesServerPath + "/" + baseDir);
         final Optional<String> foundImage = rsImages.stream().map(RemoteResourceInfo::getName)
@@ -293,15 +293,15 @@ public class UserImageSftpService implements IUserImageService {
      * @since 1.0.2
      */
     private String createImagesServerPath(Environment env) {
-        imagesRelativePath = __GFX_SFTP_PATH.getProperty(env);
-        if (!hasLength(imagesRelativePath)) {
+        imagesRelativePath = GfxEnv.__GFX_SFTP_PATH.getProperty(env);
+        if (!StringUtils.hasLength(imagesRelativePath)) {
             return socketConnector.getServerPath();
         }
         socketConnector.connectToSocketAndPerformAction(sftpClient -> {
             try {
-                createDirIfNotExist(sftpClient, socketConnector.getServerPath(), imagesRelativePath);
+                FileUtil.createDirIfNotExist(sftpClient, socketConnector.getServerPath(), imagesRelativePath);
             } catch (IOException ex) {
-                LOGGER.error("Unable to create static images server path. Images path: {}", imagesRelativePath);
+                log.error("Unable to create static images server path. Images path: {}", imagesRelativePath);
             }
         });
         return socketConnector.getServerPath() + "/" + imagesRelativePath;

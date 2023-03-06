@@ -18,23 +18,24 @@
 
 package org.jmpsl.security.filter;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.core.annotation.Order;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-
 import java.util.Arrays;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpMethod.*;
-import static org.jmpsl.security.SecurityEnv.__SEC_CORS_CLIENT;
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+import org.jmpsl.security.SecurityEnv;
 
 /**
  * Custom servlet {@link Filter} added extra cors headers (available rest methods, allowed authorization header keys and
@@ -44,23 +45,25 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Component
-@Order(HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsHeaderFilter extends HttpFilter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CorsHeaderFilter.class);
 
     private final String corsClient;
     private String flattedMethods;
 
-    private static final HttpMethod[] REST_METHODS = { GET, POST, PUT, OPTIONS, PATCH, DELETE };
+    private static final HttpMethod[] REST_METHODS = {
+        HttpMethod.GET, HttpMethod.POST, HttpMethod.PUT, HttpMethod.OPTIONS, HttpMethod.PATCH, HttpMethod.DELETE
+    };
+
     private static final String[] ALLOW_HEADERS = {
-            "x-requested-with", "authorization", "Content-Type", "Authorization", "credential", "X-XSRF-TOKEN",
+        "x-requested-with", "authorization", "Content-Type", "Authorization", "credential", "X-XSRF-TOKEN",
     };
 
     public CorsHeaderFilter(Environment env) {
-        corsClient = __SEC_CORS_CLIENT.getProperty(env);
-        LOGGER.info("Successful loaded CORS HEADERS FILTER into Spring Context");
+        corsClient = SecurityEnv.__SEC_CORS_CLIENT.getProperty(env);
+        log.info("Successful loaded CORS HEADERS FILTER into Spring Context");
     }
 
     @Override
@@ -79,7 +82,7 @@ public class CorsHeaderFilter extends HttpFilter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", String.join(",", ALLOW_HEADERS));
 
-        if (OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
+        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, res);

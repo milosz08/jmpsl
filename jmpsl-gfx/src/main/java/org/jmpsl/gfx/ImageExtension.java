@@ -18,7 +18,8 @@
 
 package org.jmpsl.gfx;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 /**
  * Enum class storing all available images extensions.

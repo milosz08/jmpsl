@@ -18,20 +18,23 @@
 
 package org.jmpsl.communication.locale;
 
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
 import org.springframework.context.MessageSource;
-import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
+
+import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-import java.util.*;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
 
-import static java.lang.String.valueOf;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.jmpsl.communication.CommunicationEnv.*;
+import org.jmpsl.communication.CommunicationEnv;
 
 /**
  * Configuration class responsible for generate basic configuration for locale REST services. To configure locale, set
@@ -54,8 +57,8 @@ public class LocaleConfigurerExtender {
     private final List<Locale> availableLocales;
 
     LocaleConfigurerExtender(Environment env) {
-        this.defaultLocale = new Locale(__COM_DEFAULT_LOCALE.getProperty(env));
-        this.availableLocales = Arrays.stream(__COM_AVAILABLE_LOCALES.getProperty(env).split(","))
+        this.defaultLocale = new Locale(CommunicationEnv.__COM_DEFAULT_LOCALE.getProperty(env));
+        this.availableLocales = Arrays.stream(CommunicationEnv.__COM_AVAILABLE_LOCALES.getProperty(env).split(","))
             .map(Locale::new).collect(Collectors.toList());
     }
 
@@ -63,7 +66,7 @@ public class LocaleConfigurerExtender {
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
         resourceBundleMessageSource.setBasenames("locale/messages");
-        resourceBundleMessageSource.setDefaultEncoding(valueOf(UTF_8));
+        resourceBundleMessageSource.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         return resourceBundleMessageSource;
     }
 

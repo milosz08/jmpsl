@@ -18,10 +18,10 @@
 
 package org.jmpsl.core.mapper;
 
-import java.lang.annotation.*;
-
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import java.lang.annotation.Target;
+import java.lang.annotation.Retention;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Insert this annotation on custom converter class to automatically load at application start (and insert in Spring
@@ -30,7 +30,7 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Target(TYPE)
-@Retention(CLASS)
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.CLASS)
 public @interface MappingConverter {
 }

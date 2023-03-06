@@ -18,10 +18,11 @@
 
 package org.jmpsl.core.env;
 
-import java.util.List;
 import org.springframework.core.env.Environment;
 
-import static java.util.Objects.isNull;
+import java.util.List;
+import java.util.Objects;
+
 
 /**
  * Class storing static methods for handling environment variables from <code>application.properties</code> file.
@@ -37,14 +38,14 @@ public class EnvPropertyHandler {
      * @since 1.0.2
      */
     private static final List<EnvCastData<?>> CAST_DATA_LIST = List.of(
-            new EnvCastData<>(String.class, rawData -> rawData),
-            new EnvCastData<>(Integer.class, Integer::valueOf),
-            new EnvCastData<>(Boolean.class, Boolean::valueOf),
-            new EnvCastData<>(Double.class, Double::valueOf),
-            new EnvCastData<>(Float.class, Float::valueOf),
-            new EnvCastData<>(Character.class, rawData -> rawData.charAt(0)),
-            new EnvCastData<>(Byte.class, Byte::valueOf),
-            new EnvCastData<>(Long.class, Long::valueOf)
+        new EnvCastData<>(String.class, rawData -> rawData),
+        new EnvCastData<>(Integer.class, Integer::valueOf),
+        new EnvCastData<>(Boolean.class, Boolean::valueOf),
+        new EnvCastData<>(Double.class, Double::valueOf),
+        new EnvCastData<>(Float.class, Float::valueOf),
+        new EnvCastData<>(Character.class, rawData -> rawData.charAt(0)),
+        new EnvCastData<>(Byte.class, Byte::valueOf),
+        new EnvCastData<>(Long.class, Long::valueOf)
     );
 
     private EnvPropertyHandler() { }
@@ -66,9 +67,9 @@ public class EnvPropertyHandler {
     @SuppressWarnings("unchecked")
     public static <T> T getPostTypedProperty(EnvDataPayload envDataPayload, Class<T> targetClazz) {
         final Environment env = envDataPayload.env();
-        if (isNull(envDataPayload.defValue())) {
+        if (Objects.isNull(envDataPayload.defValue())) {
             final T requiredProperty = env.getProperty(envDataPayload.name(), targetClazz);
-            if (isNull(requiredProperty) && envDataPayload.required()) {
+            if (Objects.isNull(requiredProperty) && envDataPayload.required()) {
                 throw new EnvPropertyNullableException(envDataPayload.name());
             }
             return requiredProperty;

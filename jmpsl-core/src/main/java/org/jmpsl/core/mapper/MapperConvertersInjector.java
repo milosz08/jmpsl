@@ -18,15 +18,18 @@
 
 package org.jmpsl.core.mapper;
 
-import org.slf4j.*;
-import org.modelmapper.*;
+import lombok.extern.slf4j.Slf4j;
 
-import org.reflections.util.*;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.AbstractConverter;
+
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
-import org.springframework.context.annotation.*;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Set;
 
@@ -37,10 +40,9 @@ import java.util.Set;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Configuration
 class MapperConvertersInjector {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapperConvertersInjector.class);
 
     private final ModelMapper modelMapper;
     private final ApplicationContext applicationContext;
@@ -67,10 +69,10 @@ class MapperConvertersInjector {
             final AbstractConverter<?, ?> converter = (AbstractConverter<?, ?>) applicationContext.getBean(converterClazz);
             try {
                 modelMapper.addConverter(converter);
-                LOGGER.info("Successful loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
+                log.info("Successful loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
             } catch (Exception ex) {
-                LOGGER.error("Failure loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
-                LOGGER.error("Error: {}", ex.getMessage());
+                log.error("Failure loaded custom mapper converter: {} via reflection", converterClazz.getSimpleName());
+                log.error("Error: {}", ex.getMessage());
             }
         }
     }

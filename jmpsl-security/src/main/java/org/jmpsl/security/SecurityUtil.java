@@ -18,19 +18,19 @@
 
 package org.jmpsl.security;
 
+import org.springframework.util.Assert;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
-import java.util.*;
+import java.util.Set;
+import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.jmpsl.security.user.*;
-
-import static org.springframework.util.Assert.notNull;
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
-import static org.jmpsl.security.ApplicationMode.DEV;
+import org.jmpsl.security.user.AuthUser;
+import org.jmpsl.security.user.IAuthUserModel;
 
 /**
  * Utilities static methods for JMPSL Security module.
@@ -68,7 +68,7 @@ public class SecurityUtil {
      * @throws IllegalArgumentException if user object is null
      */
     public static AuthUser fabricateUser(IAuthUserModel user) {
-        notNull(user, "User object cannot be null.");
+        Assert.notNull(user, "User object cannot be null.");
         return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
     }
 
@@ -83,12 +83,13 @@ public class SecurityUtil {
      * @throws IllegalArgumentException if {@link HttpSecurity} object is null
      */
     public static void enableH2ConsoleForDev(HttpSecurity httpSecurity, Environment env) throws Exception {
-        notNull(httpSecurity, "http security object cannot be null.");
-        final boolean inNotDev = Arrays.stream(env.getActiveProfiles()).noneMatch(p -> p.equals(DEV.getModeName()));
+        Assert.notNull(httpSecurity, "http security object cannot be null.");
+        final boolean inNotDev = Arrays.stream(env.getActiveProfiles())
+            .noneMatch(p -> p.equals(ApplicationMode.DEV.getModeName()));
         if (inNotDev) return;
         httpSecurity
-            .authorizeHttpRequests(auth -> auth.requestMatchers(antMatcher("/h2-console/**")).permitAll())
-            .csrf(csrf -> csrf.ignoringRequestMatchers(antMatcher("/h2-console/**")))
+            .authorizeHttpRequests(auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
             .headers(headers -> headers.frameOptions().sameOrigin());
     }
 }

@@ -18,7 +18,10 @@
 
 package org.jmpsl.file;
 
-import lombok.*;
+import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * Simple POJO class storing generated file data (bytes representation and SFTP server location).

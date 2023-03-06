@@ -18,23 +18,22 @@
 
 package org.jmpsl.oauth2;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 
-import jakarta.servlet.http.*;
-
-import java.util.*;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.jmpsl.core.cookie.CookieUtil;
 import org.jmpsl.core.cookie.AddedCookiePayload;
 
-import static java.util.Objects.isNull;
-import static org.apache.commons.lang3.StringUtils.isNoneBlank;
-
-import static org.jmpsl.oauth2.OAuth2Cookie.*;
-import static org.jmpsl.core.cookie.CookieUtil.*;
-import static org.jmpsl.oauth2.OAuth2Env.__OAT_COOKIE_EXP;
 import static org.jmpsl.oauth2.OAuth2Exception.OAuth2AuthenticationProcessingException;
 
 /**
@@ -47,11 +46,14 @@ import static org.jmpsl.oauth2.OAuth2Exception.OAuth2AuthenticationProcessingExc
  */
 public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
-    private final OAuth2Cookie[] allCookies = { SESSION_REMEMBER, AFTER_LOGIN_REDIRECT_URI, AFTER_SIGNUP_REDIRECT_URI };
+    private final OAuth2Cookie[] allCookies = {
+        OAuth2Cookie.SESSION_REMEMBER, OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI, OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI
+    };
+
     private final int cookieExiredInSec;
 
     CookieOAuth2ReqRepository(Environment env) {
-        this.cookieExiredInSec = __OAT_COOKIE_EXP.getProperty(env, Integer.class) * 60;
+        this.cookieExiredInSec = OAuth2Env.__OAT_COOKIE_EXP.getProperty(env, Integer.class) * 60;
     }
 
     /**
@@ -68,9 +70,9 @@ public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository
      */
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest req) {
-        return getCookie(req, SESSION_REMEMBER.getCookieName())
-                .map(c -> deserializeCookieValue(c, OAuth2AuthorizationRequest.class))
-                .orElseThrow(() -> { throw new OAuth2AuthenticationProcessingException(); });
+        return CookieUtil.getCookie(req, OAuth2Cookie.SESSION_REMEMBER.getCookieName())
+            .map(c -> CookieUtil.deserializeCookieValue(c, OAuth2AuthorizationRequest.class))
+            .orElseThrow(() -> { throw new OAuth2AuthenticationProcessingException(); });
     }
 
     /**
@@ -86,19 +88,19 @@ public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository
      */
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authReq, HttpServletRequest req, HttpServletResponse res) {
-        if (isNull(authReq)) {
+        if (Objects.isNull(authReq)) {
             final Set<String> flattedCookies = Arrays.stream(allCookies)
-                    .map(OAuth2Cookie::getCookieName)
-                    .collect(Collectors.toSet());
-            deleteMultipleCookies(req, res, flattedCookies);
+                .map(OAuth2Cookie::getCookieName)
+                .collect(Collectors.toSet());
+            CookieUtil.deleteMultipleCookies(req, res, flattedCookies);
             return;
         }
-        addCookie(res, buildCookiePayload(SESSION_REMEMBER, serializeCookieValue(authReq)));
-        if (isNoneBlank(req.getParameter(AFTER_LOGIN_REDIRECT_URI.getCookieName()))) {
-            addCookie(res, buildCookiePayload(AFTER_LOGIN_REDIRECT_URI, req));
+        CookieUtil.addCookie(res, buildCookiePayload(OAuth2Cookie.SESSION_REMEMBER, CookieUtil.serializeCookieValue(authReq)));
+        if (StringUtils.isNoneBlank(req.getParameter(OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI.getCookieName()))) {
+            CookieUtil.addCookie(res, buildCookiePayload(OAuth2Cookie.AFTER_LOGIN_REDIRECT_URI, req));
         }
-        if (isNoneBlank(req.getParameter(AFTER_SIGNUP_REDIRECT_URI.getCookieName()))) {
-            addCookie(res, buildCookiePayload(AFTER_SIGNUP_REDIRECT_URI, req));
+        if (StringUtils.isNoneBlank(req.getParameter(OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI.getCookieName()))) {
+            CookieUtil.addCookie(res, buildCookiePayload(OAuth2Cookie.AFTER_SIGNUP_REDIRECT_URI, req));
         }
     }
 
@@ -127,10 +129,10 @@ public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository
      */
     private AddedCookiePayload buildCookiePayload(final OAuth2Cookie cookie, final String value) {
         return AddedCookiePayload.builder()
-                .name(cookie.getCookieName())
-                .value(value)
-                .maxAge(cookieExiredInSec)
-                .build();
+            .name(cookie.getCookieName())
+            .value(value)
+            .maxAge(cookieExiredInSec)
+            .build();
     }
 
     /**
@@ -143,7 +145,7 @@ public class CookieOAuth2ReqRepository implements AuthorizationRequestRepository
      * @since 1.0.2
      */
     private AddedCookiePayload buildCookiePayload(final OAuth2Cookie cookie, final HttpServletRequest req) {
-        return buildCookiePayload(cookie, req.getParameter(BASE_REDIRECT_URI.getCookieName()) + "/" +
-                req.getParameter(cookie.getCookieName()));
+        return buildCookiePayload(cookie, req.getParameter(OAuth2Cookie.BASE_REDIRECT_URI.getCookieName()) + "/" +
+            req.getParameter(cookie.getCookieName()));
     }
 }

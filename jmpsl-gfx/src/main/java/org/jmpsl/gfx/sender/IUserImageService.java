@@ -18,8 +18,9 @@
 
 package org.jmpsl.gfx.sender;
 
-import org.jmpsl.gfx.generator.*;
 import org.jmpsl.gfx.ImageExtension;
+import org.jmpsl.gfx.generator.BufferedImageGeneratorRes;
+import org.jmpsl.gfx.generator.BufferedImageGeneratorPayload;
 
 /**
  * Universal interface defined methods for generate default user image and save and save already generated user image.

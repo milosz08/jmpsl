@@ -18,30 +18,26 @@
 
 package org.jmpsl.gfx.generator;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.io.IOException;
 import java.util.stream.Collectors;
-import java.awt.image.BufferedImage;
 
-import org.jmpsl.gfx.*;
+import org.jmpsl.gfx.GfxEnv;
+import org.jmpsl.gfx.GfxUtil;
+import org.jmpsl.gfx.ImageExtension;
 
-import static java.util.Objects.*;
-import static java.awt.RenderingHints.*;
-import static java.awt.Font.TRUETYPE_FONT;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-
-import static org.jmpsl.gfx.GfxEnv.*;
-import static org.jmpsl.gfx.GfxUtil.*;
-import static org.jmpsl.gfx.ImageExtension.PNG;
-import static org.jmpsl.gfx.generator.ImageGeneratorException.*;
+import static org.jmpsl.gfx.generator.ImageGeneratorException.FontSizeNotSupportedException;
+import static org.jmpsl.gfx.generator.ImageGeneratorException.TooMuchInitialsCharactersException;
+import static org.jmpsl.gfx.generator.ImageGeneratorException.ImageNotSupportedDimensionsException;
 
 /**
  * Class storing methods responsible for generating default user image. Before run application, declare following
@@ -57,10 +53,10 @@ import static org.jmpsl.gfx.generator.ImageGeneratorException.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Service
 public class UserImageGenerator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserImageGenerator.class);
     private static final Random RANDOM = new Random();
 
     private static final int MIN_IMAGE_SIZE = 20;
@@ -85,10 +81,10 @@ public class UserImageGenerator {
 
     UserImageGenerator(Environment env) {
         this.env = env;
-        foregroundImageColor = __GFX_USER_FG_COLOR.getProperty(env);
+        foregroundImageColor = GfxEnv.__GFX_USER_FG_COLOR.getProperty(env);
         loadCustomFontFromExternalFile();
         convertAndLoadHexToRgbColorsArray();
-        LOGGER.info("Successful insert properties in IserImageGenerator from application.properties file.");
+        log.info("Successful insert properties in IserImageGenerator from application.properties file.");
     }
 
     /**
@@ -113,15 +109,15 @@ public class UserImageGenerator {
 
         Color generatedColor;
         final String userInitials = String.valueOf(payload.initials());
-        final BufferedImage bufferedImage = new BufferedImage(payload.size(), payload.size(), TYPE_INT_RGB);
+        final BufferedImage bufferedImage = new BufferedImage(payload.size(), payload.size(), BufferedImage.TYPE_INT_RGB);
         final Graphics2D graphics = bufferedImage.createGraphics();
 
-        graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
-        graphics.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON);
-        graphics.setRenderingHint(KEY_RENDERING, VALUE_RENDER_QUALITY);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         graphics.setFont(new Font(fontName, Font.PLAIN, payload.fontSize()));
-        if (nonNull(payload.preferredColor())) {
+        if (Objects.nonNull(payload.preferredColor())) {
             generatedColor = payload.preferredColor();
         } else {
             generatedColor = preferredHexColors.get(RANDOM.nextInt(preferredHexColors.size() - 1));
@@ -136,8 +132,8 @@ public class UserImageGenerator {
         graphics.drawString(userInitials, xPos, yPos);
         graphics.dispose();
 
-        LOGGER.info("Successful generated default image for user. Image properties data: {}", payload);
-        return new GeneratedImageRes(generateByteStreamFromBufferedImage(bufferedImage, extension), generatedColor);
+        log.info("Successful generated default image for user. Image properties data: {}", payload);
+        return new GeneratedImageRes(GfxUtil.generateByteStreamFromBufferedImage(bufferedImage, extension), generatedColor);
     }
 
     /**
@@ -155,7 +151,7 @@ public class UserImageGenerator {
      * @throws IllegalStateException if image size or font size is too tiny or large or initials array has not 2 elements
      */
     public GeneratedImageRes generateDefaultUserImage(BufferedImageGeneratorPayload payload) {
-        return generateDefaultUserImage(payload, PNG);
+        return generateDefaultUserImage(payload, ImageExtension.PNG);
     }
 
     /**
@@ -168,19 +164,19 @@ public class UserImageGenerator {
      * @throws NullPointerException if <code>jmpsl.file.user-gfx.preferred-font-name</code> property is null
      */
     private void loadCustomFontFromExternalFile() {
-        final String fontPath = __GFX_USER_FONT_LINK.getProperty(env);
-        if (isNull(fontPath)) {
-            fontName = getDefaultFont().getFontName();
+        final String fontPath = GfxEnv.__GFX_USER_FONT_LINK.getProperty(env);
+        if (Objects.isNull(fontPath)) {
+            fontName = GfxUtil.getDefaultFont().getFontName();
             return;
         }
-        fontName = __GFX_USER_FONT_NAME.getProperty(env);
+        fontName = GfxEnv.__GFX_USER_FONT_NAME.getProperty(env);
         try {
             final GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             final ClassPathResource resource = new ClassPathResource(fontPath);
-            graphicsEnvironment.registerFont(Font.createFont(TRUETYPE_FONT, resource.getFile()));
-            LOGGER.info("Successful loaded custom font from external file. Font full path: {}", fontPath);
+            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, resource.getFile()));
+            log.info("Successful loaded custom font from external file. Font full path: {}", fontPath);
         } catch (IOException | FontFormatException ex) {
-            LOGGER.error("Unable to load custom font from file. Exception: {}", ex.getMessage());
+            log.error("Unable to load custom font from file. Exception: {}", ex.getMessage());
         }
     }
 
@@ -192,8 +188,8 @@ public class UserImageGenerator {
      * @since 1.0.2
      */
     private void convertAndLoadHexToRgbColorsArray() {
-        final String hexColors = __GFX_USER_HEX_COLORS.getProperty(env);
-        if (isNull(hexColors) || hexColors.split(",").length == 0) {
+        final String hexColors = GfxEnv.__GFX_USER_HEX_COLORS.getProperty(env);
+        if (Objects.isNull(hexColors) || hexColors.split(",").length == 0) {
             preferredHexColors.addAll(Arrays.stream(DEF_COLORS).map(Color::decode).collect(Collectors.toSet()));
             return;
         }
@@ -201,9 +197,9 @@ public class UserImageGenerator {
             try {
                 preferredHexColors.add(Color.decode(hexColor));
             } catch (NumberFormatException ex) {
-                LOGGER.error("Passed hex color is invalid. Color {} not loaded.", hexColor);
+                log.error("Passed hex color is invalid. Color {} not loaded.", hexColor);
             }
         }
-        LOGGER.info("Successful loaded user image generator colors: {}", toHexStringArray(preferredHexColors));
+        log.info("Successful loaded user image generator colors: {}", GfxUtil.toHexStringArray(preferredHexColors));
     }
 }

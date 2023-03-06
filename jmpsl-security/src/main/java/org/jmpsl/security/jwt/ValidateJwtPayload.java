@@ -18,10 +18,13 @@
 
 package org.jmpsl.security.jwt;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+
+import io.jsonwebtoken.Claims;
 
 import java.util.Optional;
-import io.jsonwebtoken.Claims;
 
 /**
  * Payload POJO class for storing validated token info (validation type and optional claims). If token is invalid,

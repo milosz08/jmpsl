@@ -26,17 +26,22 @@ plugins {
 }
 
 ext {
-    springVersion                   = '3.0.2'
+    // dependencies version
+    springVersion                   = '6.0.6'
+    springSecurityVersion           = '6.0.2'
+
+    jakartaServletVersion           = '6.0.0'
+    jakartaMailVersion              = '2.1.1'
     jakartaPersistenceVersion       = '3.1.0'
     jakartaValidationVersion        = '3.0.2'
 
-    // dependencies version
+    jacksonDatabindVersion          = '2.7.4'
     jTuplesVersion                  = '1.2'
     jjwtVersion                     = '0.11.5'
     sshjVersion                     = '0.34.0'
     imgScalrVersion                 = '4.2'
     lombokVersion                   = '1.18.20'
-    slf4jApiVersion                 = '2.0.3'
+    slf4jApiVersion                 = '2.0.6'
     jakartaXmlBinderVersion         = '4.0.0'
     jupiterTestVersion              = '5.8.1'
     freemarkerVersion               = '2.3.31'

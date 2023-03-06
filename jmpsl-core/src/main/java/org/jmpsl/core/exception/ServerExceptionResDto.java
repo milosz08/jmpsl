@@ -18,15 +18,16 @@
 
 package org.jmpsl.core.exception;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 
+import org.springframework.util.Assert;
 import org.springframework.http.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.ZoneId;
-
-import static java.time.ZonedDateTime.now;
-import static org.springframework.util.Assert.noNullElements;
+import java.time.ZonedDateTime;
 
 /**
  * Simple POJO class for storing server exception JSON object values (without error message parameters).
@@ -56,12 +57,12 @@ public class ServerExceptionResDto {
      * @throws IllegalArgumentException if status of req parameter is null
      */
     public static ServerExceptionResDto generate(HttpStatus status, HttpServletRequest req) {
-        noNullElements(new Object[] { status, req }, "Status or req parameter cannot be null.");
+        Assert.noNullElements(new Object[] { status, req }, "Status or req parameter cannot be null.");
         return ServerExceptionResDto.builder()
-                .method(req.getMethod())
-                .status(status.value())
-                .error(status.name())
-                .timestamp(now(ZoneId.of("UTC")).toString())
-                .build();
+            .method(req.getMethod())
+            .status(status.value())
+            .error(status.name())
+            .timestamp(ZonedDateTime.now(ZoneId.of("UTC")).toString())
+            .build();
     }
 }

@@ -18,16 +18,16 @@
 
 package org.jmpsl.security.jwt;
 
-import javax.crypto.spec.SecretKeySpec;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.xml.bind.DatatypeConverter;
 
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;
 
 import java.security.Key;
+import javax.crypto.spec.SecretKeySpec;
 
-import static org.jmpsl.security.SecurityEnv.*;
-import static jakarta.xml.bind.DatatypeConverter.parseBase64Binary;
+import org.jmpsl.security.SecurityEnv;
 
 /**
  * Spring Bean component class responsible for create configuration for JWT used in web application. Default JWT hash
@@ -64,10 +64,10 @@ public class JwtConfig {
     public static final String TOKEN_PREFIX = "Bearer ";
 
     public JwtConfig(Environment env) {
-        tokenIssuer = __SEC_JWT_ISSUER.getProperty(env);
-        tokenExpiredMinutes = __SEC_JWT_EXPIRED_MINUTES.getProperty(env, Integer.class);
-        refreshTokenExpiredMonths = __SEC_REFRESH_TOKEN_EXPIRED_DAYS.getProperty(env, Integer.class);
-        tokenSecretBytes = parseBase64Binary(__SEC_JWT_SECRET.getProperty(env));
+        tokenIssuer = SecurityEnv.__SEC_JWT_ISSUER.getProperty(env);
+        tokenExpiredMinutes = SecurityEnv.__SEC_JWT_EXPIRED_MINUTES.getProperty(env, Integer.class);
+        refreshTokenExpiredMonths = SecurityEnv.__SEC_REFRESH_TOKEN_EXPIRED_DAYS.getProperty(env, Integer.class);
+        tokenSecretBytes = DatatypeConverter.parseBase64Binary(SecurityEnv.__SEC_JWT_SECRET.getProperty(env));
     }
 
     /**

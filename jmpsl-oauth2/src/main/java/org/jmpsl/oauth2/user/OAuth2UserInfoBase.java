@@ -19,6 +19,7 @@
 package org.jmpsl.oauth2.user;
 
 import lombok.Getter;
+
 import java.util.Map;
 
 /**

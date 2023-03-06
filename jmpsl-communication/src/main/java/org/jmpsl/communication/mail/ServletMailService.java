@@ -18,22 +18,25 @@
 
 package org.jmpsl.communication.mail;
 
-import org.slf4j.*;
-import freemarker.template.*;
+import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.mail.javamail.*;
+import freemarker.template.Template;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+
 import org.springframework.stereotype.Service;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.util.Map;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-
 import static org.jmpsl.communication.mail.MailException.UnableToSendEmailException;
-import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 /**
  * Custom Java Spring Bean service responsible for management and sending emails to user/multiple users with basic
@@ -42,10 +45,9 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Service
 public class ServletMailService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServletMailService.class);
 
     private final JavaMailSender sender;
     private final Configuration freemarkerConfiguration;
@@ -71,8 +73,8 @@ public class ServletMailService {
     public void sendEmail(final MailRequestDto reqDto, final Map<String, Object> model, IMailEnumeratedTemplate template) {
         final MimeMessage mimeMessage = sender.createMimeMessage();
         try {
-            final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
+            final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,
+                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
 
             final Template mailTemplate = freemarkerConfiguration.getTemplate(template.getTemplateName());
 
@@ -90,16 +92,16 @@ public class ServletMailService {
             mimeMessageHelper.setFrom(reqDto.getSendFrom());
 
             sender.send(mimeMessage);
-            LOGGER.info("Email message from template {} was successfully send. Request parameters: {}",
-                    template.getTemplateName(), reqDto);
+            log.info("Email message from template {} was successfully send. Request parameters: {}",
+                template.getTemplateName(), reqDto);
             return;
 
         } catch (MessagingException| IOException ex) {
-            LOGGER.error("Sender mail exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
+            log.error("Sender mail exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
         } catch (TemplateException ex) {
-            LOGGER.error("Template exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
+            log.error("Template exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
         } catch (Exception ex) {
-            LOGGER.error("Unexpected mail sender exception. {}, Request parameters: {}", ex.getMessage(), reqDto);
+            log.error("Unexpected mail sender exception. {}, Request parameters: {}", ex.getMessage(), reqDto);
         }
         throw new UnableToSendEmailException(reqDto.getSendTo());
     }

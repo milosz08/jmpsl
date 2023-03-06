@@ -18,19 +18,21 @@
 
 package org.jmpsl.gfx;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
-import java.awt.*;
-import java.util.*;
+import org.springframework.util.Assert;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.awt.Font;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
-import javax.swing.*;
 import javax.imageio.ImageIO;
-
-import static org.springframework.util.Assert.notNull;
+import javax.swing.JEditorPane;
 
 /**
  * Class storing utilities static methods for graphics generators, senders and manipulators.
@@ -38,9 +40,8 @@ import static org.springframework.util.Assert.notNull;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class GfxUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(GfxUtil.class);
 
     private GfxUtil() {
     }
@@ -57,13 +58,13 @@ public class GfxUtil {
      * @throws IllegalArgumentException if passed {@link BufferedImage} instance is null
      */
     public static byte[] generateByteStreamFromBufferedImage(BufferedImage bufferedImage, ImageExtension extension) {
-        notNull(bufferedImage, "BufferedImage instance cannot be null.");
+        Assert.notNull(bufferedImage, "BufferedImage instance cannot be null.");
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             ImageIO.write(bufferedImage, extension.getImageExtension(), byteArrayOutputStream);
             byteArrayOutputStream.close();
         } catch (IOException ex) {
-            LOGGER.error("Unable to save BufferedImage object into output byte stream. Exception: {}", ex.getMessage());
+            log.error("Unable to save BufferedImage object into output byte stream. Exception: {}", ex.getMessage());
         }
         return byteArrayOutputStream.toByteArray();
     }
@@ -108,7 +109,7 @@ public class GfxUtil {
      * @throws IllegalArgumentException if passed {@link Color} instance is null
      */
     public static String convertRgbToHex(Color color) {
-        notNull(color, "Color instance cannot be null.");
+        Assert.notNull(color, "Color instance cannot be null.");
         return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }

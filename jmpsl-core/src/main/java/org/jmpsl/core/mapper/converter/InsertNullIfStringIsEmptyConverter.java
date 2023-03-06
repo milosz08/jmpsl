@@ -19,11 +19,10 @@
 package org.jmpsl.core.mapper.converter;
 
 import org.modelmapper.AbstractConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import org.jmpsl.core.mapper.MappingConverter;
-
-import static org.apache.commons.lang3.StringUtils.trimToNull;
 
 /**
  * Custom mapper converter allows to map A string object to B, where when A object is empty string, B is null.
@@ -37,6 +36,6 @@ public class InsertNullIfStringIsEmptyConverter extends AbstractConverter<String
 
     @Override
     public String convert(String source) {
-        return trimToNull(source);
+        return StringUtils.trimToNull(source);
     }
 }

@@ -18,7 +18,7 @@
 
 package org.jmpsl.gfx.sender;
 
-import lombok.*;
+import lombok.Builder;
 
 import org.jmpsl.file.hashcode.FileHashCodeGenerator;
 

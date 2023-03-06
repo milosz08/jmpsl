@@ -18,7 +18,8 @@
 
 package org.jmpsl.file;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 /**
  * Enum set of file content types in "type/notation" (ex. image/jpeg, image/png etc.).

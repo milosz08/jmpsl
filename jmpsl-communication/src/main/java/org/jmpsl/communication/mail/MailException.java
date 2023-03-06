@@ -18,11 +18,12 @@
 
 package org.jmpsl.communication.mail;
 
-import java.util.*;
-import org.jmpsl.core.exception.RestServiceServerException;
+import org.springframework.http.HttpStatus;
 
-import static java.lang.String.join;
-import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
+import java.util.Map;
+import java.util.Set;
+
+import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
  * Email exceptions generating JSON object from {@link RestServiceServerException} object structure model.
@@ -41,8 +42,8 @@ public class MailException {
      */
     public static class UnableToSendEmailException extends RestServiceServerException {
         public UnableToSendEmailException(Set<String> emailRecipents) {
-            super(SERVICE_UNAVAILABLE, "jmpsl.communication.exception.UnableToSendEmailException",
-                Map.of("emailAddress", join(", ", emailRecipents)));
+            super(HttpStatus.SERVICE_UNAVAILABLE, "jmpsl.communication.exception.UnableToSendEmailException",
+                Map.of("emailAddress", String.join(", ", emailRecipents)));
         }
     }
 }

@@ -18,19 +18,16 @@
 
 package org.jmpsl.security.jwt;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
-
+import java.util.Objects;
 import java.util.Optional;
-import static java.util.Objects.isNull;
-
-import static java.util.Optional.empty;
-import static org.jmpsl.security.jwt.JwtValidationType.*;
 
 /**
  * Spring Bean component class provide basic methods for managed JWT (which be more detailed in methods in custom
@@ -40,11 +37,11 @@ import static org.jmpsl.security.jwt.JwtValidationType.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Service
 public class JwtService {
 
     private final JwtConfig jwtConfig;
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtService.class);
 
     public JwtService(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
@@ -64,13 +61,13 @@ public class JwtService {
      * @throws NullPointerException if passed JWT subject is null
      */
     public String generateToken(String subject, Claims claims) {
-        if (isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
+        if (Objects.isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
         return Jwts.builder()
-                .setIssuer(jwtConfig.getTokenIssuer())
-                .setSubject(subject)
-                .setClaims(claims)
-                .signWith(jwtConfig.getSignatureKey())
-                .compact();
+            .setIssuer(jwtConfig.getTokenIssuer())
+            .setSubject(subject)
+            .setClaims(claims)
+            .signWith(jwtConfig.getSignatureKey())
+            .compact();
     }
 
     /**
@@ -106,7 +103,7 @@ public class JwtService {
         if (isValid(token).isValid()) {
             return tokenAfterValidation.getClaims();
         }
-        return empty();
+        return Optional.empty();
     }
 
     /**
@@ -123,11 +120,11 @@ public class JwtService {
      * @throws NullPointerException if passed expired JWT or userIdClaimName is null
      */
     public Optional<Long> validateRefreshToken(String expiredToken, String userIdClaimName) {
-        if (isNull(userIdClaimName)) throw new NullPointerException("Passed user id claim name cannot be null.");
+        if (Objects.isNull(userIdClaimName)) throw new NullPointerException("Passed user id claim name cannot be null.");
         final JwtValidPayload checkedTokenValid = isValid(expiredToken);
-        if (checkedTokenValid.isValid() || !checkedTokenValid.checkType(EXPIRED)) return empty();
+        if (checkedTokenValid.isValid() || !checkedTokenValid.checkType(JwtValidationType.EXPIRED)) return Optional.empty();
         final ValidateJwtPayload unsafeClaims = insideValidateToken(expiredToken);
-        if (unsafeClaims.getClaims().isEmpty()) return empty();
+        if (unsafeClaims.getClaims().isEmpty()) return Optional.empty();
         return Optional.of(unsafeClaims.getClaims().get().get(userIdClaimName, Long.class));
     }
 
@@ -147,12 +144,12 @@ public class JwtService {
      * @throws IllegalArgumentException if passed JWT claims are invalid or malformed
      */
     public Claims unsafeExtractClaims(final String token) {
-        if (isNull(token)) throw new NullPointerException("Passed token value cannot be null.");
+        if (Objects.isNull(token)) throw new NullPointerException("Passed token value cannot be null.");
         return Jwts.parserBuilder()
-                .setSigningKey(jwtConfig.getSignatureKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+            .setSigningKey(jwtConfig.getSignatureKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
     }
 
     /**
@@ -169,8 +166,8 @@ public class JwtService {
      */
     public JwtValidPayload isValid(final String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
-        if (!tokenAfterValidation.getType().equals(GOOD)) {
-            LOGGER.error(tokenAfterValidation.getType().getMessage() + " Token: {}", token);
+        if (!tokenAfterValidation.getType().equals(JwtValidationType.GOOD)) {
+            log.error(tokenAfterValidation.getType().getMessage() + " Token: {}", token);
             return new JwtValidPayload(false, tokenAfterValidation.getType());
         }
         return new JwtValidPayload(true, tokenAfterValidation.getType());
@@ -188,18 +185,18 @@ public class JwtService {
      * @throws NullPointerException if passed JWT is null
      */
     private ValidateJwtPayload insideValidateToken(final String token) {
-        if (isNull(token)) throw new NullPointerException("Passed token value cannot be null.");
+        if (Objects.isNull(token)) throw new NullPointerException("Passed token value cannot be null.");
         try {
             final Claims extractedClaims = unsafeExtractClaims(token);
-            return new ValidateJwtPayload(GOOD, Optional.of(extractedClaims));
+            return new ValidateJwtPayload(JwtValidationType.GOOD, Optional.of(extractedClaims));
         } catch (MalformedJwtException ex) {
-            return new ValidateJwtPayload(MALFORMED);
+            return new ValidateJwtPayload(JwtValidationType.MALFORMED);
         } catch (ExpiredJwtException ex) {
-            return new ValidateJwtPayload(EXPIRED, Optional.of(ex.getClaims()));
+            return new ValidateJwtPayload(JwtValidationType.EXPIRED, Optional.of(ex.getClaims()));
         } catch (JwtException ex) {
-            return new ValidateJwtPayload(INVALID);
+            return new ValidateJwtPayload(JwtValidationType.INVALID);
         } catch (IllegalArgumentException ex) {
-            return new ValidateJwtPayload(OTHER);
+            return new ValidateJwtPayload(JwtValidationType.OTHER);
         }
     }
 }

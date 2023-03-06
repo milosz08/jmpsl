@@ -21,7 +21,7 @@ package org.jmpsl.file.hashcode;
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;
 
-import static org.jmpsl.file.FileEnv.*;
+import org.jmpsl.file.FileEnv;
 
 /**
  * Configuration class responsible for storing hash code properties. One of this properties are:
@@ -43,9 +43,9 @@ public class HashCodeConfigurationSettings {
     private static byte hashSeqBlockLenght;
 
     HashCodeConfigurationSettings(Environment env) {
-        hashCodeSeparator = __JFM_HASH_SEPARATOR.getProperty(env, Character.class);
-        hashSeqBlockCount = __JFM_HASH_SEQ_COUNT.getProperty(env, Byte.class);
-        hashSeqBlockLenght = __JFM_HASH_SEQ_LENGTH.getProperty(env, Byte.class);
+        hashCodeSeparator = FileEnv.__JFM_HASH_SEPARATOR.getProperty(env, Character.class);
+        hashSeqBlockCount = FileEnv.__JFM_HASH_SEQ_COUNT.getProperty(env, Byte.class);
+        hashSeqBlockLenght = FileEnv.__JFM_HASH_SEQ_LENGTH.getProperty(env, Byte.class);
         if (hashSeqBlockCount < 1 || hashSeqBlockLenght < 1) {
             throw new IllegalArgumentException("Hash sequence length properties cannot be less than 1");
         }

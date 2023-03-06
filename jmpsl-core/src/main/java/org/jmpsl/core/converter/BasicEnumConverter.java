@@ -20,9 +20,8 @@ package org.jmpsl.core.converter;
 
 import jakarta.persistence.AttributeConverter;
 
+import java.util.Objects;
 import java.util.stream.Stream;
-
-import static java.util.Objects.isNull;
 
 /**
  * Abstract converter class available to create custom enum converter. The converter is responsible for converting the
@@ -58,7 +57,7 @@ public abstract class BasicEnumConverter<T extends IBasicEnumConverter> implemen
      */
     @Override
     public String convertToDatabaseColumn(T attribute) {
-        if (isNull(attribute)) return null;
+        if (Objects.isNull(attribute)) return null;
         return attribute.getEnumName();
     }
 
@@ -72,10 +71,10 @@ public abstract class BasicEnumConverter<T extends IBasicEnumConverter> implemen
      */
     @Override
     public T convertToEntityAttribute(String dbData) {
-        if (isNull(dbData)) return null;
+        if (Objects.isNull(dbData)) return null;
         return Stream.of(enumClazz.getEnumConstants())
-                .filter(g -> g.getEnumName().equals(dbData))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+            .filter(g -> g.getEnumName().equals(dbData))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 }

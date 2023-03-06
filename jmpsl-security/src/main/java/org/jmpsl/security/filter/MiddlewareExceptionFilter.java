@@ -18,17 +18,19 @@
 
 package org.jmpsl.security.filter;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
 
 /**
  * Spring security filter grabbed all exceptions in filterChain method. Filter must be declared with method
@@ -38,10 +40,10 @@ import jakarta.servlet.http.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Component
 public class MiddlewareExceptionFilter extends OncePerRequestFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MiddlewareExceptionFilter.class);
     private final HandlerExceptionResolver resolver;
 
     public MiddlewareExceptionFilter(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
@@ -53,7 +55,7 @@ public class MiddlewareExceptionFilter extends OncePerRequestFilter {
         try {
             chain.doFilter(req, res);
         } catch (final Exception ex) {
-            LOGGER.error("Filter chain exception resolver executed exception. Details: {}", ex.getMessage());
+            log.error("Filter chain exception resolver executed exception. Details: {}", ex.getMessage());
             resolver.resolveException(req, res, null, ex);
         }
     }

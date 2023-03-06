@@ -18,8 +18,8 @@
 
 package org.jmpsl.oauth2;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 /**
  * Enum class storing all cookies names for OAuth2 redirect session management.

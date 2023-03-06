@@ -18,7 +18,8 @@
 
 package org.jmpsl.security;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 /**
  * Spring boot application available profiles (in standard Spring notation).

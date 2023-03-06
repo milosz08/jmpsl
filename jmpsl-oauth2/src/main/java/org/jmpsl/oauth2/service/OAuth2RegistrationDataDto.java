@@ -18,10 +18,14 @@
 
 package org.jmpsl.oauth2.service;
 
-import lombok.*;
+import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+
 import java.util.Map;
 
-import org.springframework.security.oauth2.core.oidc.*;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
 import org.jmpsl.oauth2.OAuth2Supplier;
 

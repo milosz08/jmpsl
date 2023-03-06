@@ -18,8 +18,9 @@
 
 package org.jmpsl.file.exception;
 
+import org.springframework.http.HttpStatus;
+
 import org.jmpsl.core.exception.RestServiceServerException;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
  * Exception throw, when user attempt to send file without actual file. Extended {@link RestServiceServerException}, so return
@@ -31,6 +32,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class SendingFormFileNotExistException extends RestServiceServerException {
 
     public SendingFormFileNotExistException() {
-        super(NOT_FOUND, "jmpsl.file.exception.SendingFormFileNotExistException");
+        super(HttpStatus.NOT_FOUND, "jmpsl.file.exception.SendingFormFileNotExistException");
     }
 }

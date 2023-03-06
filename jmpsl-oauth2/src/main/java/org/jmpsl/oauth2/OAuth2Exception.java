@@ -18,7 +18,8 @@
 
 package org.jmpsl.oauth2;
 
-import static org.springframework.http.HttpStatus.*;
+import org.springframework.http.HttpStatus;
+
 import org.jmpsl.core.exception.RestServiceAuthServerException;
 
 /**
@@ -38,7 +39,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2AuthenticationProcessingException extends RestServiceAuthServerException {
         public OAuth2AuthenticationProcessingException() {
-            super(UNAUTHORIZED, "jmpsl.oauth2.exception.OAuth2AuthenticationProcessingException");
+            super(HttpStatus.UNAUTHORIZED, "jmpsl.oauth2.exception.OAuth2AuthenticationProcessingException");
         }
     }
 
@@ -51,7 +52,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2SupplierNotImplementedException extends RestServiceAuthServerException {
         public OAuth2SupplierNotImplementedException() {
-            super(NOT_FOUND, "jmpsl.oauth2.exception.OAuth2SupplierNotImplementedException");
+            super(HttpStatus.NOT_FOUND, "jmpsl.oauth2.exception.OAuth2SupplierNotImplementedException");
         }
     }
 
@@ -64,7 +65,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2UriNotSupportedException extends RestServiceAuthServerException {
         public OAuth2UriNotSupportedException() {
-            super(BAD_REQUEST, "jmpsl.oauth2.exception.OAuth2UriNotSupportedException");
+            super(HttpStatus.BAD_REQUEST, "jmpsl.oauth2.exception.OAuth2UriNotSupportedException");
         }
     }
 }

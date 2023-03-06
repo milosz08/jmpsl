@@ -18,17 +18,21 @@
 
 package org.jmpsl.file;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
+import net.schmizz.sshj.sftp.RemoteResourceInfo;
+import net.schmizz.sshj.sftp.StatefulSFTPClient;
+
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.schmizz.sshj.sftp.*;
-
-import java.util.*;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Objects;
 import java.io.IOException;
 
-import org.jmpsl.file.exception.*;
-
-import static org.springframework.util.Assert.*;
+import org.jmpsl.file.exception.SendingFormFileNotExistException;
+import org.jmpsl.file.exception.NotAcceptableFileExtensionException;
 
 /**
  * Class storing static util methods for files and directory's structures.
@@ -36,9 +40,8 @@ import static org.springframework.util.Assert.*;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 public class FileUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     private FileUtil() {
     }
@@ -57,8 +60,8 @@ public class FileUtil {
      * @throws IllegalArgumentException if {@link StatefulSFTPClient} or path or dirName is null
      */
     public static void createDirIfNotExist(StatefulSFTPClient sftpClient, String path, String dirName) throws IOException {
-        notNull(sftpClient, "Sftp client object cannot be null.");
-        noNullElements(new Object[] { path, dirName }, "Path and dirname parameters cannot be null.");
+        Assert.notNull(sftpClient, "Sftp client object cannot be null.");
+        Assert.noNullElements(new Object[] { path, dirName }, "Path and dirname parameters cannot be null.");
         final List<RemoteResourceInfo> ls = sftpClient.ls(path);
         if (ls.stream().noneMatch(p -> p.getName().equals(dirName))) {
             sftpClient.cd(path);
@@ -81,10 +84,10 @@ public class FileUtil {
      * @throws NotAcceptableFileExtensionException if file extension is not supported
      */
     public static void checkIfFileExtensionIsSupported(MultipartFile file, ContentType... types) {
-        notNull(file, "Multipart file object cannot be null");
+        Assert.notNull(file, "Multipart file object cannot be null");
         if (types.length == 0) throw new IllegalStateException("Content type args must be at least one.");
         if (Arrays.stream(types).noneMatch(t -> Objects.equals(file.getContentType(), t.getContentTypeName()))) {
-            LOGGER.error("Attempt to send file with not supported extension. Extension: {}, supported extensions: {}",
+            log.error("Attempt to send file with not supported extension. Extension: {}, supported extensions: {}",
                     file.getContentType(), types);
             throw new NotAcceptableFileExtensionException(types);
         }
@@ -102,7 +105,7 @@ public class FileUtil {
      */
     public static void isFileExist(MultipartFile file) {
         if (Objects.isNull(file) || file.isEmpty() || file.getSize() == 0) {
-            LOGGER.error("Attempt to send file without actual file instance.");
+            log.error("Attempt to send file without actual file instance.");
             throw new SendingFormFileNotExistException();
         }
     }

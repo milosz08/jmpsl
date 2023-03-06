@@ -18,7 +18,9 @@
 
 package org.jmpsl.oauth2;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Converter;
+
 import org.jmpsl.core.converter.BasicEnumConverter;
 
 /**

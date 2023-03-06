@@ -19,10 +19,13 @@
 dependencies {
     implementation          project(':jmpsl-core')
 
-    implementation          "com.hierynomus:sshj:${sshjVersion}"
     implementation          "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+
+    implementation          "com.hierynomus:sshj:${sshjVersion}"
+    implementation          "org.slf4j:slf4j-api:${slf4jApiVersion}"
     implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
 
-    implementation          "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+    implementation          "org.springframework:spring-web:${springVersion}"
+    implementation          "org.springframework:spring-context:${springVersion}"
 }

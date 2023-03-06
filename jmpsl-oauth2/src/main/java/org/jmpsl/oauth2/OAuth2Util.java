@@ -20,19 +20,22 @@ package org.jmpsl.oauth2;
 
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.security.oauth2.client.endpoint.*;
 import org.springframework.http.converter.FormHttpMessageConverter;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 
+import java.util.List;
+import java.util.Arrays;
+
+import org.jmpsl.security.SecurityUtil;
 import org.jmpsl.security.user.IAuthUserModel;
 import org.jmpsl.oauth2.user.OAuth2UserExtender;
 import org.jmpsl.oauth2.service.OAuth2RegistrationDataDto;
-
-import java.util.*;
-
-import static org.jmpsl.security.SecurityUtil.convertRolesToAuthorities;
 
 /**
  * Class with utilities static methods for OAuth2 Spring services.
@@ -75,9 +78,9 @@ public class OAuth2Util {
     public static OAuth2UserExtender fabricateUser(IAuthUserModel user, OAuth2RegistrationDataDto dto) {
         Assert.notNull(user, "User object cannot be null.");
         Assert.notNull(dto, "OAuth2RegistrationDataDto cannot be null.");
-        final List<SimpleGrantedAuthority> authorities = convertRolesToAuthorities(user.getAuthRoles());
+        final List<SimpleGrantedAuthority> authorities = SecurityUtil.convertRolesToAuthorities(user.getAuthRoles());
         final var authUser = new OAuth2UserExtender(user, authorities, dto.getSupplier(), dto.getOidcUserToken(),
-                dto.getOidcUserInfo());
+            dto.getOidcUserInfo());
         authUser.setAttributes(dto.getAttributes());
         return authUser;
     }
@@ -96,6 +99,6 @@ public class OAuth2Util {
     public static OAuth2UserExtender fabricateUser(IAuthUserModel user, OAuth2Supplier supplier) {
         Assert.notNull(user, "User object cannot be null.");
         Assert.notNull(supplier, "Supplier object cannot be null.");
-        return new OAuth2UserExtender(user, convertRolesToAuthorities(user.getAuthRoles()), supplier);
+        return new OAuth2UserExtender(user, SecurityUtil.convertRolesToAuthorities(user.getAuthRoles()), supplier);
     }
 }

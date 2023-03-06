@@ -18,13 +18,16 @@
 
 package org.jmpsl.core.validator;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
-import java.util.stream.*;
-import jakarta.validation.*;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-import static java.util.Objects.isNull;
+import java.util.Set;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * Custom validator class implementing javax constraint validator interface for checking, if string value passed in DTO
@@ -33,9 +36,8 @@ import static java.util.Objects.isNull;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnumIsValidValidator.class);
 
     private Set<String> availableValues;
 
@@ -49,8 +51,8 @@ class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
     @Override
     public void initialize(EnumIsValid constraintAnnotation) {
         this.availableValues = Stream.of(constraintAnnotation.enumClazz().getEnumConstants())
-                .map(v -> v.name().toLowerCase(Locale.ROOT))
-                .collect(Collectors.toSet());
+            .map(v -> v.name().toLowerCase(Locale.ROOT))
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -65,9 +67,9 @@ class EnumIsValidValidator implements ConstraintValidator<EnumIsValid, String> {
      */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (isNull(value) || !availableValues.contains(value.toLowerCase(Locale.ROOT))) {
-            LOGGER.error("Attept to add not existing enum value (malformed enum string data for enum parser)." +
-                    "Available values: {}, passed value: {}", availableValues, value);
+        if (Objects.isNull(value) || !availableValues.contains(value.toLowerCase(Locale.ROOT))) {
+            log.error("Attept to add not existing enum value (malformed enum string data for enum parser)." +
+                "Available values: {}, passed value: {}", availableValues, value);
             return false;
         }
         return true;

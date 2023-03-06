@@ -18,10 +18,10 @@
 
 package org.jmpsl.core;
 
-import java.util.Random;
+import org.springframework.util.Assert;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import static org.springframework.util.Assert.notNull;
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
+import java.util.Random;
 
 /**
  * Class storing static methods for generating random sequences. Methods of this class might be used for example in
@@ -50,8 +50,8 @@ public class RndSeqGenerator {
      * @throws IllegalArgumentException if passed prefix value is null or seqLenght parameter is less than 1
      */
     public static String addEndRndSeq(String prefix, int seqLenght) {
-        notNull(prefix, "Passed prefix value cannot be null.");
-        return prefix + randomNumeric(seqLenght);
+        Assert.notNull(prefix, "Passed prefix value cannot be null.");
+        return prefix + RandomStringUtils.randomNumeric(seqLenght);
     }
 
     /**
@@ -67,8 +67,8 @@ public class RndSeqGenerator {
      * @throws IllegalArgumentException if passed suffix value is null or seqLenght parameter is less than 1
      */
     public static String addBeforeRndSeq(String suffix, int seqLenght) {
-        notNull(suffix, "Passed prefix value cannot be null.");
-        return randomNumeric(seqLenght) + suffix;
+        Assert.notNull(suffix, "Passed prefix value cannot be null.");
+        return RandomStringUtils.randomNumeric(seqLenght) + suffix;
     }
 
     /**

@@ -18,15 +18,15 @@
 
 package org.jmpsl.oauth2.validator;
 
+import jakarta.validation.Valid;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
-import jakarta.validation.*;
 import java.lang.annotation.*;
 
 import org.jmpsl.oauth2.OAuth2Supplier;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Custom Javax validation annotation checking, if passed OAuth2Supplier property (as string) is one of the
@@ -36,8 +36,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@Target(FIELD)
-@Retention(RUNTIME)
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = OAuth2SupplierValidator.class)
 @Documented
 public @interface ValidateOAuth2Supplier {

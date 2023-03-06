@@ -18,9 +18,10 @@
 
 package org.jmpsl.core;
 
-import static java.util.Locale.ROOT;
-import static java.util.Objects.isNull;
-import static org.springframework.util.Assert.noNullElements;
+import org.springframework.util.Assert;
+
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Class storing static methods for string operations. This class extends the standard
@@ -57,7 +58,7 @@ public class StringUtil {
             }
             builder.append(values[i].charAt(0));
         }
-        return builder.toString().toUpperCase(ROOT);
+        return builder.toString().toUpperCase(Locale.ROOT);
     }
 
     /**
@@ -73,7 +74,7 @@ public class StringUtil {
      * @throws IllegalArgumentException if name or surname is null
      */
     public static char[] initialsAsCharsArray(final String name, final String surname) {
-        noNullElements(new Object[] { name, surname }, "Name or surname parameter cannot be null.");
+        Assert.noNullElements(new Object[] { name, surname }, "Name or surname parameter cannot be null.");
         return initials(name, surname).toCharArray();
     }
 
@@ -89,7 +90,7 @@ public class StringUtil {
      * @throws NullPointerException if passed string sequence is null
      */
     public static String addDot(final String value) {
-        if (isNull(value)) return "";
+        if (Objects.isNull(value)) return "";
         if (value.charAt(value.length() - 1) == '.') return value;
         return value + ".";
     }
@@ -109,7 +110,7 @@ public class StringUtil {
      * @throws NullPointerException if passed string value to hash is null
      */
     public static String hashValue(final String value, final char hashValue, final char delimiter, final int hashCount) {
-        if (isNull(value)) throw new NullPointerException("Passed string value to hash cannot be null.");
+        if (Objects.isNull(value)) throw new NullPointerException("Passed string value to hash cannot be null.");
         final String hashedPart = value.substring(0, value.indexOf(delimiter));
         int hashingCharsCount = hashCount;
         if (hashedPart.length() < 5) hashingCharsCount = 1;
@@ -117,7 +118,7 @@ public class StringUtil {
         final String hashPartNonVisible = value.substring(hashingCharsCount + 1, value.indexOf(delimiter));
         final String nonHashPart = value.substring(value.indexOf(delimiter) + 1);
         return hashPartVisible + Character.toString(hashValue).repeat(hashPartNonVisible.length())
-                + delimiter + nonHashPart;
+            + delimiter + nonHashPart;
     }
 
     /**

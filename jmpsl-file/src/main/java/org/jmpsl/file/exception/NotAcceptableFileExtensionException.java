@@ -18,13 +18,14 @@
 
 package org.jmpsl.file.exception;
 
-import org.jmpsl.file.ContentType;
-import org.jmpsl.core.exception.RestServiceServerException;
+import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import org.jmpsl.file.ContentType;
+import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
  * Exception throw, when user sent file with unsupported extension. Extended {@link RestServiceServerException}, so return
@@ -35,7 +36,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
  */
 public class NotAcceptableFileExtensionException extends RestServiceServerException {
     public NotAcceptableFileExtensionException(ContentType... types) {
-        super(BAD_REQUEST, "jmpsl.file.exception.NotAcceptableFileExtensionException", Map.of("extensions",
+        super(HttpStatus.BAD_REQUEST, "jmpsl.file.exception.NotAcceptableFileExtensionException", Map.of("extensions",
             Arrays.stream(types).map(ContentType::getRegularName).collect(Collectors.joining(", "))));
     }
 }

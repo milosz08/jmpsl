@@ -18,18 +18,20 @@
 
 package org.jmpsl.file.socket;
 
-import org.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
+
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.sftp.StatefulSFTPClient;
 
+import org.springframework.util.StringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import static org.jmpsl.file.FileEnv.*;
-import static org.jmpsl.file.FileUtil.createDirIfNotExist;
-import static org.springframework.util.StringUtils.hasLength;
+import org.jmpsl.file.FileEnv;
+import org.jmpsl.file.FileUtil;
 
 /**
  * Spring Bean component responsible for connecting and performing custom action on SFTP socket. Before run application,
@@ -52,10 +54,9 @@ import static org.springframework.util.StringUtils.hasLength;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
+@Slf4j
 @Component
 public class SshFileSocketConnector {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SshFileSocketConnector.class);
 
     private String appServerPath;
     private String sshHost;
@@ -66,17 +67,17 @@ public class SshFileSocketConnector {
     private String sshUserPrivateKeyLocation;
 
     SshFileSocketConnector(Environment env) {
-        if (!__JFM_SSH_ACTIVE.getProperty(env, Boolean.class)) {
-            LOGGER.info("SSH service is not active. To activate service, set 'jmpsl.file.ssh.active' to true");
+        if (!FileEnv.__JFM_SSH_ACTIVE.getProperty(env, Boolean.class)) {
+            log.info("SSH service is not active. To activate service, set 'jmpsl.file.ssh.active' to true");
             return;
         }
-        sshHost = __JFM_SSH_HOST.getProperty(env);
-        sshLogin =  __JFM_SSH_LOGIN.getProperty(env);
-        knownHostsFile = new File(__JFM_SSH_KNOWN_HOSTS.getProperty(env));
-        sshUserPrivateKeyLocation = __JFM_SSH_PRIVATE_KEY.getProperty(env);
-        sftpServerUrl = __JFM_SFTP_SERVER_URL.getProperty(env);
+        sshHost = FileEnv.__JFM_SSH_HOST.getProperty(env);
+        sshLogin =  FileEnv.__JFM_SSH_LOGIN.getProperty(env);
+        knownHostsFile = new File(FileEnv.__JFM_SSH_KNOWN_HOSTS.getProperty(env));
+        sshUserPrivateKeyLocation = FileEnv.__JFM_SSH_PRIVATE_KEY.getProperty(env);
+        sftpServerUrl = FileEnv.__JFM_SFTP_SERVER_URL.getProperty(env);
         serverPath = createBasicSfptServerPath(env);
-        LOGGER.info("Successful loaded SSH socket configuration from configuration properties file.");
+        log.info("Successful loaded SSH socket configuration from configuration properties file.");
     }
 
     /**
@@ -97,11 +98,11 @@ public class SshFileSocketConnector {
             try (final StatefulSFTPClient sftpClient = (StatefulSFTPClient) sshClient.newStatefulSFTPClient()) {
                 executor.execute(sftpClient);
             } catch (IOException ex) {
-                LOGGER.error("Unable to invoke stateful SFTP client execution from SSHClient socket.");
+                log.error("Unable to invoke stateful SFTP client execution from SSHClient socket.");
                 throw new UnableToPerformSftpActionException();
             }
         } catch (IOException ex) {
-            LOGGER.error("Unable to connect with SSH socket. Check connecting parameters.");
+            log.error("Unable to connect with SSH socket. Check connecting parameters.");
             throw new UnableToPerformSftpActionException();
         }
     }
@@ -119,16 +120,16 @@ public class SshFileSocketConnector {
      * @throws NullPointerException if basicServerPath or appServerPath properties are null
      */
     private String createBasicSfptServerPath(Environment env) {
-        final String basicServerPath = __JFM_SSH_BASIC_EXT_SERVER_URL.getProperty(env);
-        appServerPath = __JFM_SSH_APP_EXT_SERVER_URL.getProperty(env);
-        if (!hasLength(appServerPath)) {
+        final String basicServerPath = FileEnv.__JFM_SSH_BASIC_EXT_SERVER_URL.getProperty(env);
+        appServerPath = FileEnv.__JFM_SSH_APP_EXT_SERVER_URL.getProperty(env);
+        if (!StringUtils.hasLength(appServerPath)) {
             return basicServerPath;
         }
         connectToSocketAndPerformAction(sftpClient -> {
             try {
-                createDirIfNotExist(sftpClient, basicServerPath, appServerPath);
+                FileUtil.createDirIfNotExist(sftpClient, basicServerPath, appServerPath);
             } catch (IOException ex) {
-                LOGGER.error("Unable to create basic server path. Server path: {}, app server path: {}",
+                log.error("Unable to create basic server path. Server path: {}, app server path: {}",
                         basicServerPath, appServerPath);
             }
         });
@@ -150,6 +151,6 @@ public class SshFileSocketConnector {
      * @since 1.0.2
      */
     public String getAppServerPath() {
-        return hasLength(appServerPath) ? sftpServerUrl + "/" + appServerPath : sftpServerUrl;
+        return StringUtils.hasLength(appServerPath) ? sftpServerUrl + "/" + appServerPath : sftpServerUrl;
     }
 }

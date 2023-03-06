@@ -18,15 +18,13 @@
 
 package org.jmpsl.security;
 
+import org.springframework.util.Assert;
 import org.springframework.http.HttpMethod;
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Arrays;
-
-import static org.jmpsl.security.SecurityEnv.*;
-import static org.springframework.util.Assert.notNull;
 
 /**
  * Configuration class storing method for CORS policy MVC spring boot application configuration.
@@ -38,8 +36,8 @@ public class CorsPolicyConfigurer {
     private final long maxAge;
 
     public CorsPolicyConfigurer(Environment env) {
-        corsClient = __SEC_CORS_CLIENT.getProperty(env);
-        maxAge = __SEC_CORS_MAX_AGE.getProperty(env, Long.class);
+        corsClient = SecurityEnv.__SEC_CORS_CLIENT.getProperty(env);
+        maxAge = SecurityEnv.__SEC_CORS_MAX_AGE.getProperty(env, Long.class);
     }
 
     /**
@@ -52,7 +50,7 @@ public class CorsPolicyConfigurer {
      * @throws IllegalArgumentException if {@link CorsRegistry} object is null
      */
     public void configureCorsPolicy(CorsRegistry registry, String[] availableMethods) {
-        notNull(registry, "Registry object cannot be null.");
+        Assert.notNull(registry, "Registry object cannot be null.");
         registry.addMapping("/**")
             .allowedOrigins(corsClient)
             .allowedMethods(availableMethods)

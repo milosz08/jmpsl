@@ -18,14 +18,15 @@
 
 package org.jmpsl.core;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.javatuples.Pair;
+import org.springframework.util.Assert;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import jakarta.servlet.http.*;
-
-import static org.springframework.util.Assert.notNull;
 
 /**
  * Class storing static methods for utilities path servlet actions. Most of methods in this class include auto-inserting
@@ -54,8 +55,8 @@ public class ServletPathUtil {
      */
     public static URI redirectMessageUri(String message, String redirectPageUri, boolean error) {
         final List<Pair<String, Object>> queryParams = List.of(
-                new Pair<>("message", message),
-                new Pair<>("error", error));
+            new Pair<>("message", message),
+            new Pair<>("error", error));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
@@ -74,8 +75,8 @@ public class ServletPathUtil {
      */
     public static URI redirectTokenUri(String token, String redirectPageUri, String supplier) {
         final List<Pair<String, Object>> queryParams = List.of(
-                new Pair<>("token", token),
-                new Pair<>("supplier", supplier));
+            new Pair<>("token", token),
+            new Pair<>("supplier", supplier));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
@@ -109,10 +110,10 @@ public class ServletPathUtil {
      * @throws IllegalArgumentException if redirectPageUri string value are null
      */
     private static URI generateBasicUri(List<Pair<String, Object>> queryParams, String redirectPageUri) {
-        notNull(redirectPageUri, "RedirectPageUri cannot be null.");
+        Assert.notNull(redirectPageUri, "RedirectPageUri cannot be null.");
         final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(redirectPageUri);
         for(final Pair<String, Object> param : queryParams) {
-            notNull(param.getValue1(), "Query parameter cannot be null.");
+            Assert.notNull(param.getValue1(), "Query parameter cannot be null.");
             uriComponentsBuilder.queryParam(param.getValue0(), param.getValue1());
         }
         return uriComponentsBuilder.build().toUri();

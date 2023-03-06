@@ -17,18 +17,20 @@
  */
 
 dependencies {
-    implementation          "org.javatuples:javatuples:${jTuplesVersion}"
-    implementation          "org.reflections:reflections:${reflectionsApiVersion}"
-    implementation          "org.modelmapper:modelmapper:${modelMapperVersion}"
-
     implementation          "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
 
+    implementation          "org.javatuples:javatuples:${jTuplesVersion}"
+    implementation          "org.reflections:reflections:${reflectionsApiVersion}"
+    implementation          "org.modelmapper:modelmapper:${modelMapperVersion}"
     implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+    implementation          "com.fasterxml.jackson.core:jackson-databind:${jacksonDatabindVersion}"
+
+    implementation          "jakarta.servlet:jakarta.servlet-api:${jakartaServletVersion}"
     implementation          "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceVersion}"
     implementation          "jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}"
 
-    implementation          "org.springframework.boot:spring-boot-starter:${springVersion}"
-    implementation          "org.springframework.boot:spring-boot-starter-web:${springVersion}"
-    implementation          "org.springframework.boot:spring-boot-starter-security:${springVersion}"
+    implementation          "org.springframework:spring-web:${springVersion}"
+    implementation          "org.springframework:spring-core:${springVersion}"
+    implementation          "org.springframework.security:spring-security-core:${springSecurityVersion}"
 }

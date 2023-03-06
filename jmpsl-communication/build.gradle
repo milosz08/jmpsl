@@ -19,12 +19,17 @@
 dependencies {
     implementation          project(':jmpsl-core')
 
-    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
     implementation          "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+
+    implementation          "org.slf4j:slf4j-api:${slf4jApiVersion}"
     implementation          "org.freemarker:freemarker:${freemarkerVersion}"
     implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
 
-    implementation          "org.springframework.boot:spring-boot-starter:${springVersion}"
-    implementation          "org.springframework.boot:spring-boot-starter-web:${springVersion}"
-    implementation          "org.springframework.boot:spring-boot-starter-mail:${springVersion}"
+    implementation          "jakarta.mail:jakarta.mail-api:${jakartaMailVersion}"
+    implementation          "jakarta.servlet:jakarta.servlet-api:${jakartaServletVersion}"
+
+    implementation          "org.springframework:spring-webmvc:${springVersion}"
+    implementation          "org.springframework:spring-context:${springVersion}"
+    implementation          "org.springframework:spring-context-support:${springVersion}"
 }

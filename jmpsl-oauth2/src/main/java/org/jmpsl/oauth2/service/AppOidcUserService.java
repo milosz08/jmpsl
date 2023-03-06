@@ -19,17 +19,17 @@
 package org.jmpsl.oauth2.service;
 
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.client.oidc.userinfo.*;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-
-import org.jmpsl.oauth2.OAuth2Supplier;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 import java.util.Set;
 
-import static org.jmpsl.oauth2.OAuth2Supplier.checkIfSupplierExist;
+import org.jmpsl.oauth2.OAuth2Supplier;
+import org.jmpsl.oauth2.OAuth2AutoConfigurationLoader;
+
 import static org.jmpsl.oauth2.OAuth2Exception.OAuth2AuthenticationProcessingException;
-import static org.jmpsl.oauth2.OAuth2AutoConfigurationLoader.getAvailableOAuth2Suppliers;
 
 /**
  * Service for Oidc Spring Security verificator. To implemented in Spring Security filterChain method,
@@ -40,7 +40,7 @@ import static org.jmpsl.oauth2.OAuth2AutoConfigurationLoader.getAvailableOAuth2S
  */
 public class AppOidcUserService extends OidcUserService {
 
-    private final Set<OAuth2Supplier> availableSuppliers = getAvailableOAuth2Suppliers();
+    private final Set<OAuth2Supplier> availableSuppliers = OAuth2AutoConfigurationLoader.getAvailableOAuth2Suppliers();
     private final IOAuth2LoaderService oAuth2LoaderService;
 
     public AppOidcUserService(IOAuth2LoaderService oAuth2LoaderService) {
@@ -52,13 +52,13 @@ public class AppOidcUserService extends OidcUserService {
         final OidcUser oidcUser = super.loadUser(userRequest);
         try {
             final String supplierRaw = userRequest.getClientRegistration().getRegistrationId();
-            final OAuth2Supplier supplier = checkIfSupplierExist(supplierRaw, availableSuppliers);
+            final OAuth2Supplier supplier = OAuth2Supplier.checkIfSupplierExist(supplierRaw, availableSuppliers);
             final var registrationData = OAuth2RegistrationDataDto.builder()
-                    .supplier(supplier)
-                    .oidcUserToken(oidcUser.getIdToken())
-                    .attributes(oidcUser.getAttributes())
-                    .oidcUserInfo(oidcUser.getUserInfo())
-                    .build();
+                .supplier(supplier)
+                .oidcUserToken(oidcUser.getIdToken())
+                .attributes(oidcUser.getAttributes())
+                .oidcUserInfo(oidcUser.getUserInfo())
+                .build();
             return oAuth2LoaderService.registrationProcessingFactory(registrationData);
         } catch (AuthenticationException ex) {
             throw ex;
