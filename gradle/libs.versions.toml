@@ -1,0 +1,83 @@
+#
+# Copyright (c) 2022 by multiple authors
+#
+# File name: libs.versions.toml
+# Last modified: 13/10/2022, 16:32
+# Project name: jmps-library
+#
+# Licensed under the MIT license; you may not use this file except in compliance with the License.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+# documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# THE ABOVE COPYRIGHT NOTICE AND THIS PERMISSION NOTICE SHALL BE INCLUDED IN ALL
+# COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
+#
+
+# libs.versions.toml
+# refer to build.gradle 3rd part libraries script file
+
+[versions]
+springFramework             = '6.0.6'
+springSecurity              = '6.0.2'
+jakartaServlet              = '6.0.0'
+jakartaMail                 = '2.1.1'
+jakartaPersistence          = '3.1.0'
+jakartaValidation           = '3.0.2'
+jakartaXmlBinder            = '4.0.0'
+jacksonDatabind             = '2.7.4'
+jjwt                        = '0.11.5'
+sshj                        = '0.34.0'
+imgScalar                   = '4.2'
+lombok                      = '1.18.20'
+slf4j                       = '2.0.6'
+jUnit                       = '5.8.1'
+freemarker                  = '2.3.31'
+modelmapper                 = '3.1.1'
+reflections                 = '0.10.2'
+commonsText                 = '1.10.0'
+gson                        = '2.10.1'
+
+dotenvGradle                = '2.0.0'
+
+[libraries]
+reflections                     = { module = 'org.reflections:reflections',                                 version.ref = 'reflections' }
+sshj                            = { module = 'com.hierynomus:sshj',                                         version.ref = 'sshj' }
+imgscalar                       = { module = 'org.imgscalr:imgscalr-lib',                                   version.ref = 'imgScalar' }
+modelmapper                     = { module = 'org.modelmapper:modelmapper',                                 version.ref = 'modelmapper' }
+jackson-databind                = { module = 'com.fasterxml.jackson.core:jackson-databind',                 version.ref = 'jacksonDatabind' }
+commons-text                    = { module = 'org.apache.commons:commons-text',                             version.ref = 'commonsText' }
+freemarker                      = { module = 'org.freemarker:freemarker',                                   version.ref = 'freemarker' }
+slf4j-api                       = { module = 'org.slf4j:slf4j-api',                                         version.ref = 'slf4j' }
+lombok                          = { module = 'org.projectlombok:lombok',                                    version.ref = 'lombok' }
+jjwt-api                        = { module = 'io.jsonwebtoken:jjwt-api',                                    version.ref = 'jjwt' }
+jjwt-impl                       = { module = 'io.jsonwebtoken:jjwt-impl',                                   version.ref = 'jjwt' }
+jjwt-jackson                    = { module = 'io.jsonwebtoken:jjwt-jackson',                                version.ref = 'jjwt' }
+gson                            = { module = 'com.google.code.gson:gson',                                   version.ref = 'gson' }
+
+spring-web                      = { module = 'org.springframework:spring-web',                              version.ref = 'springFramework' }
+spring-core                     = { module = 'org.springframework:spring-core',                             version.ref = 'springFramework' }
+spring-webmvc                   = { module = 'org.springframework:spring-webmvc',                           version.ref = 'springFramework' }
+spring-context                  = { module = 'org.springframework:spring-context',                          version.ref = 'springFramework' }
+spring-context-support          = { module = 'org.springframework:spring-context-support',                  version.ref = 'springFramework' }
+
+spring-security-web             = { module = 'org.springframework.security:spring-security-web',            version.ref = 'springSecurity' }
+spring-security-core            = { module = 'org.springframework.security:spring-security-core',           version.ref = 'springSecurity' }
+spring-security-config          = { module = 'org.springframework.security:spring-security-config',         version.ref = 'springSecurity' }
+spring-security-oauth2-jose     = { module = 'org.springframework.security:spring-security-oauth2-jose',    version.ref = 'springSecurity' }
+spring-security-oauth2-client   = { module = 'org.springframework.security:spring-security-oauth2-client',  version.ref = 'springSecurity' }
+
+jakarta-mail-api                = { module = 'jakarta.mail:jakarta.mail-api',                               version.ref = 'jakartaMail' }
+jakarta-servlet-api             = { module = 'jakarta.servlet:jakarta.servlet-api',                         version.ref = 'jakartaServlet' }
+jakarta-persistence-api         = { module = 'jakarta.persistence:jakarta.persistence-api',                 version.ref = 'jakartaPersistence' }
+jakarta-validation-api          = { module = 'jakarta.validation:jakarta.validation-api',                   version.ref = 'jakartaValidation' }
+jakarta-xml-bind-api            = { module = 'jakarta.xml.bind:jakarta.xml.bind-api',                       version.ref = 'jakartaXmlBinder' }
+jaxb-runtime                    = { module = 'org.glassfish.jaxb:jaxb-runtime',                             version.ref = 'jakartaXmlBinder' }
+
+junit-api                       = { module = 'org.junit.jupiter:junit-jupiter-api',                         version.ref = 'jUnit' }
+junit-engine                    = { module = 'org.junit.jupiter:junit-jupiter-engine',                      version.ref = 'jUnit' }
+
+[plugins]
+dotenv-gradle                   = { id     = 'co.uzzu.dotenv.gradle',                                       version.ref = 'dotenvGradle' }

@@ -20,24 +20,23 @@ dependencies {
     implementation          project(':jmpsl-core')
     implementation          project(':jmpsl-communication')
 
-    implementation          "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+    implementation          libs.lombok
+    annotationProcessor     libs.lombok
 
-    implementation          "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
-    implementation          "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
-    implementation          "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
-    implementation          "com.google.code.gson:gson:${gsonVersion}"
-    implementation          "org.reflections:reflections:${reflectionsApiVersion}"
-    implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+    implementation          libs.jjwt.api
+    implementation          libs.jjwt.impl
+    implementation          libs.jjwt.jackson
+    implementation          libs.gson
+    implementation          libs.reflections
+    implementation          libs.commons.text
 
-    implementation          "jakarta.servlet:jakarta.servlet-api:${jakartaServletVersion}"
-    api                     "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBinderVersion}"
-    runtimeOnly             "org.glassfish.jaxb:jaxb-runtime:${jakartaXmlBinderVersion}"
+    implementation          libs.jakarta.servlet.api
+    api                     libs.jakarta.xml.bind.api
+    runtimeOnly             libs.jaxb.runtime
 
-    implementation          "org.springframework:spring-web:${springVersion}"
-    implementation          "org.springframework:spring-webmvc:${springVersion}"
-    implementation          "org.springframework:spring-context:${springVersion}"
-    implementation          "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    implementation          "org.springframework.security:spring-security-config:${springSecurityVersion}"
-
+    implementation          libs.spring.web
+    implementation          libs.spring.webmvc
+    implementation          libs.spring.context
+    implementation          libs.spring.security.web
+    implementation          libs.spring.security.config
 }

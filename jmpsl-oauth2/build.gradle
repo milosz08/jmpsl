@@ -20,19 +20,19 @@ dependencies {
     implementation          project(':jmpsl-core')
     implementation          project(':jmpsl-security')
 
-    implementation          "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+    implementation          libs.lombok
+    annotationProcessor     libs.lombok
 
-    implementation          "org.slf4j:slf4j-api:${slf4jApiVersion}"
-    implementation          "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+    implementation          libs.slf4j.api
+    implementation          libs.commons.text
 
-    implementation          "jakarta.servlet:jakarta.servlet-api:${jakartaServletVersion}"
-    implementation          "jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}"
-    implementation          "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceVersion}"
+    implementation          libs.jakarta.servlet.api
+    implementation          libs.jakarta.validation.api
+    implementation          libs.jakarta.persistence.api
 
-    implementation          "org.springframework:spring-context:${springVersion}"
-    implementation          "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    implementation          "org.springframework.security:spring-security-core:${springSecurityVersion}"
-    implementation          "org.springframework.security:spring-security-oauth2-jose:${springSecurityVersion}"
-    implementation          "org.springframework.security:spring-security-oauth2-client:${springSecurityVersion}"
+    implementation          libs.spring.context
+    implementation          libs.spring.security.web
+    implementation          libs.spring.security.core
+    implementation          libs.spring.security.oauth2.jose
+    implementation          libs.spring.security.oauth2.client
 }

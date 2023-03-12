@@ -20,13 +20,13 @@ dependencies {
     implementation          project(':jmpsl-core')
     implementation          project(':jmpsl-file')
 
-    implementation          "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor     "org.projectlombok:lombok:${lombokVersion}"
+    implementation          libs.lombok
+    annotationProcessor     libs.lombok
 
-    implementation          "com.hierynomus:sshj:${sshjVersion}"
-    implementation          "org.slf4j:slf4j-api:${slf4jApiVersion}"
-    implementation          "org.imgscalr:imgscalr-lib:${imgScalrVersion}"
+    implementation          libs.sshj
+    implementation          libs.slf4j.api
+    implementation          libs.imgscalar
 
-    implementation          "org.springframework:spring-web:${springVersion}"
-    implementation          "org.springframework:spring-context:${springVersion}"
+    implementation          libs.spring.web
+    implementation          libs.spring.context
 }

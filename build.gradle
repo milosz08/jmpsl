@@ -20,37 +20,13 @@ plugins {
     id 'java-library'
     id 'signing'
     id 'maven-publish'
-    id 'co.uzzu.dotenv.gradle' version '2.0.0'
-    id 'org.springframework.boot' version '3.0.2' apply false
-    id 'io.spring.dependency-management' version '1.1.0' apply false
+    alias libs.plugins.dotenv.gradle
 }
 
+// NOTE: all 3rd part libraries in /gradle/libs.versions.toml file
+
 ext {
-    // dependencies version
-    springVersion                   = '6.0.6'
-    springSecurityVersion           = '6.0.2'
-
-    jakartaServletVersion           = '6.0.0'
-    jakartaMailVersion              = '2.1.1'
-    jakartaPersistenceVersion       = '3.1.0'
-    jakartaValidationVersion        = '3.0.2'
-
-    jacksonDatabindVersion          = '2.7.4'
-    jTuplesVersion                  = '1.2'
-    jjwtVersion                     = '0.11.5'
-    sshjVersion                     = '0.34.0'
-    imgScalrVersion                 = '4.2'
-    lombokVersion                   = '1.18.20'
-    slf4jApiVersion                 = '2.0.6'
-    jakartaXmlBinderVersion         = '4.0.0'
-    jupiterTestVersion              = '5.8.1'
-    freemarkerVersion               = '2.3.31'
-    modelMapperVersion              = '3.1.1'
-    reflectionsApiVersion           = '0.10.2'
-    apacheCommonsTextVersion        = '1.10.0'
-    gsonVersion                     = '2.10.1'
-
-    // maven nexus repository artifacts and additional package information's
+    // maven nexus repository artifacts and additional package informations
     libraryVersion                  = '1.0.2'
     globalArtifactId                = 'org.jmpsl'
 }
@@ -59,8 +35,6 @@ allprojects {
     apply plugin: 'java-library'
     apply plugin: 'signing'
     apply plugin: 'maven-publish'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
 
     version     = rootProject.ext.libraryVersion
     group       = rootProject.ext.globalArtifactId
@@ -155,7 +129,7 @@ rootProject.dependencies {
 // dependencies for all subprojects
 subprojects {
     dependencies {
-        testImplementation  "org.junit.jupiter:junit-jupiter-api:${jupiterTestVersion}"
-        testRuntimeOnly     "org.junit.jupiter:junit-jupiter-engine:${jupiterTestVersion}"
+        testImplementation  libs.junit.api
+        testRuntimeOnly     libs.junit.engine
     }
 }
