@@ -21,7 +21,6 @@ package org.jmpsl.core;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.javatuples.Pair;
 import org.springframework.util.Assert;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -54,9 +53,9 @@ public class ServletPathUtil {
      * @throws IllegalArgumentException if message or redirectPageUri parameters are null
      */
     public static URI redirectMessageUri(String message, String redirectPageUri, boolean error) {
-        final List<Pair<String, Object>> queryParams = List.of(
-            new Pair<>("message", message),
-            new Pair<>("error", error));
+        final List<QueryMap> queryParams = List.of(
+            new QueryMap("message", message),
+            new QueryMap("error", error));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
@@ -74,9 +73,9 @@ public class ServletPathUtil {
      * @throws IllegalArgumentException if token, supplier or redirectPageUri parameters are null
      */
     public static URI redirectTokenUri(String token, String redirectPageUri, String supplier) {
-        final List<Pair<String, Object>> queryParams = List.of(
-            new Pair<>("token", token),
-            new Pair<>("supplier", supplier));
+        final List<QueryMap> queryParams = List.of(
+            new QueryMap("token", token),
+            new QueryMap("supplier", supplier));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
@@ -93,7 +92,7 @@ public class ServletPathUtil {
      * @throws IllegalArgumentException if message or redirectPageUri parameters are null
      */
     public static URI redirectErrorUri(String message, String redirectPageUri) {
-        final List<Pair<String, Object>> queryParams = List.of(new Pair<>("error", message));
+        final List<QueryMap> queryParams = List.of(new QueryMap("error", message));
         return generateBasicUri(queryParams, redirectPageUri);
     }
 
@@ -109,12 +108,12 @@ public class ServletPathUtil {
      *
      * @throws IllegalArgumentException if redirectPageUri string value are null
      */
-    private static URI generateBasicUri(List<Pair<String, Object>> queryParams, String redirectPageUri) {
+    private static URI generateBasicUri(List<QueryMap> queryParams, String redirectPageUri) {
         Assert.notNull(redirectPageUri, "RedirectPageUri cannot be null.");
         final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(redirectPageUri);
-        for(final Pair<String, Object> param : queryParams) {
-            Assert.notNull(param.getValue1(), "Query parameter cannot be null.");
-            uriComponentsBuilder.queryParam(param.getValue0(), param.getValue1());
+        for(final QueryMap param : queryParams) {
+            Assert.notNull(param.value(), "Query parameter cannot be null.");
+            uriComponentsBuilder.queryParam(param.name(), param.value());
         }
         return uriComponentsBuilder.build().toUri();
     }
