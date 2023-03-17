@@ -18,10 +18,10 @@
 
 package org.jmpsl.security.resolver;
 
-import com.google.gson.Gson;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;

@@ -2,7 +2,7 @@
  * Copyright (c) 2023 by multiple authors
  *
  * File name: CustomLocaleResolver.java
- * Last modified: 19/02/2023, 17:22
+ * Last modified: 17/03/2023, 14:28
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.communication.locale;
+package org.jmpsl.core.i18n;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,7 +26,6 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.List;
 import java.util.Locale;
-
 
 /**
  * External configuration class for resolve locale by Http request header "Accept-Language". If header does not exist,

@@ -2,7 +2,7 @@
  * Copyright (c) 2023 by multiple authors
  *
  * File name: LocaleUtil.java
- * Last modified: 20/02/2023, 00:03
+ * Last modified: 17/03/2023, 10:14
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.communication.locale;
+package org.jmpsl.core.i18n;
 
 import org.springframework.util.Assert;
 

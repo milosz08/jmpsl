@@ -21,6 +21,8 @@ package org.jmpsl.communication.locale;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
+import org.jmpsl.core.i18n.LocaleUtil;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LocaleUtilTest {

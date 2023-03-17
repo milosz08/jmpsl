@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: LocaleMessage.java
- * Last modified: 19/02/2023, 17:34
+ * File name: LocaleMessageService.java
+ * Last modified: 06/03/2023, 11:50
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.communication.locale;
+package org.jmpsl.core.i18n;
 
 import org.springframework.stereotype.Service;
 import org.springframework.context.NoSuchMessageException;
