@@ -20,6 +20,7 @@ package org.jmpsl.oauth2;
 
 import org.springframework.http.HttpStatus;
 
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.exception.RestServiceAuthServerException;
 
 /**
@@ -39,7 +40,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2AuthenticationProcessingException extends RestServiceAuthServerException {
         public OAuth2AuthenticationProcessingException() {
-            super(HttpStatus.UNAUTHORIZED, OAuth2LocaleSet.AUTHENTICATION_PROCESSING_EXC);
+            super(HttpStatus.UNAUTHORIZED, LocaleSet.OAUTH2_AUTHENTICATION_PROCESSING_EXC);
         }
     }
 
@@ -52,7 +53,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2SupplierNotImplementedException extends RestServiceAuthServerException {
         public OAuth2SupplierNotImplementedException() {
-            super(HttpStatus.NOT_FOUND, OAuth2LocaleSet.SUPPLIER_NOT_IMPLEMENTED_EXC);
+            super(HttpStatus.NOT_FOUND, LocaleSet.OAUTH2_SUPPLIER_NOT_IMPLEMENTED_EXC);
         }
     }
 
@@ -65,7 +66,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2UriNotSupportedException extends RestServiceAuthServerException {
         public OAuth2UriNotSupportedException() {
-            super(HttpStatus.BAD_REQUEST, OAuth2LocaleSet.URI_NOT_SUPPORTED_EXC);
+            super(HttpStatus.BAD_REQUEST, LocaleSet.OAUTH2_URI_NOT_SUPPORTED_EXC);
         }
     }
 }

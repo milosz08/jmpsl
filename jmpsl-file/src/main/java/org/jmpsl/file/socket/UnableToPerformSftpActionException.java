@@ -20,7 +20,7 @@ package org.jmpsl.file.socket;
 
 import org.springframework.http.HttpStatus;
 
-import org.jmpsl.file.FileLocaleSet;
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -33,6 +33,6 @@ import org.jmpsl.core.exception.RestServiceServerException;
 public class UnableToPerformSftpActionException extends RestServiceServerException {
 
     public UnableToPerformSftpActionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, FileLocaleSet.UNABLE_TO_PERFORM_SFTP_ACTION_EXC);
+        super(HttpStatus.SERVICE_UNAVAILABLE, LocaleSet.FILE_UNABLE_TO_PERFORM_SFTP_ACTION_EXC);
     }
 }

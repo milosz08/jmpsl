@@ -20,7 +20,7 @@ package org.jmpsl.gfx.generator;
 
 import org.springframework.http.HttpStatus;
 
-import org.jmpsl.gfx.GfxLocaleSet;
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 import org.jmpsl.core.exception.RestServiceAuthServerException;
 
@@ -41,7 +41,7 @@ public class ImageGeneratorException {
      */
     public static class ImageNotSupportedDimensionsException extends RestServiceServerException {
         public ImageNotSupportedDimensionsException() {
-            super(HttpStatus.BAD_REQUEST, GfxLocaleSet.IMAGE_NOT_SUPPORTED_DIMENSIONS_EXC);
+            super(HttpStatus.BAD_REQUEST, LocaleSet.GFX_IMAGE_NOT_SUPPORTED_DIMENSIONS_EXC);
         }
     }
 
@@ -54,7 +54,7 @@ public class ImageGeneratorException {
      */
     public static class FontSizeNotSupportedException extends RestServiceServerException {
         public FontSizeNotSupportedException() {
-            super(HttpStatus.BAD_REQUEST, GfxLocaleSet.FONT_SIZE_NOT_SUPPORTED_EXC);
+            super(HttpStatus.BAD_REQUEST, LocaleSet.GFX_FONT_SIZE_NOT_SUPPORTED_EXC);
         }
     }
 
@@ -67,7 +67,7 @@ public class ImageGeneratorException {
      */
     public static class TooMuchInitialsCharactersException extends RestServiceServerException {
         public TooMuchInitialsCharactersException() {
-            super(HttpStatus.BAD_REQUEST, GfxLocaleSet.TOO_MUCH_INITIALS_CHARACTERS_EXC);
+            super(HttpStatus.BAD_REQUEST, LocaleSet.GFX_TOO_MUCH_INITIALS_CHARACTERS_EXC);
         }
     }
 

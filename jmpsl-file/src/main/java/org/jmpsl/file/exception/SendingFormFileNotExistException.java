@@ -20,7 +20,7 @@ package org.jmpsl.file.exception;
 
 import org.springframework.http.HttpStatus;
 
-import org.jmpsl.file.FileLocaleSet;
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -33,6 +33,6 @@ import org.jmpsl.core.exception.RestServiceServerException;
 public class SendingFormFileNotExistException extends RestServiceServerException {
 
     public SendingFormFileNotExistException() {
-        super(HttpStatus.NOT_FOUND, FileLocaleSet.SENDING_FORM_FILE_NOT_EXIST_EXC);
+        super(HttpStatus.NOT_FOUND, LocaleSet.FILE_SENDING_FORM_FILE_NOT_EXIST_EXC);
     }
 }

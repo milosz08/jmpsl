@@ -20,7 +20,7 @@ package org.jmpsl.file.exception;
 
 import org.springframework.http.HttpStatus;
 
-import org.jmpsl.file.FileLocaleSet;
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -33,6 +33,6 @@ import org.jmpsl.core.exception.RestServiceServerException;
 public class ExternalFileServerMalfunctionException extends RestServiceServerException {
 
     public ExternalFileServerMalfunctionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, FileLocaleSet.EXTERNAL_FILE_SERVER_MALFUNCTION_EXC);
+        super(HttpStatus.SERVICE_UNAVAILABLE, LocaleSet.FILE_EXTERNAL_FILE_SERVER_MALFUNCTION_EXC);
     }
 }

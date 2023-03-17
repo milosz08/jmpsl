@@ -33,7 +33,7 @@ import org.springframework.security.core.AuthenticationException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import org.jmpsl.security.SecurityLocaleSet;
+import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.i18n.LocaleMessageService;
 import org.jmpsl.core.exception.ServerExceptionResDto;
 import org.jmpsl.core.exception.GeneralServerExceptionResDto;
@@ -57,7 +57,7 @@ public class AuthResolverForRest implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException ex) throws IOException {
-        final String message = localeMessageService.getMessage(SecurityLocaleSet.AUTHENTICATION_EXC);
+        final String message = localeMessageService.getMessage(LocaleSet.SECURITY_AUTHENTICATION_EXC);
         final var resDto = new GeneralServerExceptionResDto(ServerExceptionResDto.generate(HttpStatus.UNAUTHORIZED, req), message);
         res.setStatus(HttpStatus.UNAUTHORIZED.value());
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
