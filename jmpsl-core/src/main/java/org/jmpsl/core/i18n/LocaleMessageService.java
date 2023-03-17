@@ -43,16 +43,18 @@ public class LocaleMessageService {
      * passed in method arguments. If message with passed pattern does not exist, return pattern as string value.
      * Otherwise return message as string value.
      *
-     * @param placeholder message pattern declared in <code>message.properties</code> files
+     * @param placeholder message pattern declared in <code>message.properties</code> files from enum implements
+     *                    {@link ILocaleEnumSet} interface
      * @return localized message value or string pattern, if message does not exist
      * @author Miłosz Gilga
      * @since 1.0.2
      */
-    public String getMessage(String placeholder) {
+    public String getMessage(ILocaleEnumSet placeholder) {
         try {
-            return localeConfigurerExtender.messageSource().getMessage(placeholder, null, LocaleContextHolder.getLocale());
+            return localeConfigurerExtender.messageSource()
+                .getMessage(placeholder.getHolder(), null, LocaleContextHolder.getLocale());
         } catch (NoSuchMessageException ex) {
-            return placeholder;
+            return placeholder.getHolder();
         }
     }
 }

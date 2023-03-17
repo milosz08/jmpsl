@@ -39,7 +39,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2AuthenticationProcessingException extends RestServiceAuthServerException {
         public OAuth2AuthenticationProcessingException() {
-            super(HttpStatus.UNAUTHORIZED, "jmpsl.oauth2.exception.OAuth2AuthenticationProcessingException");
+            super(HttpStatus.UNAUTHORIZED, OAuth2LocaleSet.AUTHENTICATION_PROCESSING_EXC);
         }
     }
 
@@ -52,7 +52,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2SupplierNotImplementedException extends RestServiceAuthServerException {
         public OAuth2SupplierNotImplementedException() {
-            super(HttpStatus.NOT_FOUND, "jmpsl.oauth2.exception.OAuth2SupplierNotImplementedException");
+            super(HttpStatus.NOT_FOUND, OAuth2LocaleSet.SUPPLIER_NOT_IMPLEMENTED_EXC);
         }
     }
 
@@ -65,7 +65,7 @@ public class OAuth2Exception {
      */
     public static class OAuth2UriNotSupportedException extends RestServiceAuthServerException {
         public OAuth2UriNotSupportedException() {
-            super(HttpStatus.BAD_REQUEST, "jmpsl.oauth2.exception.OAuth2UriNotSupportedException");
+            super(HttpStatus.BAD_REQUEST, OAuth2LocaleSet.URI_NOT_SUPPORTED_EXC);
         }
     }
 }

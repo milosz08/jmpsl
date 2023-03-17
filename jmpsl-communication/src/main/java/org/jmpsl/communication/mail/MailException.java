@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Map;
 import java.util.Set;
 
+import org.jmpsl.communication.CommunicationLocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -42,7 +43,7 @@ public class MailException {
      */
     public static class UnableToSendEmailException extends RestServiceServerException {
         public UnableToSendEmailException(Set<String> emailRecipents) {
-            super(HttpStatus.SERVICE_UNAVAILABLE, "jmpsl.communication.exception.UnableToSendEmailException",
+            super(HttpStatus.SERVICE_UNAVAILABLE, CommunicationLocaleSet.UNABLE_TO_SEND_EMAIL_EXC,
                 Map.of("emailAddress", String.join(", ", emailRecipents)));
         }
     }

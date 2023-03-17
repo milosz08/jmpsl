@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.nio.charset.StandardCharsets;
 
-import org.jmpsl.communication.CommunicationEnv;
+import org.jmpsl.core.CoreEnv;
 
 /**
  * Configuration class responsible for generate basic configuration for locale REST services. To configure locale, set
@@ -57,15 +57,15 @@ public class LocaleConfigurerExtender {
     private final List<Locale> availableLocales;
 
     LocaleConfigurerExtender(Environment env) {
-        this.defaultLocale = new Locale(CommunicationEnv.__COM_DEFAULT_LOCALE.getProperty(env));
-        this.availableLocales = Arrays.stream(CommunicationEnv.__COM_AVAILABLE_LOCALES.getProperty(env).split(","))
+        this.defaultLocale = new Locale(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env));
+        this.availableLocales = Arrays.stream(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env).split(","))
             .map(Locale::new).collect(Collectors.toList());
     }
 
     @Bean("jmpslMessageSource")
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasenames("locale/messages");
+        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", "locale/messages");
         resourceBundleMessageSource.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         return resourceBundleMessageSource;
     }

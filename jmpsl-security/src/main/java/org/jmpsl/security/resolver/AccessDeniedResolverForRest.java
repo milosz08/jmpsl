@@ -33,9 +33,10 @@ import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.jmpsl.security.SecurityLocaleSet;
+import org.jmpsl.core.i18n.LocaleMessageService;
 import org.jmpsl.core.exception.ServerExceptionResDto;
 import org.jmpsl.core.exception.GeneralServerExceptionResDto;
-import org.jmpsl.communication.locale.LocaleMessageService;
 
 /**
  * Custom access denied entry point for REST Spring boot security context. DI instance must be declared in Spring
@@ -56,7 +57,7 @@ public class AccessDeniedResolverForRest extends AccessDeniedHandlerImpl {
 
     @Override
     public void handle(HttpServletRequest req, HttpServletResponse res, AccessDeniedException ex) throws IOException {
-        final String message = localeMessageService.getMessage("jmpsl.security.AuthorizationException");
+        final String message = localeMessageService.getMessage(SecurityLocaleSet.AUTHENTICATION_EXC);
         final var resDto = new GeneralServerExceptionResDto(ServerExceptionResDto.generate(HttpStatus.FORBIDDEN, req), message);
         res.setStatus(HttpStatus.FORBIDDEN.value());
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);

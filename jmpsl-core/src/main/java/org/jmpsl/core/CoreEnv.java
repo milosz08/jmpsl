@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: CommunicationEnv.java
- * Last modified: 15/02/2023, 00:52
+ * File name: CoreEnv.java
+ * Last modified: 17/03/2023, 14:28
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.communication;
+package org.jmpsl.core;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 
 import org.springframework.core.env.Environment;
+
+import java.util.Locale;
 
 import org.jmpsl.core.env.EnvDataPayload;
 import org.jmpsl.core.env.IEnvEnumExtender;
@@ -29,7 +31,7 @@ import org.jmpsl.core.env.EnvPropertyHandler;
 
 /**
  * Enum responsible for storing all environment variables from <code>application.properties</code> file for JMPSL
- * Communication library module.
+ * Core library module.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
@@ -38,15 +40,25 @@ import org.jmpsl.core.env.EnvPropertyHandler;
  */
 @Getter
 @AllArgsConstructor
-public enum CommunicationEnv implements IEnvEnumExtender {
+public enum CoreEnv implements IEnvEnumExtender {
 
     /**
-     * Define email Freemarker templates directory path. By default "classpath:/templates". Property required.
-     * Templates should be in /resources directory.
+     * Avaialble application locales (defined as array list, for ex. <i>fr,pl,en_GB,en_US</i>). Property not required.
+     * By default it is en_US.
      *
+     * @see Locale
      * @since 1.0.2
      */
-    __COM_FREEMARKER_PATH("jmpsl.communication.mail.freemarker-templates-dir", "classpath:/templates", false);
+    __CORE_AVAILABLE_LOCALES("jmpsl.core.locale.available-locales", "en_US", false),
+
+    /**
+     * Default selected application locale (defined as locale string, for ex. <i>en_US</i>). Property not required.
+     * By default it is en_US.
+     *
+     * @see Locale
+     * @since 1.0.2
+     */
+    __CORE_DEFAULT_LOCALE("jmpsl.core.locale.default-locale", "en_US", false);
 
     private final String name;
     private final String defaultValue;

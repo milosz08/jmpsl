@@ -31,5 +31,6 @@ dependencies {
 
     implementation          libs.spring.web
     implementation          libs.spring.core
+    implementation          libs.spring.webmvc
     implementation          libs.spring.security.core
 }

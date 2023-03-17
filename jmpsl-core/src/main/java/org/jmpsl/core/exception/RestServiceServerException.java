@@ -25,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.jmpsl.core.i18n.ILocaleEnumSet;
+
 /**
  * Simple server exception extending basic {@link RuntimeException} with {@link HttpStatus} parameter passed in
  * exception constructor.
@@ -36,19 +38,19 @@ import java.util.HashMap;
 public class RestServiceServerException extends RuntimeException {
 
     private final HttpStatus status;
-    private final String patternLocaleMessage;
+    private final ILocaleEnumSet localeEnumSet;
     private Map<String, Object> variables = new HashMap<>();
 
-    public RestServiceServerException(HttpStatus status, String patterLocaleMessage) {
-        super(patterLocaleMessage);
+    public RestServiceServerException(HttpStatus status, ILocaleEnumSet localeEnumSet) {
+        super(localeEnumSet.getHolder());
         this.status = status;
-        this.patternLocaleMessage = patterLocaleMessage;
+        this.localeEnumSet = localeEnumSet;
     }
 
-    public RestServiceServerException(HttpStatus status, String patterLocaleMessage, Map<String, Object> variables) {
-        super(patterLocaleMessage);
+    public RestServiceServerException(HttpStatus status, ILocaleEnumSet localeEnumSet, Map<String, Object> variables) {
+        super(localeEnumSet.getHolder());
         this.status = status;
-        this.patternLocaleMessage = patterLocaleMessage;
+        this.localeEnumSet = localeEnumSet;
         this.variables = variables;
     }
 }

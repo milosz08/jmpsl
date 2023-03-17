@@ -20,6 +20,7 @@ package org.jmpsl.file.hashcode;
 
 import org.springframework.http.HttpStatus;
 
+import org.jmpsl.file.FileLocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -32,6 +33,6 @@ import org.jmpsl.core.exception.RestServiceServerException;
 public class HashCodeFormatException extends RestServiceServerException {
 
     public HashCodeFormatException() {
-        super(HttpStatus.BAD_REQUEST, "jmpsl.file.exception.HashCodeFormatException");
+        super(HttpStatus.BAD_REQUEST, FileLocaleSet.HASH_CODE_FORMAT_EXC);
     }
 }

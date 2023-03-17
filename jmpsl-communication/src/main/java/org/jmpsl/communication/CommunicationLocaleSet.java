@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: UnableToPerformSftpActionException.java
- * Last modified: 02/11/2022, 14:32
+ * File name: CommunicationLocaleSet.java
+ * Last modified: 17/03/2023, 10:31
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,23 +16,30 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.file.socket;
+package org.jmpsl.communication;
 
-import org.springframework.http.HttpStatus;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import org.jmpsl.file.FileLocaleSet;
-import org.jmpsl.core.exception.RestServiceServerException;
+import org.jmpsl.core.i18n.ILocaleEnumSet;
 
 /**
- * Custom exception throws after unable to connect with SFTP server or unable to perform other general SFTP action.
- * Extended {@link RestServiceServerException}, so return JSON object in response body part.
+ * Enum set storing all placeholders of internationalization messages for communication JMPS library module.
+ * Implementing {@link ILocaleEnumSet} interface from JMPSL core module.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
+ * @see ILocaleEnumSet
  */
-public class UnableToPerformSftpActionException extends RestServiceServerException {
+@Getter
+@RequiredArgsConstructor
+public enum CommunicationLocaleSet implements ILocaleEnumSet {
+    UNABLE_TO_SEND_EMAIL_EXC                        ("jmpsl.communication.exception.UnableToSendEmailException");
 
-    public UnableToPerformSftpActionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, FileLocaleSet.UNABLE_TO_PERFORM_SFTP_ACTION_EXC);
-    }
+    /**
+     * Internationalization property holder.
+     *
+     * @since 1.0.2
+     */
+    private final String holder;
 }

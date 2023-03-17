@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: UnableToPerformSftpActionException.java
- * Last modified: 02/11/2022, 14:32
+ * File name: ILocaleEnumSet.java
+ * Last modified: 17/03/2023, 10:27
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -16,23 +16,15 @@
  * COPIES OR SUBSTANTIAL PORTIONS OF THE SOFTWARE.
  */
 
-package org.jmpsl.file.socket;
-
-import org.springframework.http.HttpStatus;
-
-import org.jmpsl.file.FileLocaleSet;
-import org.jmpsl.core.exception.RestServiceServerException;
+package org.jmpsl.core.i18n;
 
 /**
- * Custom exception throws after unable to connect with SFTP server or unable to perform other general SFTP action.
- * Extended {@link RestServiceServerException}, so return JSON object in response body part.
+ * Applied this interface to enum set in different modules storing internationalization placeholders from
+ * <code>messages.properties</code> file. Apply <code>getHolder()</code> method returning selected holder.
  *
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class UnableToPerformSftpActionException extends RestServiceServerException {
-
-    public UnableToPerformSftpActionException() {
-        super(HttpStatus.SERVICE_UNAVAILABLE, FileLocaleSet.UNABLE_TO_PERFORM_SFTP_ACTION_EXC);
-    }
+public interface ILocaleEnumSet {
+    String getHolder();
 }

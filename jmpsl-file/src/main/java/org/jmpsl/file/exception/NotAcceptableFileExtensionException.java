@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.jmpsl.file.ContentType;
+import org.jmpsl.file.FileLocaleSet;
 import org.jmpsl.core.exception.RestServiceServerException;
 
 /**
@@ -36,7 +37,7 @@ import org.jmpsl.core.exception.RestServiceServerException;
  */
 public class NotAcceptableFileExtensionException extends RestServiceServerException {
     public NotAcceptableFileExtensionException(ContentType... types) {
-        super(HttpStatus.BAD_REQUEST, "jmpsl.file.exception.NotAcceptableFileExtensionException", Map.of("extensions",
+        super(HttpStatus.BAD_REQUEST, FileLocaleSet.NOT_ACCEPTABLE_FILE_EXTENSION_EXC, Map.of("extensions",
             Arrays.stream(types).map(ContentType::getRegularName).collect(Collectors.joining(", "))));
     }
 }

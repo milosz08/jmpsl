@@ -26,6 +26,7 @@ import org.springframework.security.core.AuthenticationException;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.jmpsl.core.i18n.ILocaleEnumSet;
 
 /**
  * Simple server exception extending basic spring security {@link AuthenticationException} with {@link HttpStatus}
@@ -38,19 +39,19 @@ import java.util.HashMap;
 public class RestServiceAuthServerException extends AuthenticationException {
 
     private final HttpStatus status;
-    private final String patternLocaleMessage;
+    private final ILocaleEnumSet localeEnumSet;
     private Map<String, Object> variables = new HashMap<>();
 
-    public RestServiceAuthServerException(HttpStatus status, String patterLocaleMessage) {
-        super(patterLocaleMessage);
+    public RestServiceAuthServerException(HttpStatus status, ILocaleEnumSet localeEnumSet) {
+        super(localeEnumSet.getHolder());
         this.status = status;
-        this.patternLocaleMessage = patterLocaleMessage;
+        this.localeEnumSet = localeEnumSet;
     }
 
-    public RestServiceAuthServerException(HttpStatus status, String patterLocaleMessage, Map<String, Object> variables) {
-        super(patterLocaleMessage);
+    public RestServiceAuthServerException(HttpStatus status, ILocaleEnumSet localeEnumSet, Map<String, Object> variables) {
+        super(localeEnumSet.getHolder());
         this.status = status;
-        this.patternLocaleMessage = patterLocaleMessage;
+        this.localeEnumSet = localeEnumSet;
         this.variables = variables;
     }
 }
