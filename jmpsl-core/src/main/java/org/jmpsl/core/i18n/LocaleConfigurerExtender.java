@@ -65,7 +65,7 @@ public class LocaleConfigurerExtender {
     @Bean("jmpslMessageSource")
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", "locale/messages");
+        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", "i18n/messages");
         resourceBundleMessageSource.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         return resourceBundleMessageSource;
     }
