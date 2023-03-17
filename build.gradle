@@ -133,3 +133,11 @@ subprojects {
         testRuntimeOnly     libs.junit.engine
     }
 }
+
+tasks.register('packageAllToLocal', DefaultTask) {
+    def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
+    println('Packaging all modules to maven local repo...')
+    modules.each { moduleName ->
+        packageAllToLocal.dependsOn ":jmpsl-${moduleName}:publishToMavenLocal"
+    }
+}
