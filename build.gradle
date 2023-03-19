@@ -115,6 +115,9 @@ allprojects {
     tasks.withType(Javadoc).configureEach {
         (options as StandardJavadocDocletOptions).addBooleanOption('Xdoclint:html', true)
         (options as StandardJavadocDocletOptions).addStringOption('Xmaxwarns', '1')
+        (options as StandardJavadocDocletOptions).author(true)
+        (options as StandardJavadocDocletOptions).encoding("UTF-8")
+        (options as StandardJavadocDocletOptions).bottom("(C) 2023 by Milosz Gilga personal@miloszgilga.pl")
     }
 }
 
