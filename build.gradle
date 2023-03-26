@@ -57,11 +57,11 @@ allprojects {
     }
 
     // remove .plain.jar file from repository package
-    tasks.jar {
+    jar {
         enabled = true
         archiveClassifier.set('')
     }
-    tasks.test {
+    test {
         useJUnitPlatform()
     }
     java {
@@ -71,7 +71,7 @@ allprojects {
 
     publishing {
         publications {
-            maven(MavenPublication) {
+            mavenJava(MavenPublication) {
                 groupId     = rootProject.ext.globalArtifactId
                 artifactId  = project.properties["libraryArtifactId"]
                 version     = rootProject.ext.libraryVersion
@@ -108,12 +108,12 @@ allprojects {
         sign configurations.archives
     }
     // disable Java DockLint annoying warnings (enable only for checking HTML tags)
-    tasks.withType(Javadoc).configureEach {
-        (options as StandardJavadocDocletOptions).addBooleanOption('Xdoclint:html', true)
-        (options as StandardJavadocDocletOptions).addStringOption('Xmaxwarns', '1')
-        (options as StandardJavadocDocletOptions).author(true)
-        (options as StandardJavadocDocletOptions).encoding("UTF-8")
-        (options as StandardJavadocDocletOptions).bottom("(C) 2023 by Milosz Gilga personal@miloszgilga.pl")
+    javadoc {
+        options.addBooleanOption('Xdoclint:html', true)
+        options.addStringOption('Xmaxwarns', '1')
+        options.author(true)
+        options.encoding("UTF-8")
+        options.bottom("(C) 2023 by Milosz Gilga personal@miloszgilga.pl")
     }
 }
 
