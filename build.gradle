@@ -102,16 +102,6 @@ allprojects {
                 }
             }
         }
-        repositories {
-            maven {
-                name    = 'OSSRH'
-                url     = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-                credentials {
-                    username = env.OSSRH_USERNAME.value
-                    password = env.OSSRH_PASSWORD.value
-                }
-            }
-        }
     }
     signing {
         useGpgCmd()
