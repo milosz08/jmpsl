@@ -34,7 +34,7 @@ plugins {
 ext {
     // maven nexus repository artifacts and additional package informations
     libraryVersion                  = '1.0.2'
-    globalArtifactId                = 'org.jmpsl'
+    globalArtifactId                = 'pl.miloszgilga'
 }
 
 def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
@@ -71,7 +71,7 @@ allprojects {
 
     publishing {
         publications {
-            mavenJava(MavenPublication) {
+            maven(MavenPublication) {
                 groupId     = rootProject.ext.globalArtifactId
                 artifactId  = project.properties["libraryArtifactId"]
                 version     = rootProject.ext.libraryVersion
