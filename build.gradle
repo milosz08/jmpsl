@@ -38,6 +38,7 @@ ext {
 }
 
 def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
+initializeSignProperties()
 
 allprojects {
     apply plugin: 'java-library'
@@ -102,10 +103,19 @@ allprojects {
                 }
             }
         }
+        repositories {
+            maven {
+                name    = 'OSSRH'
+                url     = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                credentials {
+                    username = env.OSSRH_USERNAME.value
+                    password = env.OSSRH_PASSWORD.value
+                }
+            }
+        }
     }
     signing {
-        useGpgCmd()
-        sign configurations.archives
+        sign publishing.publications
     }
     // disable Java DockLint annoying warnings (enable only for checking HTML tags)
     javadoc {
@@ -115,6 +125,12 @@ allprojects {
         options.encoding("UTF-8")
         options.bottom("(C) 2023 by Milosz Gilga personal@miloszgilga.pl")
     }
+}
+
+def initializeSignProperties() {
+    project.ext.'signing.keyId' = env.GPG_KEY_ID.value
+    project.ext.'signing.password' = env.GPG_KEY_LOGIN.value
+    project.ext.'signing.secretKeyRingFile' = "$rootDir/$env.GPG_KEY_FILE.value"
 }
 
 // dependencies only for root project (grabbed all multi-modules into one single project module)
