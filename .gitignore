@@ -7,3 +7,4 @@ build/
 
 # Env and properties
 .env
+*.gpg
