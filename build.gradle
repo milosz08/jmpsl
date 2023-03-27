@@ -34,7 +34,7 @@ plugins {
 ext {
     // maven nexus repository artifacts and additional package informations
     libraryVersion                  = '1.0.2'
-    globalArtifactId                = 'com.github.milosz08'
+    globalArtifactId                = 'pl.miloszgilga'
 }
 
 def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
