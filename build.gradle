@@ -108,8 +108,8 @@ allprojects {
                 name    = 'OSSRH'
                 url     = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
                 credentials {
-                    username = env.OSSRH_USERNAME.value
-                    password = env.OSSRH_PASSWORD.value
+                    username = env.isPresent('OSSRH_USERNAME') ? env.OSSRH_USERNAME.value : ''
+                    password = env.isPresent('OSSRH_PASSWORD') ? env.OSSRH_PASSWORD.value : ''
                 }
             }
         }
