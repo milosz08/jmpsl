@@ -128,9 +128,9 @@ allprojects {
 }
 
 def initializeSignProperties() {
-    project.ext.'signing.keyId' = env.GPG_KEY_ID.value
-    project.ext.'signing.password' = env.GPG_KEY_LOGIN.value
-    project.ext.'signing.secretKeyRingFile' = "$rootDir/$env.GPG_KEY_FILE.value"
+    if (env.isPresent('GPG_KEY_ID'))        project.ext.'signing.keyId' = env.GPG_KEY_ID.value
+    if (env.isPresent('GPG_KEY_LOGIN'))     project.ext.'signing.password' = env.GPG_KEY_LOGIN.value
+    if (env.isPresent('GPG_KEY_FILE'))      project.ext.'signing.secretKeyRingFile' = "$rootDir/$env.GPG_KEY_FILE.value"
 }
 
 // dependencies only for root project (grabbed all multi-modules into one single project module)
