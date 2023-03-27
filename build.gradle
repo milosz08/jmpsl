@@ -38,7 +38,7 @@ ext {
 }
 
 def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
-def packager = System.getenv('BUILD_ENV') ?: "maven"
+def packager = System.getenv('BUILD_ENV') ?: 'maven'
 
 initializeSignProperties()
 
@@ -105,7 +105,7 @@ allprojects {
                 }
             }
         }
-        if (packager == "maven") {
+        if (packager == 'maven') {
             repositories {
                 maven {
                     name = 'OSSRH'
@@ -118,7 +118,7 @@ allprojects {
             }
         }
     }
-    if (packager == "maven") {
+    if (packager == 'maven') {
         signing {
             sign publishing.publications
         }
