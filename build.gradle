@@ -33,11 +33,13 @@ plugins {
 
 ext {
     // maven nexus repository artifacts and additional package informations
-    libraryVersion                  = '1.0.2'
+    libraryVersion                  = '1.0.2_01'
     globalArtifactId                = 'pl.miloszgilga'
 }
 
 def modules = [ 'core', 'communication', 'file', 'gfx', 'security', 'oauth2' ]
+def packager = System.getenv('BUILD_ENV') ?: "maven"
+
 initializeSignProperties()
 
 allprojects {
@@ -103,19 +105,23 @@ allprojects {
                 }
             }
         }
-        repositories {
-            maven {
-                name    = 'OSSRH'
-                url     = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-                credentials {
-                    username = env.isPresent('OSSRH_USERNAME') ? env.OSSRH_USERNAME.value : ''
-                    password = env.isPresent('OSSRH_PASSWORD') ? env.OSSRH_PASSWORD.value : ''
+        if (packager == "maven") {
+            repositories {
+                maven {
+                    name = 'OSSRH'
+                    url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                    credentials {
+                        username = env.isPresent('OSSRH_USERNAME') ? env.OSSRH_USERNAME.value : ''
+                        password = env.isPresent('OSSRH_PASSWORD') ? env.OSSRH_PASSWORD.value : ''
+                    }
                 }
             }
         }
     }
-    signing {
-        sign publishing.publications
+    if (packager == "maven") {
+        signing {
+            sign publishing.publications
+        }
     }
     // disable Java DockLint annoying warnings (enable only for checking HTML tags)
     javadoc {
