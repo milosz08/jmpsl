@@ -41,6 +41,12 @@ public enum LocaleSet implements ILocaleEnumSet {
 
     // JMPSL Communication module
     COMMUNICATION_UNABLE_TO_SEND_EMAIL_EXC              ("jmpsl.communication.exception.UnableToSendEmailException"),
+    COMMUNICATION_INCORRECT_MAIL_PARAMS_EXC             ("jmpsl.communication.exception.IncorrectMailParametersException"),
+
+    // JMPSL Core module
+    NO_HANDLER_FOUND_EXC                                ("jmpsl.core.exception.NoHandlerFoundException"),
+    HTTP_MESSAGE_NOT_READABLE_EXC                       ("jmpsl.core.exception.HttpMessageNotReadableException"),
+    INTERNAL_SERVER_ERROR_EXC                           ("jmpsl.core.exception.InternalServerError"),
 
     // JMPSL File module
     FILE_UNABLE_TO_PERFORM_SFTP_ACTION_EXC              ("jmpsl.file.exception.UnableToPerformSftpActionException"),

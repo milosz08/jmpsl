@@ -53,4 +53,16 @@ public class MailException {
                 Map.of("emailAddress", String.join(", ", emailRecipents)));
         }
     }
+
+    /**
+     * Exception for unable to insert parameters for sending email message.
+     *
+     * @author Miłosz Gilga
+     * @since 1.0.2_02
+     */
+    public static class IncorrectMailParametersException extends RestServiceServerException {
+        public IncorrectMailParametersException() {
+            super(HttpStatus.SERVICE_UNAVAILABLE, LocaleSet.COMMUNICATION_INCORRECT_MAIL_PARAMS_EXC);
+        }
+    }
 }
