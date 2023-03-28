@@ -30,6 +30,7 @@ dependencies {
     implementation          libs.modelmapper
     implementation          libs.commons.text
     implementation          libs.jackson.databind
+    implementation          libs.hibernate
 
     implementation          libs.jakarta.servlet.api
     implementation          libs.jakarta.persistence.api

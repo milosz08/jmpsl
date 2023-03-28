@@ -45,6 +45,7 @@ modelmapper                 = '3.1.1'
 reflections                 = '0.10.2'
 commonsText                 = '1.10.0'
 gson                        = '2.10.1'
+hibernate                   = '6.1.7.Final'
 
 dotenvGradle                = '2.0.0'
 
@@ -62,6 +63,7 @@ jjwt-api                        = { module = 'io.jsonwebtoken:jjwt-api',        
 jjwt-impl                       = { module = 'io.jsonwebtoken:jjwt-impl',                                   version.ref = 'jjwt' }
 jjwt-jackson                    = { module = 'io.jsonwebtoken:jjwt-jackson',                                version.ref = 'jjwt' }
 gson                            = { module = 'com.google.code.gson:gson',                                   version.ref = 'gson' }
+hibernate                       = { module = 'org.hibernate.orm:hibernate-core',                            version.ref = 'hibernate' }
 
 spring-web                      = { module = 'org.springframework:spring-web',                              version.ref = 'springFramework' }
 spring-core                     = { module = 'org.springframework:spring-core',                             version.ref = 'springFramework' }
