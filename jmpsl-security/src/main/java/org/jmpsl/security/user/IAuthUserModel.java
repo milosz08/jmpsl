@@ -29,13 +29,14 @@ import java.util.Set;
 /**
  * Implement this interface in base JPA user model and override selected methods.
  *
+ * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public interface IAuthUserModel {
+public interface IAuthUserModel<T extends IEnumerableUserRole> {
     String getAuthUsername();
     String getAuthPassword();
-    Set<String> getAuthRoles();
+    Set<T> getAuthRoles();
     default boolean isAccountEnabled() { return false; }
     default boolean isAccountNonLocked() { return true; }
     default boolean isAccountNotExpired() { return true; }

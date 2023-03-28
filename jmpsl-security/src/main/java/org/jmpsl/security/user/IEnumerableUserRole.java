@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: IOAuth2LoaderService.java
- * Last modified: 14/02/2023, 20:57
+ * File name: IEnumerableUserRole.java
+ * Last modified: 28/03/2023, 13:42
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -22,19 +22,16 @@
  * or other dealings in the software.
  */
 
-package org.jmpsl.oauth2.service;
-
-import org.jmpsl.oauth2.user.OAuth2UserExtender;
-import org.jmpsl.security.user.IEnumerableUserRole;
+package org.jmpsl.security.user;
 
 /**
- * Implement this interface in most of the top auth service layer and override method for process OAuth2
- * registration webflow.
+ * Implement this interface on enum collection of used roles in application and override {@link #getRole()} abstract
+ * method.
  *
- * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
- * @since 1.0.2
+ * @since 1.0.2_02
+ * @see IAuthUserModel
  */
-public interface IOAuth2LoaderService<T extends IEnumerableUserRole> {
-    OAuth2UserExtender<T> registrationProcessingFactory(final OAuth2RegistrationDataDto registrationData);
+public interface IEnumerableUserRole {
+    String getRole();
 }

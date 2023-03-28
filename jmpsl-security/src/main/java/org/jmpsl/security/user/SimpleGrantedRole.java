@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: IOAuth2LoaderService.java
- * Last modified: 14/02/2023, 20:57
+ * File name: SimpleGrantedRole.java
+ * Last modified: 28/03/2023, 13:53
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -22,19 +22,43 @@
  * or other dealings in the software.
  */
 
-package org.jmpsl.oauth2.service;
+package org.jmpsl.security.user;
 
-import org.jmpsl.oauth2.user.OAuth2UserExtender;
-import org.jmpsl.security.user.IEnumerableUserRole;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
+
+import java.util.Set;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
- * Implement this interface in most of the top auth service layer and override method for process OAuth2
- * registration webflow.
+ * Basic enum class for simple granted single role. Use this enum, if your app has not any special roles and all users
+ * has the same privileges.
  *
- * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
- * @since 1.0.2
+ * @since 1.0.2_02
+ * @see IEnumerableUserRole
  */
-public interface IOAuth2LoaderService<T extends IEnumerableUserRole> {
-    OAuth2UserExtender<T> registrationProcessingFactory(final OAuth2RegistrationDataDto registrationData);
+@Getter
+@AllArgsConstructor
+public enum SimpleGrantedRole implements IEnumerableUserRole {
+    USER("USER");
+
+    /**
+     * Field represents role name.
+     *
+     * @since 1.0.2_02
+     */
+    private final String role;
+
+    /**
+     * Generate set collection of all granted roles.
+     *
+     * @return {@link Set} collection of granted roles
+     * @author Miłosz Gilga
+     * @since 1.0.2_02
+     */
+    public static Set<SimpleGrantedRole> getSetCollection() {
+        return Arrays.stream(values()).collect(Collectors.toSet());
+    }
 }

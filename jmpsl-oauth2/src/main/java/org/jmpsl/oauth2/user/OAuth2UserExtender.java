@@ -41,10 +41,11 @@ import org.jmpsl.oauth2.OAuth2Supplier;
  * and attributes. Class inherit {@link User} from extending {@link AuthUser} class, so it could be also implemented
  * and management by Spring Security Context.
  *
+ * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class OAuth2UserExtender extends AuthUser implements OAuth2User, OidcUser, Serializable {
+public class OAuth2UserExtender<T extends IEnumerableUserRole> extends AuthUser<T> implements OAuth2User, OidcUser, Serializable {
     @Serial private static final long serialVersionUID = 1L;
 
     private final OidcIdToken oidcIdToken;
@@ -52,12 +53,12 @@ public class OAuth2UserExtender extends AuthUser implements OAuth2User, OidcUser
     private final OidcUserInfo oidcUserInfo;
     private Map<String, Object> attributes;
 
-    public OAuth2UserExtender(IAuthUserModel user, List<SimpleGrantedAuthority> authorities, OAuth2Supplier supplier) {
+    public OAuth2UserExtender(IAuthUserModel<T> user, List<SimpleGrantedAuthority> authorities, OAuth2Supplier supplier) {
         this(user, authorities, supplier, null, null);
     }
 
     public OAuth2UserExtender(
-        IAuthUserModel user, List<SimpleGrantedAuthority> authorities, OAuth2Supplier supplier, OidcIdToken token,
+        IAuthUserModel<T> user, List<SimpleGrantedAuthority> authorities, OAuth2Supplier supplier, OidcIdToken token,
         OidcUserInfo info
     ) {
         super(user, authorities);
