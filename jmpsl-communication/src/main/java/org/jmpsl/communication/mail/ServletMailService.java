@@ -102,7 +102,7 @@ public class ServletMailService {
                 template.getTemplateName(), reqDto);
             return;
 
-        } catch (MessagingException| IOException ex) {
+        } catch (MessagingException | IOException ex) {
             log.error("Sender mail exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
         } catch (TemplateException ex) {
             log.error("Template exception. {}. Request parameters: {}", ex.getMessage(), reqDto);
