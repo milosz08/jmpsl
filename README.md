@@ -1,10 +1,39 @@
 # JMPSL
 
-![](https://jitpack.io/v/pl.miloszgilga/jmpsl.svg)
+[![][jmpsl jitpack badge]][jmpsl jitpack]
 &nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/License-MIT-brown.svg)
+![](https://img.shields.io/badge/License-MIT-brown.svg)
 &nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+
+[![][jmpsl core badge]][jmpsl core mvn]
+&nbsp;&nbsp;
+[![][jmpsl communication badge]][jmpsl communication mvn]
+&nbsp;&nbsp;
+[![][jmpsl file badge]][jmpsl file mvn]
+&nbsp;&nbsp;
+[![][jmpsl gfx badge]][jmpsl gfx mvn]
+&nbsp;&nbsp;
+[![][jmpsl security badge]][jmpsl security mvn]
+&nbsp;&nbsp;
+[![][jmpsl oauth2 badge]][jmpsl oauth2 mvn]
+
+[jmpsl jitpack]: https://jitpack.io/#pl.miloszgilga/jmpsl
+[jmpsl jitpack badge]: https://img.shields.io/jitpack/version/pl.miloszgilga/jmpsl?color=gree&label=JMPSL%20JitPack
+
+[jmpsl core badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-core?label=JMPSL%20Core%20%28Central%29
+[jmpsl communication badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-communication?label=JMPSL%20Communication%20%28Central%29
+[jmpsl file badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-file?label=JMPSL%20File%20%28Central%29
+[jmpsl gfx badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-gfx?label=JMPSL%20GFX%20%28Central%29
+[jmpsl security badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-security?label=JMPSL%20Security%20%28Central%29
+[jmpsl oauth2 badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-oauth2?label=JMPSL%20OAuth2%20%28Central%29
+
+[jmpsl core mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-core
+[jmpsl communication mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-communication
+[jmpsl file mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-file
+[jmpsl gfx mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-gfx
+[jmpsl security mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-security
+[jmpsl oauth2 mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-oauth2
 
 Java multi purpose Spring library (in short JMPSL) is a is a multi-module development library project for rapidly building
 REST-type services in the **Spring Boot framework**. It provides services for authentication, authorization, creating raster
@@ -162,7 +191,10 @@ full version is `1.0.2` and the test version of this full version is `1.0.2_04`.
 
 <a name="core-module"></a>
 ## JMPSL Core [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-core)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-core/badge.svg)<br><br>
+[![][jmpsl core badge]][jmpsl core mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Main module: configuration, data access and utilities classes. <br><br>
 
 
@@ -257,7 +289,10 @@ public class ExceptionsListener extends AbstractBaseRestExceptionListener {
 
 <a name="communication-module"></a>
 ## JMPSL Communication [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-communication)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-communication/badge.svg)<br><br>
+[![][jmpsl communication badge]][jmpsl communication mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Provide classes for point-to-point communication (email, websockets etc.),
 
 Required artifacts: `jmpsl-core`. Corresponding versions.<br>
@@ -351,7 +386,10 @@ class MailSender {
 
 <a name="file-module"></a>
 ## JMPSL File [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-file)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-file/badge.svg)<br><br>
+[![][jmpsl file badge]][jmpsl file mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Provide classes for generators, receivers and senders to local or remote FTP server.
 
 Required artifacts: `jmpsl-core`. Corresponding versions.
@@ -425,7 +463,10 @@ public class SftpConnecion {
 
 <a name="gfx-module"></a>
 ## JMPSL GFX [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-gfx)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-gfx/badge.svg)<br><br>
+[![][jmpsl gfx badge]][jmpsl gfx mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Provide classes for 2D raster images generators and manipulators.
 
 Required artifacts: `jmpsl-core`, `jmpsl-file`. Corresponding versions.
@@ -525,7 +566,10 @@ class you will find in `JMPSL Core` module.
 
 <a name="security-module"></a>
 ## JMPSL Security [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-security)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-security/badge.svg)<br><br>
+[![][jmpsl security badge]][jmpsl security mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Provide classes which extending Spring Security (for most typical REST API scenarios).
 
 ### Basic usage
@@ -680,7 +724,10 @@ public class SpringSecurityConfigurer {
 
 <a name="oauth2-module"></a>
 ## JMPSL OAuth2 [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-oauth2)]
-![](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-oauth2/badge.svg)<br><br>
+[![][jmpsl oauth2 badge]][jmpsl oauth2 mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br><br>
 Provide classes for OAuth2 Spring Security authorization via stateless REST endpoints. At this moment, support following
 OAuth2 authentication providers:
 * Facebook

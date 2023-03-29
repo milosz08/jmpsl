@@ -1,12 +1,19 @@
 # JMPSL Core
 
-![](https://jitpack.io/v/pl.miloszgilga/jmpsl.svg)
+![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 &nbsp;&nbsp;
-![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-core/badge.svg)
+![](https://img.shields.io/badge/License-MIT-brown.svg)
+
+[![][jmpsl core badge]][jmpsl core mvn]
 &nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/License-MIT-brown.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br>
+
+[jmpsl jitpack]: https://jitpack.io/#pl.miloszgilga/jmpsl
+[jmpsl jitpack badge]: https://img.shields.io/jitpack/version/pl.miloszgilga/jmpsl?color=gree&label=JMPSL%20JitPack
+
+[jmpsl core badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-core?label=JMPSL%20Core%20%28Central%29
+[jmpsl core mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-core
 
 Main module: configuration, data access and utilities classes.
 

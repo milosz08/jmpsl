@@ -1,12 +1,19 @@
 # JMPSL GFX
-![](https://jitpack.io/v/pl.miloszgilga/jmpsl.svg)
-&nbsp;&nbsp;
-![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-gfx/badge.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/License-MIT-brown.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 
+![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+&nbsp;&nbsp;
+![](https://img.shields.io/badge/License-MIT-brown.svg)
+
+[![][jmpsl gfx badge]][jmpsl gfx mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br>
+
+[jmpsl jitpack]: https://jitpack.io/#pl.miloszgilga/jmpsl
+[jmpsl jitpack badge]: https://img.shields.io/jitpack/version/pl.miloszgilga/jmpsl?color=gree&label=JMPSL%20JitPack
+
+[jmpsl gfx badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-gfx?label=JMPSL%20GFX%20%28Central%29
+[jmpsl gfx mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-gfx
 
 Provide classes for 2D raster images generators and manipulators.
 

@@ -1,12 +1,19 @@
 # JMPSL File
 
-![](https://jitpack.io/v/pl.miloszgilga/jmpsl.svg)
+![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 &nbsp;&nbsp;
-![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-file/badge.svg)
+![](https://img.shields.io/badge/License-MIT-brown.svg)
+
+[![][jmpsl file badge]][jmpsl file mvn]
 &nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/License-MIT-brown.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br>
+
+[jmpsl jitpack]: https://jitpack.io/#pl.miloszgilga/jmpsl
+[jmpsl jitpack badge]: https://img.shields.io/jitpack/version/pl.miloszgilga/jmpsl?color=gree&label=JMPSL%20JitPack
+
+[jmpsl file badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-file?label=JMPSL%20File%20%28Central%29
+[jmpsl file mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-file
 
 Provide classes for generators, receivers and senders to local or remote FTP server.
 

@@ -1,12 +1,19 @@
 # JMPSL OAuth2
-![](https://jitpack.io/v/pl.miloszgilga/jmpsl.svg)
-&nbsp;&nbsp;
-![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.miloszgilga/jmpsl-oauth2/badge.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/License-MIT-brown.svg)
-&nbsp;&nbsp;
-![Generic badge](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 
+![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
+&nbsp;&nbsp;
+![](https://img.shields.io/badge/License-MIT-brown.svg)
+
+[![][jmpsl oauth2 badge]][jmpsl oauth2 mvn]
+&nbsp;&nbsp;
+[![][jmpsl jitpack badge]][jmpsl jitpack]
+<br>
+
+[jmpsl jitpack]: https://jitpack.io/#pl.miloszgilga/jmpsl
+[jmpsl jitpack badge]: https://img.shields.io/jitpack/version/pl.miloszgilga/jmpsl?color=gree&label=JMPSL%20JitPack
+
+[jmpsl oauth2 badge]: https://img.shields.io/maven-central/v/pl.miloszgilga/jmpsl-oauth2?label=JMPSL%20OAuth2%20%28Central%29
+[jmpsl oauth2 mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-oauth2
 
 Provide classes for OAuth2 Spring Security authorization via stateless REST endpoints. At this moment, support following
 OAuth2 authentication providers:
