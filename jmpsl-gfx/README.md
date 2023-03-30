@@ -171,7 +171,7 @@ class ProfileImage {
         // in SFTP server directory: "/user1_7LFAC-XxrJC-aZi0E-lbGxH"
         
         // send image to SFTP server
-        final BufferedImageRes responsePayload = userImageSftpService
+        final BufferedImageRes response = userImageSftpService
             .saveUserImage(imageSenderPayload, ImageExtension.PNG);
         // show saved image location in remove SFTP server
         System.out.println(response.getBufferedImageRes().getLocation());
