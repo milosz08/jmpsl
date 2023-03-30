@@ -135,18 +135,25 @@ implementation("org.springframework.boot:spring-boot-starter-security:3.X.Y")
 ```properties
 # OTA (One Time Access) token elapsed time in minutes. Property not required. By default it is 10 minutes
 jmpsl.security.ota.length = 10
+
 # password encoder strength (reccomended from 8 to 12). Property not required. By default it is 8 units
 jmpsl.security.password-encoder-strength = 8
+
 # JWT secret key (salt). Property required.
 jmpsl.security.jwt.secret = fm92400mfomvnoifd1039cmoivmoeifmd01390d9fomfv
+
 # JWT issuer (key signatory). Property required.
 jmpsl.security.jwt.issuer = applicationName
+
 # time (in minutes) after JWT is expired. Property not required. By default it is 5 minutes
 jmpsl.security.jwt.expired-minutes = 5
+
 # time (in days) after refresh token is expired. Property not required. By default it is 30 days
 jmpsl.security.jwt.refresh-token-expired-days = 30
+
 # enabled address in CORS policy (for more info check https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). Property required.
 jmpsl.security.cors.client = http://127.0.0.1:4200
+
 # max CORS alive time in milis. Property not required. By default it is 3600 milis
 jmpsl.security.cors.max-age = 3600
 ```

@@ -116,26 +116,36 @@ technologies, go to [official Maven repository website](https://mvnrepository.co
 ```properties
 # define, if SSH/SFTP service is active. By default "true". Property required.
 jmpsl.file.ssh.active = true
+
 # define SSH/SFTP service host address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.ssh.socket-host = 127.0.0.1
+
 # define SSH/SFTP service login. Property required.
 jmpsl.file.ssh.socket-login = sampleLogin123
+
 # define file name for known hosts in SSH/SFTP service. By default "known_hosts.dat". Property required.
 # File must be located in ROOT project directory.
 jmpsl.file.ssh.known-hosts-file-name = known_hosts.dat
+
 # define SFTP server address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.ssh.user-private-key-file-name = id_rsa
+
 # define SFTP server address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.sftp.server-url = 127.0.0.1
+
 # define SSH/SFTP path from server root to domain directory. Property required. Property must be end with "/" character.
 jmpsl.file.basic-external-server-path = /external-file-server-path
+
 # define SSH/SFTP directory name for application static resources. By default "". Property required. Property
 # cannot be end with "/" character.
 jmpsl.file.app-external-server-path = /static-images
+
 # define file name hash generator separator. By default "-". Property non-required.
 jmpsl.file.hash-code.separator = "-"
+
 # single sequences count in all hash word. By default "4". Property required. Only unsigned values (1-255).
 jmpsl.file.hash-code.count-of-sequences = 4
+
 # Define count of characters in single hash sequence. By default "5". Property required. Only unsigned values (1-255).
 jmpsl.file.hash-code.sequence-length = 5
 ```

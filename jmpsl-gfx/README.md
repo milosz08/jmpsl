@@ -116,15 +116,19 @@ technologies, go to [official Maven repository website](https://mvnrepository.co
 ```properties
 # SSH/SFTP server path for static user graphics resources. Property required.
 jmpsl.gfx.user-gfx.static-images-content-path = images
+
 # font location for user default profile image generator. Property not required. Font file should be in
 # /resources directory
 jmpsl.gfx.user-gfx.preferred-font-link = static/font/noto-serif-v21-latin-regular.ttf
+
 # font name for user default profile image generator. Property required
 jmpsl.gfx.user-gfx.preferred-font-name = Noto Serif
+
 # colors which usage in generated user avatar images. Property not required. Default colors:
 #   "#f83f3d", "#fe5430", "#ff9634", "#ffbf41", "#cad958", "#85c15d", "#029489", "#00bcd2", "#1197ec",
 #   "#4151b0", "#6a3ab0", "#a128a9", "#ee1860",
 jmpsl.gfx.user-gfx.preferred-hex-colors = #00ff00,#2254fc
+
 # preffered foreground for user avatar generator. Property not required. By default it is #ffffff (white)
 jmpsl.gfx.user-gfx.preferred-foreground-color = #ffffff
 ```

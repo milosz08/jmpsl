@@ -204,12 +204,13 @@ Main module: configuration, data access and utilities classes. <br><br>
 # avaialble application locales (defined as array list, for ex. <i>fr,pl,en_GB,en_US</i>). Property not required.
 # by default it is en_US.
 jmpsl.core.locale.available-locales = en_US,pl
+
 # default selected application locale (defined as locale string, for ex. <i>en_US</i>). Property not required.
 # by default it is en_US.
 jmpsl.core.locale.default-locale = en_US
 ```
 
-### Implements i18n API (internationalization)
+### i18n API implementation (internationalization)
 1. To initialized i18n in your application, firstly create resources bundle in `resources/i18n` directory. Resource files 
 should be named as `messages_[lg].properties`, where `[lg]` is the language prefix (ex. en-US, pl, fr etc.). Example:
 ```properties
@@ -400,26 +401,36 @@ Required artifacts: `jmpsl-core`. Corresponding versions.
 ```properties
 # define, if SSH/SFTP service is active. By default "true". Property required.
 jmpsl.file.ssh.active = true
+
 # define SSH/SFTP service host address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.ssh.socket-host = 127.0.0.1
+
 # define SSH/SFTP service login. Property required.
 jmpsl.file.ssh.socket-login = sampleLogin123
+
 # define file name for known hosts in SSH/SFTP service. By default "known_hosts.dat". Property required.
 # File must be located in ROOT project directory.
 jmpsl.file.ssh.known-hosts-file-name = known_hosts.dat
+
 # define SFTP server address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.ssh.user-private-key-file-name = id_rsa
+
 # define SFTP server address. By default "127.0.0.1" (localhost). Property required.
 jmpsl.file.sftp.server-url = 127.0.0.1
+
 # define SSH/SFTP path from server root to domain directory. Property required. Property must be end with "/" character.
 jmpsl.file.basic-external-server-path = /external-file-server-path
+
 # define SSH/SFTP directory name for application static resources. By default "". Property required. Property
 # cannot be end with "/" character.
 jmpsl.file.app-external-server-path = /static-images
+
 # define file name hash generator separator. By default "-". Property non-required.
 jmpsl.file.hash-code.separator = "-"
+
 # single sequences count in all hash word. By default "4". Property required. Only unsigned values (1-255).
 jmpsl.file.hash-code.count-of-sequences = 4
+
 # Define count of characters in single hash sequence. By default "5". Property required. Only unsigned values (1-255).
 jmpsl.file.hash-code.sequence-length = 5
 ```
@@ -478,15 +489,19 @@ Required artifacts: `jmpsl-core`, `jmpsl-file`. Corresponding versions.
 ```properties
 # SSH/SFTP server path for static user graphics resources. Property required.
 jmpsl.gfx.user-gfx.static-images-content-path = images
+
 # font location for user default profile image generator. Property not required. Font file should be in
 # /resources directory
 jmpsl.gfx.user-gfx.preferred-font-link = static/font/noto-serif-v21-latin-regular.ttf
+
 # font name for user default profile image generator. Property required
 jmpsl.gfx.user-gfx.preferred-font-name = Noto Serif
+
 # colors which usage in generated user avatar images. Property not required. Default colors:
 #   "#f83f3d", "#fe5430", "#ff9634", "#ffbf41", "#cad958", "#85c15d", "#029489", "#00bcd2", "#1197ec",
 #   "#4151b0", "#6a3ab0", "#a128a9", "#ee1860",
 jmpsl.gfx.user-gfx.preferred-hex-colors = #00ff00,#2254fc
+
 # preffered foreground for user avatar generator. Property not required. By default it is #ffffff (white)
 jmpsl.gfx.user-gfx.preferred-foreground-color = #ffffff
 ```
@@ -596,18 +611,25 @@ implementation("org.springframework.boot:spring-boot-starter-security:3.X.Y")
 ```properties
 # OTA (One Time Access) token elapsed time in minutes. Property not required. By default it is 10 minutes
 jmpsl.security.ota.length = 10
+
 # password encoder strength (reccomended from 8 to 12). Property not required. By default it is 8 units
 jmpsl.security.password-encoder-strength = 8
+
 # JWT secret key (salt). Property required.
 jmpsl.security.jwt.secret = fm92400mfomvnoifd1039cmoivmoeifmd01390d9fomfv
+
 # JWT issuer (key signatory). Property required.
 jmpsl.security.jwt.issuer = applicationName
+
 # time (in minutes) after JWT is expired. Property not required. By default it is 5 minutes
 jmpsl.security.jwt.expired-minutes = 5
+
 # time (in days) after refresh token is expired. Property not required. By default it is 30 days
 jmpsl.security.jwt.refresh-token-expired-days = 30
+
 # enabled address in CORS policy (for more info check https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). Property required.
 jmpsl.security.cors.client = http://127.0.0.1:4200
+
 # max CORS alive time in milis. Property not required. By default it is 3600 milis
 jmpsl.security.cors.max-age = 3600
 ```

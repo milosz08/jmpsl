@@ -109,12 +109,25 @@ technologies, go to [official Maven repository website](https://mvnrepository.co
 
 <a name="basic-usage"></a>
 ## Basic usage
+1. Apply following properties in `application.properties` or `application.yml`:
+```properties
+# avaialble application locales (defined as array list, for ex. <i>fr,pl,en_GB,en_US</i>). Property not required.
+# by default it is en_US.
+jmpsl.core.locale.available-locales = en_US,pl
+
+# default selected application locale (defined as locale string, for ex. <i>en_US</i>). Property not required.
+# by default it is en_US.
+jmpsl.core.locale.default-locale = en_US
+```
+
+### i18n API implementation (internationalization)
 1. To initialized i18n in your application, firstly create resources bundle in `resources/i18n` directory. Resource files
    should be named as `messages_[lg].properties`, where `[lg]` is the language prefix (ex. en-US, pl, fr etc.). Example:
 ```properties
 # messages_en.properties
 app.exception.NumberFormatException = Incorrect number format.
-
+```
+```properties
 # messages_pl.properties
 app.exception.NumberFormatException = Nieprawidłowy format liczbowy.
 ```
