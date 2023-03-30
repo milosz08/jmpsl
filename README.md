@@ -288,7 +288,7 @@ public class ExceptionsListener extends AbstractBaseRestExceptionListener {
 <hr/>
 
 
-<a name="communication-module"></a>
+<a name="module-communication"></a>
 ## JMPSL Communication [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-communication)]
 [![][jmpsl communication badge]][jmpsl communication mvn]
 &nbsp;&nbsp;
@@ -385,7 +385,7 @@ class MailSender {
 <hr/>
 
 
-<a name="file-module"></a>
+<a name="module-file"></a>
 ## JMPSL File [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-file)]
 [![][jmpsl file badge]][jmpsl file mvn]
 &nbsp;&nbsp;
@@ -472,7 +472,7 @@ public class SftpConnecion {
 <hr/>
 
 
-<a name="gfx-module"></a>
+<a name="module-gfx"></a>
 ## JMPSL GFX [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-gfx)]
 [![][jmpsl gfx badge]][jmpsl gfx mvn]
 &nbsp;&nbsp;
@@ -579,7 +579,7 @@ class you will find in `JMPSL Core` module.
 <hr/>
 
 
-<a name="security-module"></a>
+<a name="module-security"></a>
 ## JMPSL Security [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-security)]
 [![][jmpsl security badge]][jmpsl security mvn]
 &nbsp;&nbsp;
@@ -744,7 +744,7 @@ public class SpringSecurityConfigurer {
 <hr/>
 
 
-<a name="oauth2-module"></a>
+<a name="module-oauth2"></a>
 ## JMPSL OAuth2 [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-oauth2)]
 [![][jmpsl oauth2 badge]][jmpsl oauth2 mvn]
 &nbsp;&nbsp;
