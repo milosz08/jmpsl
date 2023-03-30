@@ -195,8 +195,7 @@ full version is `1.0.2` and the test version of this full version is `1.0.2_04`.
 &nbsp;&nbsp;
 [![][jmpsl jitpack badge]][jmpsl jitpack]
 <br><br>
-Main module: configuration, data access and utilities classes. <br><br>
-
+Main module: configuration, data access and utilities classes.
 
 ### Basic usage
 1. Apply following properties in `application.properties` or `application.yml`:
@@ -653,7 +652,7 @@ public class UserEntity implements Serializable, IAuthUserModel<SimpleGrantedRol
     }
   
     @Override
-    public Set<String> getAuthRoles() {
+    public Set<SimpleGrantedRole> getAuthRoles() {
         // return user roles as Set of strings, ex. USER, ADMIN, OWNER
         return SimpleGrantedRole.getSetCollection(); // return default roles
     }
@@ -835,7 +834,7 @@ public class UserEntity implements Serializable, IAuthUserModel<SimpleGrantedRol
     }
   
     @Override
-    public Set<String> getAuthRoles() {
+    public Set<SimpleGrantedRole> getAuthRoles() {
         // return user roles as Set of strings, ex. USER, ADMIN, OWNER
         return SimpleGrantedRole.getSetCollection(); // return default roles
     }
