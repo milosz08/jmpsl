@@ -177,7 +177,7 @@ public class UserEntity implements Serializable, IAuthUserModel<SimpleGrantedRol
     }
   
     @Override
-    public Set<String> getAuthRoles() {
+    public Set<SimpleGrantedRole> getAuthRoles() {
         // return user roles as Set of strings, ex. USER, ADMIN, OWNER
         return SimpleGrantedRole.getSetCollection(); // return default roles
     }
