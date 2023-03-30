@@ -52,7 +52,7 @@ graphics, sending files via FTP, messaging using popular communication protocols
     <tbody>
         <tr>
             <td rowspan="2">Modules</td>
-            <td><a href="#core-module">JMPSL Core</a></td>
+            <td><a href="#module-core">JMPSL Core</a></td>
             <td><a href="#module-communication">JMPSL Communication</a></td>
             <td><a href="#module-file">JMPSL File</a></td>
         </tr>
@@ -189,7 +189,7 @@ Versions of this library are annotated by `X.Y.Z_AA`, where `AA` is the next ite
 full version is `1.0.2` and the test version of this full version is `1.0.2_04`.
 
 
-<a name="core-module"></a>
+<a name="module-core"></a>
 ## JMPSL Core [[page](https://github.com/Milosz08/jmpsl/tree/master/jmpsl-core)]
 [![][jmpsl core badge]][jmpsl core mvn]
 &nbsp;&nbsp;
