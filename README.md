@@ -35,7 +35,7 @@
 [jmpsl security mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-security
 [jmpsl oauth2 mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-oauth2
 
-Java multi purpose Spring library (in short JMPSL) is a is a multi-module development library project for rapidly building
+Java multi purpose Spring library (in short JMPSL) it's a multi-module development library project for rapidly building
 REST-type services in the **Spring Boot framework**. It provides services for authentication, authorization, creating raster
 graphics, sending files via FTP, messaging using popular communication protocols, and much more.
 
@@ -220,7 +220,7 @@ app.exception.NumberFormatException = Incorrect number format.
 app.exception.NumberFormatException = Nieprawidłowy format liczbowy.
 ```
 2. In created resources insert key <> values pairs with messages.
-3. Create following enum class exdents `org.jmpsl.core.i18n.ILocaleEnumSet` interface:
+3. Create following enum class extends `org.jmpsl.core.i18n.ILocaleEnumSet` interface:
 ```java
 public enum AppLocaleSet implements ILocaleEnumSet {
     INCORRECT_NUMBER_FORMAT_EXC("app.exception.NumberFormatException");
