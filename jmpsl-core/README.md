@@ -132,7 +132,7 @@ app.exception.NumberFormatException = Incorrect number format.
 app.exception.NumberFormatException = Nieprawidłowy format liczbowy.
 ```
 2. In created resources insert key <> values pairs with messages.
-3. Create following enum class extents `org.jmpsl.core.i18n.ILocaleEnumSet` interface:
+3. Create following enum class extends `org.jmpsl.core.i18n.ILocaleEnumSet` interface:
 ```java
 public enum AppLocaleSet implements ILocaleEnumSet {
     INCORRECT_NUMBER_FORMAT_EXC("app.exception.NumberFormatException");
