@@ -47,9 +47,9 @@ import org.jmpsl.core.CoreEnv;
  * this following elements in <code>application.properties</code> file:
  *
  * <ul>
- *     <li><code>jmpsl.communication.locale.available-locales</code> - avaialble application locales (defined as array
+ *     <li><code>jmpsl.core.locale.available-locales</code> - avaialble application locales (defined as array
  *     list, for ex. <i>fr,pl,en_GB,en_US</i>). By default it is en_US.</li>
- *     <li><code>jmpsl.communication.locale.default-locale</code> - default selected application locale (defined as
+ *     <li><code>jmpsl.core.locale.default-locale</code> - default selected application locale (defined as
  *     locale string, for ex. <i>en_US</i>). By default it is en_US.</li>
  *     <li><code>jmpsl.core.locale.default-locale</code> - application locale bundle path.
  *     Default location is in classpath: 'i18n/messages'.</li>
