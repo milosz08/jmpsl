@@ -51,6 +51,8 @@ import org.jmpsl.core.CoreEnv;
  *     list, for ex. <i>fr,pl,en_GB,en_US</i>). By default it is en_US.</li>
  *     <li><code>jmpsl.communication.locale.default-locale</code> - default selected application locale (defined as
  *     locale string, for ex. <i>en_US</i>). By default it is en_US.</li>
+ *     <li><code>jmpsl.core.locale.default-locale</code> - application locale bundle path.
+ *     Default location is in classpath: 'i18n/messages'.</li>
  * </ul>
  *
  * @author Miłosz Gilga
@@ -60,10 +62,12 @@ import org.jmpsl.core.CoreEnv;
 public class LocaleConfigurerExtender {
 
     private final Locale defaultLocale;
+    private final String localeBundlePath;
     private final List<Locale> availableLocales;
 
     LocaleConfigurerExtender(Environment env) {
         this.defaultLocale = new Locale(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env));
+        this.localeBundlePath = CoreEnv.__CORE_LOCALE_BUNDLE_PATH.getProperty(env);
         this.availableLocales = Arrays.stream(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env).split(","))
             .map(Locale::new).collect(Collectors.toList());
     }
@@ -71,7 +75,7 @@ public class LocaleConfigurerExtender {
     @Bean("jmpslMessageSource")
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", "i18n/messages");
+        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", localeBundlePath);
         resourceBundleMessageSource.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         return resourceBundleMessageSource;
     }
