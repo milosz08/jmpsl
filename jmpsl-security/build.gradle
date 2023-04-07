@@ -24,7 +24,6 @@
 
 dependencies {
     implementation          project(':jmpsl-core')
-    implementation          project(':jmpsl-communication')
 
     implementation          libs.lombok
     annotationProcessor     libs.lombok
