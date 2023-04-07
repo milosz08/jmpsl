@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 import org.jmpsl.security.user.AuthUser;
 import org.jmpsl.security.user.IAuthUserModel;
+import org.jmpsl.security.user.IEnumerableUserRole;
 
 /**
  * Utilities static methods for JMPSL Security module.
@@ -73,9 +74,11 @@ public class SecurityUtil {
      *
      * @throws IllegalArgumentException if user object is null
      */
-    public static AuthUser fabricateUser(IAuthUserModel user) {
+    public static <T extends IEnumerableUserRole> AuthUser<T> fabricateUser(IAuthUserModel<T> user) {
         Assert.notNull(user, "User object cannot be null.");
-        return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
+        final Set<String> availableRoles =  user.getAuthRoles().stream()
+            .map(IEnumerableUserRole::getRole).collect(Collectors.toSet());
+        return new AuthUser<>(user, convertRolesToAuthorities(availableRoles));
     }
 
     /**
