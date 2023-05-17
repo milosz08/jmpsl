@@ -33,7 +33,7 @@ plugins {
 
 ext {
     // maven nexus repository artifacts and additional package informations
-    libraryVersion                  = '1.0.2_03'
+    libraryVersion                  = '1.0.2_04'
     globalArtifactId                = 'pl.miloszgilga'
 }
 
