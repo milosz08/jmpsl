@@ -88,4 +88,26 @@ public class LocaleMessageService {
     public String getMessage(ILocaleEnumSet placeholder) {
         return getMessage(placeholder, Map.of());
     }
+
+    /**
+     * Method responsible for returning message based current spring context holder locale and message source pattern
+     * passed in method arguments.
+     *
+     * @param placeholder raw message pattern declared in <code>message.properties</code> files
+     * @return localized message value or string pattern, if message does not exist
+     * @author Miłosz Gilga
+     * @since 1.0.2_04
+     */
+    public String getMessage(String placeholder) {
+        try {
+            String resourceText = localeConfigurerExtender.messageSource()
+                .getMessage(placeholder, null, LocaleContextHolder.getLocale());
+            if (resourceText.isBlank()) {
+                return placeholder;
+            }
+            return resourceText;
+        } catch (NoSuchMessageException ex) {
+            return placeholder;
+        }
+    }
 }
