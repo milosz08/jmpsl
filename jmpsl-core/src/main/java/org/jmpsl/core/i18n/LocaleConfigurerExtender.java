@@ -66,7 +66,7 @@ public class LocaleConfigurerExtender {
     private final List<Locale> availableLocales;
 
     LocaleConfigurerExtender(Environment env) {
-        this.defaultLocale = new Locale(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env));
+        this.defaultLocale = new Locale(CoreEnv.__CORE_DEFAULT_LOCALE.getProperty(env));
         this.localeBundlePath = CoreEnv.__CORE_LOCALE_BUNDLE_PATH.getProperty(env);
         this.availableLocales = Arrays.stream(CoreEnv.__CORE_AVAILABLE_LOCALES.getProperty(env).split(","))
             .map(Locale::new).collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class LocaleConfigurerExtender {
     @Bean("jmpslMessageSource")
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasenames("org.jmpsl.i18n.messages", localeBundlePath);
+        resourceBundleMessageSource.addBasenames("org.jmpsl.i18n.messages", localeBundlePath);
         resourceBundleMessageSource.setDefaultEncoding(String.valueOf(StandardCharsets.UTF_8));
         return resourceBundleMessageSource;
     }

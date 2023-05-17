@@ -55,7 +55,7 @@ public class LocaleMessageService {
      * @param attributes template string as {@link Map} of key -> value attributes
      * @return localized message value or string pattern, if message does not exist
      * @author Miłosz Gilga
-     * @since 1.0.2_03
+     * @since 1.0.2_04
      * 
      * @see #getMessage(ILocaleEnumSet placeholder)
      */
@@ -83,7 +83,7 @@ public class LocaleMessageService {
      *                    {@link ILocaleEnumSet} interface
      * @return localized message value or string pattern, if message does not exist
      * @author Miłosz Gilga
-     * @since 1.0.2_03
+     * @since 1.0.2_04
      */
     public String getMessage(ILocaleEnumSet placeholder) {
         return getMessage(placeholder, Map.of());

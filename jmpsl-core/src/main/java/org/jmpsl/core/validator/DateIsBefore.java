@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.LocalDate;
 import java.lang.annotation.*;
 
-
 /**
  * Custom javax validation annotation which can be used for checked if passed date as string is valid (after parse into
  * {@link LocalDate} object) and if this date is before the current date. This annotation must be use together with
