@@ -32,13 +32,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 
 import org.jmpsl.core.i18n.LocaleSet;
 import org.jmpsl.core.i18n.LocaleUtil;
@@ -130,8 +133,17 @@ public abstract class AbstractBaseRestExceptionListener {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> invalidArgumentException(MethodArgumentNotValidException ex, HttpServletRequest req) {
-        final List<String> errors = ex.getBindingResult().getFieldErrors().stream()
-            .map(FieldError::getDefaultMessage).toList();
+        final List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        if (fieldErrors.isEmpty()) {
+            final ObjectError objectError = ex.getBindingResult().getAllErrors().get(0);
+            return new ResponseEntity<>(new GeneralServerExceptionResDto(ServerExceptionResDto.generate(
+                HttpStatus.BAD_REQUEST, req), messageService.getMessage(objectError.getDefaultMessage())),
+                HttpStatus.BAD_REQUEST);
+        }
+        final Map<String, String> errors = new HashMap<>();
+        for (final FieldError fieldError : fieldErrors) {
+            errors.put(fieldError.getField(), messageService.getMessage(fieldError.getDefaultMessage()));
+        }
         log.error("Bad request. Cause: {}", ex.getMessage());
         return new ResponseEntity<>(new InvalidDtoExceptionResDto(ServerExceptionResDto.generate(
             HttpStatus.BAD_REQUEST, req), errors), HttpStatus.BAD_REQUEST);
