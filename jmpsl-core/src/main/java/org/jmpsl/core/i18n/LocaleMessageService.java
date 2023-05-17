@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.Map;
+
 /**
  * Rest service for getting locale message based current spring context holder locale and message source from
  * <code>messages.properties</code> message source files.
@@ -46,21 +48,44 @@ public class LocaleMessageService {
 
     /**
      * Method responsible for returning message based current spring context holder locale and message source pattern
-     * passed in method arguments. If message with passed pattern does not exist, return pattern as string value.
-     * Otherwise return message as string value.
+     * passed in method arguments. Additionaly parsed template strings in message from attributes parameter.
+     * 
+     * @param placeholder message pattern declared in <code>message.properties</code> files from enum implements
+     *                    {@link ILocaleEnumSet} interface
+     * @param attributes template string as {@link Map} of key -> value attributes
+     * @return localized message value or string pattern, if message does not exist
+     * @author Miłosz Gilga
+     * @since 1.0.2_03
+     * 
+     * @see #getMessage(ILocaleEnumSet placeholder)
+     */
+    public String getMessage(ILocaleEnumSet placeholder, Map<String, Object> attributes) {
+        try {
+            String resourceText = localeConfigurerExtender.messageSource()
+                .getMessage(placeholder.getHolder(), null, LocaleContextHolder.getLocale());
+            if (resourceText.isBlank()) {
+                return placeholder.getHolder();
+            }
+            for (final Map.Entry<String, Object> param : attributes.entrySet()) {
+                resourceText = resourceText.replace("{{" + param.getKey() + "}}", String.valueOf(param.getValue()));
+            }
+            return resourceText;
+        } catch (NoSuchMessageException ex) {
+            return placeholder.getHolder();
+        }
+    }
+
+    /**
+     * Method responsible for returning message based current spring context holder locale and message source pattern
+     * passed in method arguments.
      *
      * @param placeholder message pattern declared in <code>message.properties</code> files from enum implements
      *                    {@link ILocaleEnumSet} interface
      * @return localized message value or string pattern, if message does not exist
      * @author Miłosz Gilga
-     * @since 1.0.2
+     * @since 1.0.2_03
      */
     public String getMessage(ILocaleEnumSet placeholder) {
-        try {
-            return localeConfigurerExtender.messageSource()
-                .getMessage(placeholder.getHolder(), null, LocaleContextHolder.getLocale());
-        } catch (NoSuchMessageException ex) {
-            return placeholder.getHolder();
-        }
+        return getMessage(placeholder, Map.of());
     }
 }
