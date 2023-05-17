@@ -26,21 +26,22 @@
 # refer to build.gradle 3rd part libraries script file
 
 [versions]
-springFramework             = '6.0.6'
+springFramework             = '6.0.7'
 springSecurity              = '6.0.2'
 jakartaServlet              = '6.0.0'
 jakartaMail                 = '2.1.1'
 jakartaPersistence          = '3.1.0'
 jakartaValidation           = '3.0.2'
-jakartaXmlBinder            = '4.0.0'
-jacksonDatabind             = '2.7.4'
+jakartaXmlRuntime           = '4.0.0'
+jakartaXmlBinder            = '4.0.2'
+jacksonDatabind             = '2.14.2'
 jjwt                        = '0.11.5'
-sshj                        = '0.34.0'
+sshj                        = '0.35.0'
 imgScalar                   = '4.2'
-lombok                      = '1.18.20'
-slf4j                       = '2.0.6'
+lombok                      = '1.18.26'
+slf4j                       = '2.0.7'
 jUnit                       = '5.8.1'
-freemarker                  = '2.3.31'
+freemarker                  = '2.3.32'
 modelmapper                 = '3.1.1'
 reflections                 = '0.10.2'
 commonsText                 = '1.10.0'
@@ -81,7 +82,7 @@ jakarta-mail-api                = { module = 'jakarta.mail:jakarta.mail-api',   
 jakarta-servlet-api             = { module = 'jakarta.servlet:jakarta.servlet-api',                         version.ref = 'jakartaServlet' }
 jakarta-persistence-api         = { module = 'jakarta.persistence:jakarta.persistence-api',                 version.ref = 'jakartaPersistence' }
 jakarta-validation-api          = { module = 'jakarta.validation:jakarta.validation-api',                   version.ref = 'jakartaValidation' }
-jakarta-xml-bind-api            = { module = 'jakarta.xml.bind:jakarta.xml.bind-api',                       version.ref = 'jakartaXmlBinder' }
+jakarta-xml-bind-api            = { module = 'jakarta.xml.bind:jakarta.xml.bind-api',                       version.ref = 'jakartaXmlRuntime' }
 jaxb-runtime                    = { module = 'org.glassfish.jaxb:jaxb-runtime',                             version.ref = 'jakartaXmlBinder' }
 
 junit-api                       = { module = 'org.junit.jupiter:junit-jupiter-api',                         version.ref = 'jUnit' }
