@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.core.AuthenticationException;
 
 import java.util.Map;
 import java.util.List;
@@ -118,6 +119,24 @@ public abstract class AbstractBaseRestExceptionListener {
         log.error("Unauthorized. Cause: {}", ex.getMessage());
         return new ResponseEntity<>(new GeneralServerExceptionResDto(ServerExceptionResDto.generate(
             HttpStatus.UNAUTHORIZED, req), message), HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * Exception handler responsible for catching all {@link AuthenticationException} exceptions and sending
+     * response as JSON string format.
+     *
+     * @param ex catching {@link AuthenticationException} object
+     * @param req {@link HttpServletRequest} object
+     * @return JSON response entity
+     * @author Miłosz Gilga
+     * @since 1.0.2_04
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> restServiceServerException(AuthenticationException ex, HttpServletRequest req) {
+        log.error("Spring security authentication exception. Cause: {}", ex.getMessage());
+        return new ResponseEntity<>(new GeneralServerExceptionResDto(ServerExceptionResDto.generate(
+            HttpStatus.UNAUTHORIZED, req), ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     /**
