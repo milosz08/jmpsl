@@ -28,12 +28,16 @@ import lombok.extern.slf4j.Slf4j;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.time.DateUtils;
 
 import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 
 /**
  * Spring Bean component class provide basic methods for managed JWT (which be more detailed in methods in custom
@@ -54,7 +58,8 @@ public class JwtService {
     }
 
     /**
-     * Method responsible for generate JWT token based passed passed subject and claims parameters. Before invoke this
+     * Method responsible for generate JWT token based passed passed subject and claims parameters with default
+     * expiration time defined in <code>jmpsl.security.jwt.expired-minutes</code> property. Before invoke this
      * method, check if file <code>application.properties</code> include <code>jmpsl.auth.jwt.issuer</code> value and
      * value is not null or empty string.
      *
@@ -72,8 +77,37 @@ public class JwtService {
             .setIssuer(jwtConfig.getTokenIssuer())
             .setSubject(subject)
             .setClaims(claims)
+            .setExpiration(DateUtils.addMinutes(Date.from(Instant.now()), jwtConfig.getTokenExpiredMinutes()))
             .signWith(jwtConfig.getSignatureKey())
             .compact();
+    }
+
+    /**
+     * Method responsible for generate refresh token based passed passed subject and claims parameters with default
+     * expiration time defined in <code>jmpsl.security.jwt.refresh-token-expired-days</code> property. Before invoke this
+     * method, check if file <code>application.properties</code> include <code>jmpsl.auth.jwt.issuer</code> value and
+     * value is not null or empty string.
+     *
+     * @param subject JWT subject parameter
+     * @param claims JWT claims array
+     * @return compacted (stringified) refresh token based passed parameters
+     * @author Miłosz Gilga
+     * @since 1.0.2_04
+     *
+     * @throws NullPointerException if passed JWT subject is null
+     */
+    public RefreshTokenPayloadDto generateRefreshToken(String subject, Claims claims) {
+        if (Objects.isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
+        final Date expiredAt = DateUtils.addDays(Date.from(Instant.now()), jwtConfig.getRefreshTokenExpiredDays());
+        final String token =  Jwts.builder()
+            .setIssuer(jwtConfig.getTokenIssuer())
+            .setSubject(subject)
+            .setClaims(claims)
+            .setExpiration(expiredAt)
+            .signWith(jwtConfig.getSignatureKey())
+            .compact();
+        return new RefreshTokenPayloadDto(token, ZonedDateTime.ofInstant(expiredAt.toInstant(),
+            ZonedDateTime.now().getZone()));
     }
 
     /**
