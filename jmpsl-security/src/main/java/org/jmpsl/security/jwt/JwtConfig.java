@@ -51,7 +51,7 @@ public class JwtConfig {
 
     private final String tokenIssuer;
     private final int tokenExpiredMinutes;
-    private final int refreshTokenExpiredMonths;
+    private final int refreshTokenExpiredDays;
 
     private final byte[] tokenSecretBytes;
 
@@ -72,7 +72,7 @@ public class JwtConfig {
     public JwtConfig(Environment env) {
         tokenIssuer = SecurityEnv.__SEC_JWT_ISSUER.getProperty(env);
         tokenExpiredMinutes = SecurityEnv.__SEC_JWT_EXPIRED_MINUTES.getProperty(env, Integer.class);
-        refreshTokenExpiredMonths = SecurityEnv.__SEC_REFRESH_TOKEN_EXPIRED_DAYS.getProperty(env, Integer.class);
+        refreshTokenExpiredDays = SecurityEnv.__SEC_REFRESH_TOKEN_EXPIRED_DAYS.getProperty(env, Integer.class);
         tokenSecretBytes = DatatypeConverter.parseBase64Binary(SecurityEnv.__SEC_JWT_SECRET.getProperty(env));
     }
 
@@ -95,7 +95,7 @@ public class JwtConfig {
         return tokenExpiredMinutes;
     }
 
-    public int getRefreshTokenExpiredMonths() {
-        return refreshTokenExpiredMonths;
+    public int getRefreshTokenExpiredDays() {
+        return refreshTokenExpiredDays;
     }
 }
