@@ -50,16 +50,16 @@ public class SecurityUtil {
     }
 
     /**
-     * Static method responsible for converting {@link Set} collection of roles (in string) into also {@link Set}
+     * Static method responsible for converting {@link Set} of {@link IEnumerableUserRole} interface into {@link List}
      * collection of {@link SimpleGrantedAuthority} object.
      *
-     * @param roles {@link Set} collection of roles.
-     * @return {@link Set} collection of {@link SimpleGrantedAuthority} objects
+     * @param roles {@link Set} of {@link IEnumerableUserRole} interfaces
+     * @return {@link List} collection of {@link SimpleGrantedAuthority} objects
      * @author Miłosz Gilga
-     * @since 1.0.2
+     * @since 1.0.2_04
      */
-    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(Set<String> roles) {
-        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(Set<IEnumerableUserRole> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
     /**
