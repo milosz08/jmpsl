@@ -26,6 +26,7 @@ package org.jmpsl.core.i18n;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -72,6 +73,7 @@ public class LocaleConfigurerExtender {
             .map(Locale::new).collect(Collectors.toList());
     }
 
+    @Primary
     @Bean("jmpslMessageSource")
     public MessageSource messageSource() {
         final ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
