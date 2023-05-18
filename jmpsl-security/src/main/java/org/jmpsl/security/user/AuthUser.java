@@ -35,22 +35,21 @@ import java.io.Serializable;
  * Spring Security User extended class with implementation of {@link IAuthUserModel} field. Use this class for
  * authorization and authentication, if you not using OAuth2 mechanisms.
  *
- * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public class AuthUser<T extends IEnumerableUserRole> extends User implements Serializable {
+public class AuthUser extends User implements Serializable {
     @Serial private static final long serialVersionUID = 1L;
 
-    private final IAuthUserModel<T> userModel;
+    private final IAuthUserModel userModel;
 
-    public AuthUser(IAuthUserModel<T> user, List<SimpleGrantedAuthority> authorities) {
+    public AuthUser(IAuthUserModel user, List<SimpleGrantedAuthority> authorities) {
         super(user.getAuthUsername(), user.getAuthPassword(), user.isAccountEnabled(), user.isAccountNotExpired(),
             user.isCredentialsNotExpired(), user.isAccountNonLocked(), authorities);
         this.userModel = user;
     }
 
-    public IAuthUserModel<T> getUserModel() {
+    public IAuthUserModel getUserModel() {
         return userModel;
     }
 }

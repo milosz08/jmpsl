@@ -74,11 +74,9 @@ public class SecurityUtil {
      *
      * @throws IllegalArgumentException if user object is null
      */
-    public static <T extends IEnumerableUserRole> AuthUser<T> fabricateUser(IAuthUserModel<T> user) {
+    public static AuthUser fabricateUser(IAuthUserModel user) {
         Assert.notNull(user, "User object cannot be null.");
-        final Set<String> availableRoles =  user.getAuthRoles().stream()
-            .map(IEnumerableUserRole::getRole).collect(Collectors.toSet());
-        return new AuthUser<>(user, convertRolesToAuthorities(availableRoles));
+        return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
     }
 
     /**

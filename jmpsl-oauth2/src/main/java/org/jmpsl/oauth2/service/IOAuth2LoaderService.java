@@ -25,16 +25,14 @@
 package org.jmpsl.oauth2.service;
 
 import org.jmpsl.oauth2.user.OAuth2UserExtender;
-import org.jmpsl.security.user.IEnumerableUserRole;
 
 /**
  * Implement this interface in most of the top auth service layer and override method for process OAuth2
  * registration webflow.
  *
- * @param <T> application roles enum class, implements {@link IEnumerableUserRole} interface
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-public interface IOAuth2LoaderService<T extends IEnumerableUserRole> {
-    OAuth2UserExtender<T> registrationProcessingFactory(final OAuth2RegistrationDataDto registrationData);
+public interface IOAuth2LoaderService {
+    OAuth2UserExtender registrationProcessingFactory(final OAuth2RegistrationDataDto registrationData);
 }
