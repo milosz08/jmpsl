@@ -27,7 +27,6 @@ package org.jmpsl.security;
 import org.springframework.util.Assert;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import java.util.Set;
@@ -95,8 +94,8 @@ public class SecurityUtil {
             .noneMatch(p -> p.equals(ApplicationMode.DEV.getModeName()));
         if (inNotDev) return;
         httpSecurity
-            .authorizeHttpRequests(auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
-            .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
             .headers(headers -> headers.frameOptions().sameOrigin());
     }
 }
