@@ -248,14 +248,12 @@ public class AuthUserDetailsService implements UserDetailsService {
 @Component
 public class JwtAuthenticationFilter extends AbstractJwtRequestFilter {
 
-    // extract and validate user by functional expression. Take token from request and return user identifier or null
-    private final Function<String, String> validateFunctor = token -> { 
-        /* extracted user details from JWT */
-    };
-    
-    public JwtAuthenticationFilter(JwtService jwtService, AuthUserDetailsService details) {
-        super(jwtService, details, validateFunctor);
-    }
+   public JwtAuthenticationFilter(JwtService jwtService, AuthUserDetailsService details) {
+      // extract and validate user by functional expression. Take token from request and return user identifier or null
+      super(jwtService, details, token -> {
+         /* extracted user details from JWT */
+      });
+   }
 }
 ```
 
@@ -293,8 +291,8 @@ public class SpringSecurityConfigurer {
                 .accessDeniedHandler(accessDeniedResolverForRest)
             )
             .authorizeHttpRequests(auth -> auth
-                // insert here requestMatchers
                 .requestMatchers("/", "/error", "/oauth2/**").permitAll()
+                // insert here requestMatchers
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2Login -> oauth2Login

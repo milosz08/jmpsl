@@ -27,7 +27,6 @@ package org.jmpsl.security;
 import org.springframework.util.Assert;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import java.util.Set;
@@ -51,16 +50,16 @@ public class SecurityUtil {
     }
 
     /**
-     * Static method responsible for converting {@link Set} collection of roles (in string) into also {@link Set}
+     * Static method responsible for converting {@link Set} of {@link IEnumerableUserRole} interface into {@link List}
      * collection of {@link SimpleGrantedAuthority} object.
      *
-     * @param roles {@link Set} collection of roles.
-     * @return {@link Set} collection of {@link SimpleGrantedAuthority} objects
+     * @param roles {@link Set} of {@link IEnumerableUserRole} interfaces
+     * @return {@link List} collection of {@link SimpleGrantedAuthority} objects
      * @author Miłosz Gilga
-     * @since 1.0.2
+     * @since 1.0.2_04
      */
-    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(Set<String> roles) {
-        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    public static List<SimpleGrantedAuthority> convertRolesToAuthorities(Set<IEnumerableUserRole> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
     /**
@@ -74,11 +73,9 @@ public class SecurityUtil {
      *
      * @throws IllegalArgumentException if user object is null
      */
-    public static <T extends IEnumerableUserRole> AuthUser<T> fabricateUser(IAuthUserModel<T> user) {
+    public static AuthUser fabricateUser(IAuthUserModel user) {
         Assert.notNull(user, "User object cannot be null.");
-        final Set<String> availableRoles =  user.getAuthRoles().stream()
-            .map(IEnumerableUserRole::getRole).collect(Collectors.toSet());
-        return new AuthUser<>(user, convertRolesToAuthorities(availableRoles));
+        return new AuthUser(user, convertRolesToAuthorities(user.getAuthRoles()));
     }
 
     /**
@@ -97,8 +94,8 @@ public class SecurityUtil {
             .noneMatch(p -> p.equals(ApplicationMode.DEV.getModeName()));
         if (inNotDev) return;
         httpSecurity
-            .authorizeHttpRequests(auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
-            .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
             .headers(headers -> headers.frameOptions().sameOrigin());
     }
 }

@@ -118,11 +118,15 @@ jmpsl.core.locale.available-locales = en_US,pl
 # default selected application locale (defined as locale string, for ex. <i>en_US</i>). Property not required.
 # by default it is en_US.
 jmpsl.core.locale.default-locale = en_US
+
+# default locale message bundles. Property not required. Default location is in classpath: 'i18n/messages'.
+# accept multiple values separated by period's
+jmpsl.core.locale.messages-paths = i18n-api/messages,i18n-mail/messages,i18n-jpa/messages
 ```
 
 ### i18n API implementation (internationalization)
 1. To initialized i18n in your application, firstly create resources bundle in `resources/i18n` directory. Resource files
-   should be named as `messages_[lg].properties`, where `[lg]` is the language prefix (ex. en-US, pl, fr etc.). Example:
+   should be named as `messages_[lang].properties`, where `[lang]` is the language prefix (ex. en-US, pl, fr etc.). Example:
 ```properties
 # messages_en.properties
 app.exception.NumberFormatException = Incorrect number format.
@@ -169,6 +173,7 @@ public class InternationalizationExample {
     * `org.jmpsl.core.exception.RestServiceAuthServerException`
     * `org.springframework.web.servlet.NoHandlerFoundException` [See NOTE below]
     * `org.springframework.web.bind.MethodArgumentNotValidException`
+    * `org.springframework.security.core.AuthenticationException`
     * `org.springframework.http.converter.HttpMessageNotReadableException`
     * `org.springframework.http.converter.HttpMessageNotReadableException`
     * `java.lang.Exception`

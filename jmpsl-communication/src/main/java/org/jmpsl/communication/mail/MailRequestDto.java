@@ -29,9 +29,8 @@ import lombok.Setter;
 import lombok.Builder;
 import lombok.ToString;
 
-import java.util.Set;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.jmpsl.communication.mail.MailException.IncorrectMailParametersException;
 
@@ -52,10 +51,14 @@ public class MailRequestDto {
     private String messageSubject;
     private List<ResourceDto> inlineResources;
     private List<ResourceDto> attachments;
+    private Locale locale;
+    private HttpServletRequest request;
+    private String appName;
+    private String replyAddress;
 
     public MailRequestDto(
         Set<String> sendTo, String sendFrom, String messageSubject, List<ResourceDto> inlineResources,
-        List<ResourceDto> attachments
+        List<ResourceDto> attachments, Locale locale, HttpServletRequest request, String appName, String replyAddress
     ) {
         if (Objects.isNull(sendTo) || sendTo.isEmpty() || Objects.isNull(sendFrom) || sendFrom.isBlank()) {
             throw new IncorrectMailParametersException();
@@ -63,7 +66,11 @@ public class MailRequestDto {
         this.sendTo = sendTo;
         this.sendFrom = sendFrom;
         this.messageSubject = messageSubject;
-        this.inlineResources = inlineResources;
-        this.attachments = attachments;
+        this.inlineResources = Objects.isNull(inlineResources) ? new ArrayList<>() : inlineResources;
+        this.attachments = Objects.isNull(attachments) ? new ArrayList<>() : attachments;
+        this.locale = locale;
+        this.request = request;
+        this.appName = appName;
+        this.replyAddress = replyAddress;
     }
 }

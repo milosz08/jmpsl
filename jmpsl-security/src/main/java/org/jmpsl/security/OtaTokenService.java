@@ -41,12 +41,12 @@ import java.util.regex.Pattern;
  * @since 1.0.2
  */
 @Service
-public class OtaToken {
+public class OtaTokenService {
 
     private static final Pattern PATTERN = Pattern.compile("[a-zA-Z0-9]+");
     private final byte otaTokenLenght;
 
-    public OtaToken(Environment env) {
+    public OtaTokenService(Environment env) {
         this.otaTokenLenght = SecurityEnv.__SEC_OTA_LENGTH.getProperty(env, Byte.class);
     }
 

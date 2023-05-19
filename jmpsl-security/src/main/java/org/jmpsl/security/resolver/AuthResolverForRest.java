@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.stereotype.Component;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.core.AuthenticationException;
@@ -52,7 +52,7 @@ import org.jmpsl.core.exception.GeneralServerExceptionResDto;
  * @author Miłosz Gilga
  * @since 1.0.2
  */
-@ControllerAdvice
+@Component
 public class AuthResolverForRest implements AuthenticationEntryPoint {
 
     private final LocaleMessageService localeMessageService;

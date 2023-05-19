@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: DateIsBefore.java
- * Last modified: 06/03/2023, 17:16
+ * File name: HttpUtil.java
+ * Last modified: 19/05/2023, 15:36
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -22,31 +22,33 @@
  * or other dealings in the software.
  */
 
-package org.jmpsl.core.validator;
+package org.jmpsl.core;
 
-import jakarta.validation.Valid;
-import jakarta.validation.Payload;
-import jakarta.validation.Constraint;
-
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.time.LocalDate;
-import java.lang.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Custom javax validation annotation which can be used for checked if passed date as string is valid (after parse into
- * {@link LocalDate} object) and if this date is before the current date. This annotation must be use together with
- * {@link Valid} annotation in the {@link RequestBody} in sample controller method.
+ * Utilities static class for Http context utilities methods.
  *
  * @author Miłosz Gilga
- * @since 1.0.2
+ * @since 1.0.2_04
  */
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = DateIsBeforeValidator.class)
-@Documented
-public @interface DateIsBefore {
-    String message();
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+public class HttpUtil {
+
+    private HttpUtil() {
+    }
+
+    /**
+     * Static method responsible for returning full host address based {@link HttpServletRequest} object passed in
+     * method argument. Sample return: <code>https://example.net:8080</code>
+     *
+     * @param req {@link HttpServletRequest} object
+     * @return parsed base full host address path
+     * @author Miłosz Gilga
+     * @since 1.0.2_04
+     */
+    public static String getBaseReqPath(HttpServletRequest req) {
+        final boolean isHttp = req.getScheme().equals("http") && req.getServerPort() == 80;
+        final boolean isHttps = req.getScheme().equals("https") && req.getServerPort() == 443;
+        return req.getScheme() + "://" + req.getServerName() + (isHttp || isHttps ? "" : ":" + req.getServerPort());
+    }
 }

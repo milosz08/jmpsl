@@ -26,7 +26,7 @@ package org.jmpsl.core.exception;
 
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Simple POJO class for jakarta validator errors from request's DTO objects. Rewirte to JSON in REST template.
@@ -37,15 +37,15 @@ import java.util.List;
 @Getter
 public class InvalidDtoExceptionResDto extends ServerExceptionResDto {
 
-    private final List<String> errors;
+    private final Map<String, String> errors;
 
-    public InvalidDtoExceptionResDto(ServerExceptionResDto res, List<String> errors) {
+    public InvalidDtoExceptionResDto(ServerExceptionResDto res, Map<String, String> errors) {
         super(res.getTimestamp(), res.getStatus(), res.getError(), res.getMethod());
         this.errors = errors;
     }
 
-    public InvalidDtoExceptionResDto(ServerExceptionResDto res, String error) {
+    public InvalidDtoExceptionResDto(ServerExceptionResDto res, String fieldName, String value) {
         super(res.getTimestamp(), res.getStatus(), res.getError(), res.getMethod());
-        this.errors = List.of(error);
+        this.errors = Map.of(fieldName, value);
     }
 }

@@ -47,7 +47,7 @@ import org.jmpsl.core.env.EnvPropertyHandler;
 public enum CommunicationEnv implements IEnvEnumExtender {
 
     /**
-     * Define email Freemarker templates directory path. By default "classpath:/templates". Property required.
+     * Define email Freemarker templates directory path. By default "classpath:/templates". Property not required.
      * Templates should be in /resources directory.
      *
      * @since 1.0.2

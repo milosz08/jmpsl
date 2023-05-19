@@ -44,7 +44,7 @@ import org.jmpsl.core.DateTimeUtil;
  * @since 1.0.2
  */
 @Slf4j
-public class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, String> {
+class DateIsBeforeValidator implements ConstraintValidator<DateIsBefore, String> {
 
     /**
      * Override javax constraint validator method for determinate valid date. if passed date is before the current date

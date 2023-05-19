@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023 by multiple authors
  *
- * File name: IAuthUserModel.java
- * Last modified: 14/02/2023, 23:33
+ * File name: UserPrincipalAuthenticationToken.java
+ * Last modified: 18/05/2023, 17:38
  * Project name: jmps-library
  *
  * Licensed under the MIT license; you may not use this file except in compliance with the License.
@@ -24,20 +24,41 @@
 
 package org.jmpsl.security.user;
 
-import java.util.Set;
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+
+import org.jmpsl.security.jwt.AbstractJwtRequestFilter;
 
 /**
- * Implement this interface in base JPA user model and override selected methods.
+ * Custom spring security user principal authorities class extending {@link AbstractAuthenticationToken}. Use this class
+ * together with {@link UserDetails} interface and {@link AbstractJwtRequestFilter}
  *
  * @author Miłosz Gilga
- * @since 1.0.2
+ * @since 1.0.2_04
+ * @see UserDetails
+ * @see AbstractJwtRequestFilter
  */
-public interface IAuthUserModel {
-    String getAuthUsername();
-    String getAuthPassword();
-    Set<IEnumerableUserRole> getAuthRoles();
-    default boolean isAccountEnabled() { return false; }
-    default boolean isAccountNonLocked() { return true; }
-    default boolean isAccountNotExpired() { return true; }
-    default boolean isCredentialsNotExpired() { return true; }
+public class UserPrincipalAuthenticationToken extends AbstractAuthenticationToken {
+
+    private final UserDetails principal;
+
+    public UserPrincipalAuthenticationToken(HttpServletRequest req, UserDetails principal) {
+        super(principal.getAuthorities());
+        this.principal = principal;
+        setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+        setAuthenticated(true);
+    }
+
+    @Override
+    public Object getCredentials() {
+        return null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return principal;
+    }
 }
