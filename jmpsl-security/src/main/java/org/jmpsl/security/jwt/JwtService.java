@@ -34,6 +34,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 import java.util.Objects;
 import java.util.Optional;
 import java.time.Instant;
@@ -88,24 +89,13 @@ public class JwtService {
      * method, check if file <code>application.properties</code> include <code>jmpsl.auth.jwt.issuer</code> value and
      * value is not null or empty string.
      *
-     * @param subject JWT subject parameter
-     * @param claims JWT claims array
-     * @return compacted (stringified) refresh token based passed parameters
+     * @return compacted (stringified) UUID refresh token based passed parameters
      * @author Miłosz Gilga
      * @since 1.0.2_04
-     *
-     * @throws NullPointerException if passed JWT subject is null
      */
-    public RefreshTokenPayloadDto generateRefreshToken(String subject, Claims claims) {
-        if (Objects.isNull(subject)) throw new NullPointerException("Passed subject parameter cannot be null.");
+    public RefreshTokenPayloadDto generateRefreshToken() {
         final Date expiredAt = DateUtils.addDays(Date.from(Instant.now()), jwtConfig.getRefreshTokenExpiredDays());
-        final String token =  Jwts.builder()
-            .setIssuer(jwtConfig.getTokenIssuer())
-            .setSubject(subject)
-            .setClaims(claims)
-            .setExpiration(expiredAt)
-            .signWith(jwtConfig.getSignatureKey())
-            .compact();
+        final String token = UUID.randomUUID().toString();
         return new RefreshTokenPayloadDto(token, ZonedDateTime.ofInstant(expiredAt.toInstant(),
             ZonedDateTime.now().getZone()));
     }
