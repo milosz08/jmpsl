@@ -172,7 +172,7 @@ sample.message = To jest testowa wiadomość {0}.
 3. Create enum implementing interface `org.jmpsl.communication.mail.IMailEnumeratedTemplate` with names of templates:
 ```java
 public enum MailTemplate implements IMailEnumeratedTemplate {
-    SAMPLE_TEMPLATE                 ("/sample-template.template.ftl");
+    SAMPLE_TEMPLATE("/sample-template.template.ftl");
     
     private final String templateName;
     
@@ -185,8 +185,6 @@ public enum MailTemplate implements IMailEnumeratedTemplate {
 4. Build mail message with `org.jmpsl.communication.mail.MailRequestDto` class:
 
 ```java
-import java.util.HashMap;
-
 @Service
 class MailSender {
 
