@@ -34,13 +34,18 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 import org.springframework.stereotype.Service;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import java.util.Map;
+import java.util.*;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+
+import org.jmpsl.core.HttpUtil;
 
 import static org.jmpsl.communication.mail.MailException.UnableToSendEmailException;
 
@@ -53,14 +58,16 @@ import static org.jmpsl.communication.mail.MailException.UnableToSendEmailExcept
  */
 @Slf4j
 @Service
-public class ServletMailService {
+public class JmpslMailService {
 
     private final JavaMailSender sender;
+    private final MessageSource messageSource;
     private final Configuration freemarkerConfiguration;
 
-    public ServletMailService(JavaMailSender sender, Configuration freemarkerConfiguration) {
+    public JmpslMailService(JavaMailSender sender, Configuration freemarkerConfiguration, MessageSource messageSource) {
         this.sender = sender;
         this.freemarkerConfiguration = freemarkerConfiguration;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -76,18 +83,29 @@ public class ServletMailService {
      *
      * @throws UnableToSendEmailException when method unable to send email to request users
      */
-    public void sendEmail(final MailRequestDto reqDto, final Map<String, Object> model, IMailEnumeratedTemplate template) {
+    public void sendEmail(final MailRequestDto reqDto, final Map<String, String> model, IMailEnumeratedTemplate template) {
         final MimeMessage mimeMessage = sender.createMimeMessage();
         try {
             final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
 
-            final Template mailTemplate = freemarkerConfiguration.getTemplate(template.getTemplateName());
+            final Template mailTemplate = freemarkerConfiguration.getTemplate(template.getTemplateName(),
+                reqDto.getLocale());
 
+            final Map<String, Object> modelWithI18n = new HashMap<>(model);
+            modelWithI18n.put("i18n", new MessageResolverMethod(messageSource, reqDto.getLocale()));
+            modelWithI18n.put("currentYear", String.valueOf(ZonedDateTime.now().getYear()));
+            modelWithI18n.put("serverUtcTime", Instant.now().toString());
+            if (!Objects.isNull(reqDto.getRequest())) {
+                modelWithI18n.put("baseServletPath", HttpUtil.getBaseReqPath(reqDto.getRequest()));
+            }
+            if (!Objects.isNull(reqDto.getAppName())) {
+                modelWithI18n.put("appName", reqDto.getAppName());
+            }
             for (final String client : reqDto.getSendTo()) {
                 mimeMessageHelper.setTo(client);
             }
-            mimeMessageHelper.setText(FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, model), true);
+            mimeMessageHelper.setText(FreeMarkerTemplateUtils.processTemplateIntoString(mailTemplate, modelWithI18n), true);
             for (final ResourceDto inlineRes : reqDto.getInlineResources()) {
                 mimeMessageHelper.addInline(inlineRes.mimeVariableName(), inlineRes.fileHandler());
             }
@@ -96,6 +114,7 @@ public class ServletMailService {
             }
             mimeMessageHelper.setSubject(reqDto.getMessageSubject());
             mimeMessageHelper.setFrom(reqDto.getSendFrom());
+            mimeMessageHelper.setReplyTo(reqDto.getReplyAddress(), reqDto.getAppName());
 
             sender.send(mimeMessage);
             log.info("Email message from template {} was successfully send. Request parameters: {}",
