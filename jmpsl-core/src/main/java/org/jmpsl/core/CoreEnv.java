@@ -67,12 +67,12 @@ public enum CoreEnv implements IEnvEnumExtender {
     __CORE_DEFAULT_LOCALE("jmpsl.core.locale.default-locale", "en_US", false),
 
     /**
-     * Default locale message bundle. Property not required. Default location is in classpath: 'i18n/messages'.
+     * Default locale message bundles. Property not required. Default location is in classpath: 'i18n/messages'.
      *
      * @see Locale
      * @since 1.0.2
      */
-    __CORE_LOCALE_BUNDLE_PATH("jmpsl.core.locale.messages-path", "i18n/messages", false);
+    __CORE_LOCALE_BUNDLE_PATH("jmpsl.core.locale.messages-paths", "i18n/messages", false);
 
     private final String name;
     private final String defaultValue;
