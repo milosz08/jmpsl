@@ -119,7 +119,7 @@ public class JwtService {
 
     /**
      * Method responsible for extracting claims from raw JWT passed in method parameter. Method also validate token and
-     * return claims if token is valid, otherwise return null value.
+     * return claims if token is valid (or invalid and expired), otherwise return null value.
      *
      * @param token generated raw JWT (without "Bearer" prefix)
      * @return extracted claims object from passed JWT if optional contains data, otherwise return empty optional
@@ -130,7 +130,8 @@ public class JwtService {
      */
     public Optional<Claims> extractClaims(String token) {
         final ValidateJwtPayload tokenAfterValidation = insideValidateToken(token);
-        if (isValid(token).isValid()) {
+        final JwtValidPayload validPayload = isValid(token);
+        if (validPayload.isValid() || validPayload.checkType(JwtValidationType.EXPIRED)) {
             return tokenAfterValidation.getClaims();
         }
         return Optional.empty();
