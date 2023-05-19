@@ -148,17 +148,41 @@ where:
 # define email Freemarker templates directory path. By default "classpath:/templates". Property required.
 # templates should be in /resources directory.
 jmpsl.communication.mail.freemarker-templates-dir = classpath:/templates
+
+# external resource bundle file for i18n messages (in src/main/resources). Property not requred.
+jmpsl.core.locale.messages-path = i18n-mail/messages,... others message bundles
 ```
 
 ### Email messages sender API
+1. Create `messages_[lang].properties` in `i18n-mail` directory, where lang is i18n tag (pl, en-US etc.):
+```properties
+# messages_en.properties
+sample.message = This is a sample message {0}.
+# messages_pl.properties
+sample.message = To jest testowa wiadomość {0}.
+```
 
-1. Create sample email template file in `/resources/templates` with `.ftl` extension.
+2. Create sample email template file in `/resources/templates` with `.ftl` extension.
 ```injectedfreemarker
+<#assign sampleMessage = i18n("sample.message", [ injectedText ])>
 <table>
-    <td><p>${injectedText}</p></td>
+    <td><p>${sampleMessage}</p></td>
 </table>
 ```
-2. Build mail message with `org.jmpsl.communication.mail.MailRequestDto` class:
+3. Create enum implementing interface `org.jmpsl.communication.mail.IMailEnumeratedTemplate` with names of templates:
+```java
+public enum MailTemplate implements IMailEnumeratedTemplate {
+    SAMPLE_TEMPLATE                 ("/sample-template.template.ftl");
+    
+    private final String templateName;
+    
+    @Override
+    public String getTemplateName() {
+        return templateName;
+    }
+}
+```
+4. Build mail message with `org.jmpsl.communication.mail.MailRequestDto` class:
 
 ```java
 import java.util.HashMap;
@@ -166,7 +190,7 @@ import java.util.HashMap;
 @Service
 class MailSender {
 
-    private final ServletMailService servletMailService;
+    private final JmpslMailService jmpslMailService;
 
     // constructor for dependency injections
 
@@ -175,17 +199,21 @@ class MailSender {
         final MailRequestDto requestDto = MailRequestDto.builder()
             .sendTo(Set.of(/* insert here all mail accounts */))
             .sendFrom(/* insert here server responder, ex. noreply@example.pl */)
+            .setLocale(/* insert here locale for messages bundle */)
+            .setRequest(/* optionally, if you can have access to "baseServletPath" in templates */)
+            .setAppName(/* application name, property "appName" in templates */)
+            .setReplyAddress(/* reply address for responding on auto-generated message */)
             .messageSubject("This is a sample message")
-            .attachments(/* insert here all attachements as file handler and mime type */)
-            .inlineResources(/* insert here embedded inline resources in mail message (ex. images) */)
+            .attachments(/* optionally, insert here all attachements as file handler and mime type */)
+            .inlineResources(/* optionally, insert here embedded inline resources in mail message (ex. images) */)
             .build();
 
         final Map<String, Object> parameters = new HashMap<>();
-        parameters.add("injectedText", "This is injected text.");
+        parameters.put("injectedText", "This is injected text.");
         // ... and more additional parameters
         
         // send message with passed request DTO and parameters with template name (in last argument)
-        servletMailService.sendEmail(requestDto, parameters, "/example-template.ftl");
+        jmpslMailService.sendEmail(requestDto, parameters, MailTemplate.SAMPLE_TEMPLATE);
     }
 }
 ```
