@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2023 by MILOSZ GILGA <http://miloszgilga.pl>
+ * Copyright (c) 2023 by MULTIPLE AUTHORS
  *
  * File name: PasswordsMatchValidator.java
- * Last modified: 18/05/2023, 00:08
- * Project name: air-hub-master-server
+ * Last modified: 22/05/2023, 03:24
+ * Project name: jmps-library
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
  * file except in compliance with the License. You may obtain a copy of the License at

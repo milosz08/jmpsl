@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 &nbsp;&nbsp;
-![](https://img.shields.io/badge/License-MIT-brown.svg)
+![](https://img.shields.io/badge/License-Apache%202.0-brown.svg)
 
 [![][jmpsl communication badge]][jmpsl communication mvn]
 &nbsp;&nbsp;
