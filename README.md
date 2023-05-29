@@ -1010,4 +1010,4 @@ Project is still in development.
 
 <a name="license"></a>
 ## License
-This application is on MIT License.
+This application is on Apache 2.0 License.
