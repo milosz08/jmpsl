@@ -187,4 +187,4 @@ Created by Miłosz Gilga. If you have any questions about this application, send
 
 <a name="license"></a>
 ## License
-This application is on MIT License.
+This application is on Apache 2.0 License.
