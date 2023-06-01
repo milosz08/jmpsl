@@ -52,7 +52,7 @@ public enum SimpleGrantedRole implements IEnumerableUserRole {
      * @author Miłosz Gilga
      * @since 1.0.2_02
      */
-    public static Set<SimpleGrantedRole> getSetCollection() {
+    public static Set<IEnumerableUserRole> getSetCollection() {
         return Arrays.stream(values()).collect(Collectors.toSet());
     }
 }
