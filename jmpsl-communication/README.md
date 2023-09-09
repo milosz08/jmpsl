@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/Made%20in-Java%2017%20with%20Gradle-1abc9c.svg)
 &nbsp;&nbsp;
-![](https://img.shields.io/badge/License-MIT-brown.svg)
+![](https://img.shields.io/badge/License-Apache%202.0-brown.svg)
 
 [![][jmpsl communication badge]][jmpsl communication mvn]
 &nbsp;&nbsp;
@@ -172,7 +172,7 @@ sample.message = To jest testowa wiadomość {0}.
 3. Create enum implementing interface `org.jmpsl.communication.mail.IMailEnumeratedTemplate` with names of templates:
 ```java
 public enum MailTemplate implements IMailEnumeratedTemplate {
-    SAMPLE_TEMPLATE                 ("/sample-template.template.ftl");
+    SAMPLE_TEMPLATE("/sample-template.template.ftl");
     
     private final String templateName;
     
@@ -185,8 +185,6 @@ public enum MailTemplate implements IMailEnumeratedTemplate {
 4. Build mail message with `org.jmpsl.communication.mail.MailRequestDto` class:
 
 ```java
-import java.util.HashMap;
-
 @Service
 class MailSender {
 
@@ -226,4 +224,4 @@ Created by Miłosz Gilga. If you have any questions about this application, send
 
 <a name="license"></a>
 ## License
-This application is on MIT License.
+This application is on Apache 2.0 License.
