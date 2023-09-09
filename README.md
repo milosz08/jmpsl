@@ -35,7 +35,7 @@
 [jmpsl security mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-security
 [jmpsl oauth2 mvn]: https://mvnrepository.com/artifact/pl.miloszgilga/jmpsl-oauth2
 
-Java multi purpose Spring library (in short JMPSL) is a is a multi-module development library project for rapidly building
+Java multi purpose Spring library (in short JMPSL) it's a multi-module development library project for rapidly building
 REST-type services in the **Spring Boot framework**. It provides services for authentication, authorization, creating raster
 graphics, sending files via FTP, messaging using popular communication protocols, and much more.
 
