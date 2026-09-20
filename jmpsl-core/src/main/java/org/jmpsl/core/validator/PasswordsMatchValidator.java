@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2023 by MILOSZ GILGA <http://miloszgilga.pl>
+ * Copyright (c) 2023 by MULTIPLE AUTHORS
  *
  * File name: PasswordsMatchValidator.java
- * Last modified: 18/05/2023, 00:08
- * Project name: air-hub-master-server
+ * Last modified: 22/05/2023, 03:24
+ * Project name: jmps-library
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
  * file except in compliance with the License. You may obtain a copy of the License at
@@ -18,10 +18,12 @@
 
 package org.jmpsl.core.validator;
 
+import lombok.extern.slf4j.Slf4j;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Objects;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +39,8 @@ class PasswordsMatchValidator implements ConstraintValidator<ValidateMatchingPas
 
     @Override
     public boolean isValid(IPasswordValidatorModel value, ConstraintValidatorContext context) {
-        if (!value.getPassword().equals(value.getConfirmedPassword())) {
+        if (Objects.isNull(value.getPassword()) || Objects.isNull(value.getConfirmedPassword()) ||
+            !value.getPassword().equals(value.getConfirmedPassword())) {
             log.error("Password and confirmed passwords are not the same.");
             return false;
         }

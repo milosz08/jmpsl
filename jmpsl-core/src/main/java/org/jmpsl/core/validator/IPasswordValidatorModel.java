@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2023 by MILOSZ GILGA <http://miloszgilga.pl>
+ * Copyright (c) 2023 by MULTIPLE AUTHORS
  *
- * File name: IPasswordModel.java
- * Last modified: 18/05/2023, 00:11
- * Project name: air-hub-master-server
+ * File name: IPasswordValidatorModel.java
+ * Last modified: 18/05/2023, 01:21
+ * Project name: jmps-library
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
  * file except in compliance with the License. You may obtain a copy of the License at

@@ -1,5 +1,8 @@
 # IDEA project
-.idea/
+**/.idea/*
+!**/.idea/copyright/
+!**/.idea/codeStyles/
+!**/.idea/inspectionProfiles/
 
 # Gradle wrapper and building patch
 .gradle/
