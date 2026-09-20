@@ -1007,7 +1007,7 @@ Created by Miłosz Gilga. If you have any questions about this application, send
 
 <a name="project-status"></a>
 ## Project status
-Project is still in development.
+Project is abandoned.
 
 
 <a name="license"></a>
